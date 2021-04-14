@@ -1,0 +1,151 @@
+<ion-content [fullscreen]="true">
+
+  <div id="container">
+
+    <form id="formAbogado">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      </div>
+      <label>
+        <p class="label-txt">Nombre completo (*):</p>
+        <input type="text" class="input" id="fullname">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Genero (*):</p>
+        <select class="input" id="gender">
+          <option value="1">Femenino</option>
+          <option value="2">Masculino</option>
+        </select>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Cedula (*):</p>
+        <input type="number" class="input" id="identification">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Dirección (*):</p>
+        <input type="text" class="input" id="address">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">¿ Es usted abogado con ? (*):</p>
+        <select class="input" id="document1">
+          <option value="1">Licencia temporal</option>
+          <option value="2">Tarjeta profesional</option>
+        </select>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Universidad de egreso en Derecho:</p>
+        <input type="text" class="input" id="university">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Número de tarjeta o licencia (*):</p>
+        <input type="number" class="input" id="license">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">¿ Cuenta con experiencia laboral en el ejercicio del Derecho ? (*):</p>
+        <select class="input" id="experience" (change)="changeField('experience',$event)">
+          <option value="1">No</option>
+          <option value="2">Si</option>
+        </select>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label class="years">
+        <p class="label-txt">¿ Cuantos años ?</p>
+        <input type="text" class="input" id="years">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">¿ Cuenta con alguna investigación disciplinaria por parte del Consejo Superior de la Judicatura ? (*):</p>
+        <select class="input" id="investigate">
+          <option value="1">No</option>
+          <option value="2">Si</option>
+        </select>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">¿ Cuál de las siguientes opciones se ajusta a sus gustos en las ramas del derecho o en cual le gustaría desempeñar laboralmente ? (*):</p>
+        <select class="input" id="pleasures" (change)="changeField('pleasures',$event)">
+          <option value="1">Administrativo</option>
+          <option value="2">Ambiental</option>
+          <option value="3">Civil</option>
+          <option value="4">Comercial</option>
+          <option value="5">Derechos humanos</option>
+          <option value="6">Digital</option>
+          <option value="7">Familia</option>
+          <option value="8">Laboral</option>
+          <option value="9">Otro</option>
+          <option value="10">Penal</option>
+          <option value="11">Tributario</option>
+        </select>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label class="pleasures_other">
+        <p class="label-txt">¿ Cuál ?:</p>
+        <input type="text" class="input" id="pleasures_other">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">¿ Cuanto es el promedio que cobra usted por una asesoría juridica (Solo asesoría) ? (*):</p>
+        <input type="number" class="input" id="price">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <label>
+        <p class="label-txt">Subir hoja de vida (*):</p>
+        <input type="file" class="input" id="cv" (change)="changeField('cv',$event)">
+        <a *ngIf="this.pathFile" target="_blank" href="{{this.pathFile}}">Visualizar Hoja de Vida</a>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <div class="informacion success alert-primary" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion warning alert-warning" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion error alert-danger" role="alert">
+        {{this.msg}}
+      </div>
+
+      <button class="register" (click)="register()">Actualizar</button>
+
+    </form>
+
+  </div>
+  
+</ion-content>

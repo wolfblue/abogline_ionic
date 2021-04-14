@@ -1,0 +1,80 @@
+<ion-app>
+
+  <ion-header [translucent]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-align-self-start" [class.border]="design == 1">
+          <img (click)="location('home')" src="/assets/images/logo.png" width="50%">
+        </ion-col>
+        <ion-col class="ion-align-self-center" [class.border]="design == 1">
+          &nbsp;
+        </ion-col>
+        <ion-col class="ion-align-self-end tRight" [class.border]="design == 1">
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-align-self-center" [class.border]="design == 1">
+                <ion-button class="register" color="secondary" (click)="location('register')">Registrarse</ion-button>
+              </ion-col>
+              <ion-col class="ion-align-self-center" [class.border]="design == 1">
+                <ion-button class="login" color="primary" (click)="location('login')">Iniciar Sesión</ion-button>
+              </ion-col>
+              <ion-col class="ion-align-self-center" [class.border]="design == 1">
+                <a class="email" (click)="profileLink()">{{this.email}}</a>
+              </ion-col>
+              <ion-col class="ion-align-self-center" [class.border]="design == 1">
+                <a class="notification" (click)="location('notificaciones')">
+                  <span class="badge">{{this.notificacionesTotal}}</span>
+                </a>
+              </ion-col>
+              <ion-col class="ion-align-self-center" [class.border]="design == 1">
+                <ion-button class="logout" color="primary" (click)="logout()">Cerrar Sesión</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mainPrincipal" *ngIf="auth == 1">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link main inicio" (click)="location('home')">Inicio</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main registrarCaso" (click)="location('cliente-caso')">Registrar Caso</a>
+          <a *ngIf="profile == 'abogado'" class="nav-item nav-link main registrarCaso" (click)="location('abogado-buscar-caso')">Buscar Caso</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main registrarCaso" (click)="location('cliente-buscar-caso')">Consultar Caso</a>
+        </div>
+      </div>
+    </nav>
+
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+
+    <ion-router-outlet></ion-router-outlet>
+
+  </ion-content>
+
+</ion-app>
+
+<div class="modal modalConfirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary modal-continuar">Continuar</button>
+        <button type="button" class="btn btn-secondary modal-cancelar" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
