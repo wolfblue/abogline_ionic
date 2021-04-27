@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
 import {AppComponent} from '../app.component';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -22,11 +23,11 @@ export class LoginPage implements OnInit {
   constructor(
     private http:HttpClient,
     private router: Router,
-    private appComponent: AppComponent
+    private appComponent: AppComponent,
+    private spinner: NgxSpinnerService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   postModel(Metodo: string, data: FormData) {
     let url = `${environment.apiUrl}` + Metodo;
@@ -43,6 +44,7 @@ export class LoginPage implements OnInit {
 
     var _this = this;
     this.error = 0;
+    this.spinner.show();
 
     $(".error").hide();
     $(".success").hide();
@@ -72,6 +74,7 @@ export class LoginPage implements OnInit {
 
           this.msg = "Autenticado correctamente";
           $(".success").show();
+          this.spinner.hide();
 
           setTimeout(function(){
 
@@ -83,15 +86,16 @@ export class LoginPage implements OnInit {
             $("input").val("");
 
             _this.appComponent.validateAuth();
-            _this.router.navigateByUrl('home'); 
+            _this.router.navigateByUrl('home');
 
-          },2000);
+          },1000);
 
         }else{
 
           $("input").val("");
           this.msg = "Los datos ingresados no son válidos";
           $(".warning").show();
+          _this.spinner.hide();
 
         }
 
@@ -101,8 +105,12 @@ export class LoginPage implements OnInit {
 
     //  Mostrar errores
 
-    if(this.error == 1)
+    if(this.error == 1){
+
       $(".error").show();
+      _this.spinner.hide();
+      
+    }
 
   }
 

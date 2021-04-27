@@ -51,9 +51,13 @@
         <p id="field7"></p>
       </div>
 
-      <div class="mb-3">
-        <button type="button" class="btn btn-primary" (click)="modalConfirmar('Aplicar al caso','¿ Esta seguro de continuar con la información diligenciada ?')">Aplicar al caso</button>
-      </div>
+      <button 
+        type="button" 
+        class="btn btn-success" 
+        (click)="modalConfirmar('Solicitar consulta','¿ Esta seguro de enviar al cliente una solicitud de consulta para este caso ?')"
+      >
+        Solicitar consulta
+      </button>
 
     </form>
 

@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -23,6 +24,7 @@ export class NotificacionesPage implements OnInit {
 
     private http:HttpClient,
     private router: Router,
+    private spinner: NgxSpinnerService
 
   ) { 
 
@@ -44,6 +46,27 @@ export class NotificacionesPage implements OnInit {
 
   }
 
+  /************************************************************************************* */
+
+  /**
+   * Modal confirmar notificaciones
+   */
+
+   modalConfirmar(titulo,body){
+
+    var _this = this;
+
+    $(".modal-title").html(titulo);
+    $(".modal-body").html(body);
+    $(".modalConfirmNotification").modal("toggle");
+    $(".modalContinuar").unbind("click");
+
+    $(".modal-continuar").click(function(){
+      $(".modalConfirm").modal("toggle");
+    });
+
+  }
+
   /************************************************************************ */
 
   /**
@@ -52,13 +75,19 @@ export class NotificacionesPage implements OnInit {
 
    getNotificaciones(){
      
+    //  Variables iniciales
+
     var _this = this;
+    this.spinner.show();
 
     let getNotificacion = new FormData();
 
     getNotificacion.append("email", sessionStorage.getItem("email"));
+    getNotificacion.append("tipo", "2");
 
     this.postModel("getNotificacion",getNotificacion).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
 
       this.notificaciones = result;
 
@@ -66,48 +95,57 @@ export class NotificacionesPage implements OnInit {
 
       for(var i = 0; i < result.length; i++){
 
-        buscarNotificaciones += "<tr>";
-        buscarNotificaciones += " <td>"+(i+1)+"</td>";
-        buscarNotificaciones += " <td>"+result[i].message+"</td>";
+        //  Validar leído o no leído
+
+        var background = "#3880ff6e";
+        
+        if(result[i].active == '2')
+          background = "#ffffff";
+
+        buscarNotificaciones += "<tr class='notificacion' style='background:" + background + ";'>";
+        buscarNotificaciones += " <td>";
+        buscarNotificaciones += "   <input class='id' type='hidden' value='" + result[i].id + "' />";
+        buscarNotificaciones += "   <input class='tipo' type='hidden' value='" + result[i].tipo + "' />";
+        buscarNotificaciones += "   <input class='message' type='hidden' value='" + result[i].message + "' />";
+        buscarNotificaciones +=     result[i].tipo;
+        buscarNotificaciones += " </td>";
         buscarNotificaciones += " <td>"+result[i].created_at+"</td>";
-        buscarNotificaciones += " <td><button type='button' id='" + result[i].id + "' class='btn btn-danger eliminarNotificacion'>Eliminar Notificación</button></td>";
         buscarNotificaciones += "</tr>";
 
       }
 
       $("#buscarNotificaciones tbody").append(buscarNotificaciones);
 
-      //  Evento click eliminar notificacion
+      //  Aplicar estilos
 
-      $(".eliminarNotificacion").click(function(){
+      $(".notificacion").hover(function(e) { 
 
-        var confirm = window.confirm("¿ Esta seguro de eliminar la notificación ?");
+        $(this).css("cursor","pointer");
+        $(this).css("opacity","0.4");
 
-        if(confirm == true){
+      },function(){
 
-          let deleteNotificacion = new FormData();
+        $(this).css("cursor","default");
+        $(this).css("opacity","1");
 
-          deleteNotificacion.append("id", $(this).prop("id"));
+      });
 
-          _this.postModel("deleteNotificacion",deleteNotificacion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
-            
-            _this.msg = "Se eliminó la notificación correctamente";
-            
-            $(".success").show();
+      //  Abrir modal notificación
 
-            $(this).parent().parent().remove();
+      $(".notificacion").click(function(){
 
-            //  Volver a la busqueda de casos
+        $(".modalConfirmNotification").modal("show");
+        $(".mnTitle").html($(this).find(".tipo").val());
+        $(".mnMessage").html($(this).find(".message").val());
+        $(this).css("background","#ffffff");
 
-            setTimeout(function(){
+        //  Actualizar notificación como leído
 
-              $(".success").hide();
+        let notificacionLeido = new FormData();
 
-            },3000);
+        notificacionLeido.append("id", $(this).find(".id").val());
 
-          });
-
-        }
+        _this.postModel("notificacionLeido",notificacionLeido).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
 
       });
 
@@ -136,6 +174,7 @@ export class NotificacionesPage implements OnInit {
       var table = $('#buscarNotificaciones').DataTable( {
           orderCellsTop: true,
           fixedHeader: true,
+          order: [[ 1, "desc" ]],
           language: {
             "decimal": "",
             "emptyTable": "No hay información",

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -10,6 +10,8 @@ import {ClienteProfilePage} from './cliente-profile/cliente-profile.page';
 import {AbogadoDetalleCasoPage} from './abogado-detalle-caso/abogado-detalle-caso.page';
 import {ClienteDetalleCasoPage} from './cliente-detalle-caso/cliente-detalle-caso.page';
 import {ClienteDetalleAbogadoPage} from './cliente-detalle-abogado/cliente-detalle-abogado.page';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +21,9 @@ import {ClienteDetalleAbogadoPage} from './cliente-detalle-abogado/cliente-detal
     IonicModule.forRoot(), 
     AppRoutingModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -30,5 +34,6 @@ import {ClienteDetalleAbogadoPage} from './cliente-detalle-abogado/cliente-detal
     ClienteDetalleAbogadoPage
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

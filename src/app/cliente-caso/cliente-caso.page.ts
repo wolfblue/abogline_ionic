@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -23,17 +24,25 @@ export class ClienteCasoPage implements OnInit {
   casoField4Vali1 = 0;
   casoField4Vali2 = 0;
 
+  idCaso:any = "0";
+
   constructor(
 
     private http:HttpClient,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
 
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit() {
 
     //  Ocultar campos con clase 'otro'
     $(".otro").hide();
+
+    //  Cargar datos cuando es edición
+    this.loadDataCasoEdit();
 
   }
 
@@ -202,11 +211,11 @@ export class ClienteCasoPage implements OnInit {
 
   casoRegister(){
 
-    console.log(1);
+    //  Variables iniciales
 
     var _this = this;
-
     this.error = 0;
+    this.spinner.show();
 
     $(".error").hide();
     $(".success").hide();
@@ -227,7 +236,7 @@ export class ClienteCasoPage implements OnInit {
 
       let casosUpdate = new FormData();
 
-      casosUpdate.append("id", "0");
+      casosUpdate.append("id", this.idCaso);
       casosUpdate.append("email", sessionStorage.getItem('email'));
       casosUpdate.append("field1", $("#casoField1").val());
       casosUpdate.append("field2", $("#casoField2").val());
@@ -258,6 +267,53 @@ export class ClienteCasoPage implements OnInit {
 
     if(this.error == 1)
       $(".error").show();
+
+  }
+
+  /*********************************************************************************** */
+
+  /**
+   * Cargar datos del caso cuando es edición
+   */
+
+  loadDataCasoEdit(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var caso = JSON.parse(sessionStorage.getItem('caso'));
+
+    //  Obtener el id del caso
+    this.idCaso = caso.id;
+
+    //  Asignar los valores a los campos del formulario
+
+    $("#casoField1").val(caso.field1);
+    this.changeField("casoField1");
+
+    setTimeout(function(){
+
+      $("#casoField2").val(caso.field2);
+      _this.changeField("casoField2");
+
+      setTimeout(function(){
+
+        $("#casoField3").val(caso.field3);
+        $("#casoField4").val(caso.field4);
+        _this.changeField("casoField4");
+
+        setTimeout(function(){
+
+          $("#casoField5").val(caso.field5);
+
+        },800);
+
+      },800);
+
+    },800);
+
+    $("#casoField6").html(caso.field6);
+    $("#casoField7").val(caso.field7);
 
   }
 

@@ -1,0 +1,66 @@
+<ion-content [fullscreen]="true">
+
+  <div id="container">
+
+    <form>
+
+      <div class="informacion success alert-primary" role="alert">
+        {{this.msg}}
+      </div>
+    
+      <div class="informacion warning alert-warning" role="alert">
+        {{this.msg}}
+      </div>
+    
+      <div class="informacion error alert-danger" role="alert">
+        {{this.msg}}
+      </div>
+
+      <div class="mb-3">
+        <label for="fullname" class="form-label">
+          Nombre
+        </label>
+        <p id="fullname"></p>
+      </div>
+
+      <div class="mb-3">
+        <label for="document1" class="form-label">
+          Abogado con
+        </label>
+        <p id="document1"></p>
+      </div> 
+
+      <div class="mb-3">
+        <label for="university" class="form-label">
+          Universidad
+        </label>
+        <p id="university"></p>
+      </div> 
+
+      <div class="mb-3">
+        <label for="years" class="form-label">
+          Años de experiencia
+        </label>
+        <p id="years"></p>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">
+          Precio
+        </label>
+        <p id="price"></p>
+      </div>
+
+      <button 
+        type="button" 
+        class="btn btn-success" 
+        (click)="modalConfirmar('Solicitar consulta','¿ Esta seguro de enviar al abogado una solicitud de consulta para este caso ?')"
+      >
+        Solicitar consulta
+      </button>
+
+    </form>
+
+  </div>
+
+</ion-content>

@@ -77,6 +77,9 @@ export class AppComponent {
 
   validateAuth(){
 
+    //  Variables iniciales
+    var _this = this;
+
     if(sessionStorage.getItem("email")){
 
       //  Ocultar botones
@@ -97,14 +100,7 @@ export class AppComponent {
       this.profile = sessionStorage.getItem("profile");
 
       //  Obtener total notificaciones
-
-      //this.getNotificaciones();
-
-      setInterval(function(){
-
-        //this.getNotificaciones();
-
-      },3000);
+      this.getNotificaciones();
 
     }else{
 
@@ -170,6 +166,7 @@ export class AppComponent {
     let getNotificacion = new FormData();
 
     getNotificacion.append("email", sessionStorage.getItem("email"));
+    getNotificacion.append("tipo", "1");
 
     this.postModel("getNotificacion",getNotificacion).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 

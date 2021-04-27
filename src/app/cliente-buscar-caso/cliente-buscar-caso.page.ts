@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
 import {ClienteDetalleCasoPage} from '../cliente-detalle-caso/cliente-detalle-caso.page';
 import {ClienteDetalleAbogadoPage} from '../cliente-detalle-abogado/cliente-detalle-abogado.page';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -26,7 +27,8 @@ export class ClienteBuscarCasoPage implements OnInit {
     private http:HttpClient,
     private router: Router,
     private ClienteDetalleCasoPage: ClienteDetalleCasoPage,
-    private ClienteDetalleAbogadoPage: ClienteDetalleAbogadoPage
+    private ClienteDetalleAbogadoPage: ClienteDetalleAbogadoPage,
+    private spinner: NgxSpinnerService
 
   ) { 
 
@@ -45,7 +47,7 @@ export class ClienteBuscarCasoPage implements OnInit {
 
   location(ruta){
 
-    this.router.navigateByUrl(ruta); 
+    window.location = ruta; 
 
   }
 
@@ -57,7 +59,10 @@ export class ClienteBuscarCasoPage implements OnInit {
 
    getCasos(){
      
+    //  Variables iniciales
+
     var _this = this;
+    this.spinner.show();
 
     let getDataCaso = new FormData();
 
@@ -65,7 +70,7 @@ export class ClienteBuscarCasoPage implements OnInit {
 
     this.postModel("getDataCaso",getDataCaso).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-      console.log(result);
+      this.spinner.hide();
 
       this.casos = result;
 
@@ -80,13 +85,16 @@ export class ClienteBuscarCasoPage implements OnInit {
         buscarCaso += " <td>"+result[i].field7Desc+"</td>";
         buscarCaso += " <td>";
         buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-info verDetalle'>Ver Detalle</button>";
-        buscarCaso += " </td>";
 
-        if(result[i].abogado){
-          buscarCaso += " <td>";
+        //  Permitir editar el caso cuando no se ha iniciado un proceso
+
+        if(result[i].hasProceso == 'N')
+          buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-info editarCaso'>Editar Caso</button>";
+
+        //  Permitir consultar abogado cuando no se ha realizado merge con alguno
+
+        if(!result[i].abogado)
           buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-success verAbogado'>Consultar Abogado</button>";
-          buscarCaso += " </td>";
-        }
 
         buscarCaso += " </td>";
         buscarCaso += "</tr>";
@@ -94,6 +102,12 @@ export class ClienteBuscarCasoPage implements OnInit {
       }
 
       $("#buscarCaso tbody").append(buscarCaso);
+
+      //  Aplicar estilos
+
+      $("td").css("vertical-align","middle");
+      $("button").css("width","100%");
+      $("button").css("margin","1%");
 
       //  Evento click ver detalle
 
@@ -106,6 +120,15 @@ export class ClienteBuscarCasoPage implements OnInit {
 
       });
 
+      //  Evento editar caso
+
+      $(".editarCaso").click(function(){
+
+        sessionStorage.setItem('caso',JSON.stringify(_this.casos[$(this).prop('id')]));
+        _this.location('cliente-caso');
+
+      });
+
       //  Evento click ver abogado
 
       $(".verAbogado").click(function(){
@@ -113,7 +136,6 @@ export class ClienteBuscarCasoPage implements OnInit {
         sessionStorage.setItem('caso',JSON.stringify(_this.casos[$(this).prop('id')]));
 
         _this.location('cliente-detalle-abogado');
-        _this.ClienteDetalleAbogadoPage.getDataAbogado();
 
       });
 

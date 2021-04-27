@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -17,18 +18,20 @@ export class ClienteDetalleAbogadoPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
   msg:any = "";
   error: any = 0;
+  abogados:any = [];
 
   constructor(
 
     private http:HttpClient,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
 
   ) { }
 
   ngOnInit() {
 
-    //  Obtener detalle del abogado
-    this.getDataAbogado();
+    //  Consultar abogados
+    this.getAbogados();
 
   }
 
@@ -39,76 +42,130 @@ export class ClienteDetalleAbogadoPage implements OnInit {
 
   location(ruta){
 
-    this.router.navigateByUrl(ruta); 
+    window.location = ruta; 
 
   }
 
-  /************************************************************************* */
+  /******************************************************************************** */
 
   /**
-   * Obtener detalle del abogado
+   * Consultar abogados inscritos
    */
 
-   getDataAbogado(){
+  getAbogados(){
+
+    //  Variables iniciales
 
     var _this = this;
+    this.spinner.show();
     var caso = JSON.parse(sessionStorage.getItem('caso'));
 
-    let getDataAbogados = new FormData();
+    //  Consultar abogados
 
-    getDataAbogados.append("email", caso.abogado);
-    
-    _this.postModel("getDataAbogados",getDataAbogados).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+    let getAbogados = new FormData();
 
-      $("#field1").html(result[0].fullname);
-      $("#field2").html(result[0].genderDesc);
-      $("#field3").html(result[0].identification);
-      $("#field4").html(result[0].address);
-      $("#field5").html(result[0].document1Desc);
-      $("#field6").html(result[0].university);
-      $("#field7").html(result[0].license);
-      $("#field8").html(result[0].experienceDesc);
-      $("#field9").html(result[0].years);
-      $("#field10").html(result[0].investigateDesc);
+    getAbogados.append("idCaso",caso.id);
+
+    this.postModel("getAbogados",getAbogados).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+
+      this.abogados = result;
+
+      var buscarAbogado = "";
+      var abogadoCon = "";
+
+      for(var i = 0; i < result.length; i++){
+
+        //  Validar Abogado con licencia o tarjeta
+
+
+        if(result[i].document1 == 1)
+          abogadoCon = "Licencia temporal";
+        else
+          abogadoCon = "Tarjeta profesional";
+
+        buscarAbogado += "<tr>";
+        buscarAbogado += " <td>"+result[i].fullname+"</td>";
+        buscarAbogado += " <td>"+abogadoCon+"</td>";
+        buscarAbogado += " <td>"+result[i].university+"</td>";
+        buscarAbogado += " <td>"+result[i].years+"</td>";
+        buscarAbogado += " <td>$"+parseInt(result[i].price).toLocaleString()+"</td>";
+        buscarAbogado += " <td>";
+        buscarAbogado += "   <button type='button' id='"+i+"' class='btn btn-info verDetalle'>Ver Detalle</button>";
+        buscarAbogado += " </td>";
+        buscarAbogado += "</tr>";
+
+      }
+
+      $("#buscarAbogado tbody").append(buscarAbogado);
+
+      //  Aplicar estilos
+
+      $("td").css("vertical-align","middle");
+      $("button").css("width","100%");
+      $("button").css("margin","1%");
+
+      //  Evento click ver detalle
+
+      $(".verDetalle").click(function(){
+
+        sessionStorage.setItem('abogado',JSON.stringify(_this.abogados[$(this).prop('id')]));
+
+        _this.location('cliente-abogado');
+
+      });
+
+      //  Datatable casos
+
+      $('#buscarAbogado thead tr').clone(true).appendTo( '#buscarAbogado thead' );
+      $('#buscarAbogado thead tr:eq(1) th').each( function (i) {
+          var title = $(this).text();
+
+          if(title != 'Acciones')
+            $(this).html( '<input type="text" />' );
+          else
+          $(this).html( '' );
+   
+          $( 'input', this ).on( 'keyup change', function () {
+              if ( table.column(i).search() !== this.value ) {
+                  table
+                      .column(i)
+                      .search( this.value )
+                      .draw();
+              }
+          } );
+
+      });
+
+      var table = $('#buscarAbogado').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        }
+
+     });
 
     });
 
   }
-
-  /************************************************************************* */
-
-  /**
-   * Aceptar abogado
-   */
-
-   aceptarAbogado(){
-
-    var _this = this;
-    var caso = JSON.parse(sessionStorage.getItem('caso'));
-
-    let procesosUpdate = new FormData();
-
-    procesosUpdate.append("email", caso.abogado);
-    procesosUpdate.append("idCaso", caso.id);
-    procesosUpdate.append("active", "3");
-    
-    _this.postModel("procesosUpdate",procesosUpdate).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
-
-      this.msg = "Se ha notificado al abogado la continuación del proceso";
-          
-      $(".success").show();
-
-      //  Volver a la consulta de casos
-
-      setTimeout(function(){
-
-        _this.location("cliente-buscar-caso");
-        $(".success").hide();
-
-      },3000);
-
-    });
-
-   }
 
 }

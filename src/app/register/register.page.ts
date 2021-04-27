@@ -3,6 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -18,7 +19,8 @@ export class RegisterPage implements OnInit {
   error: any = 0;
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -59,7 +61,10 @@ export class RegisterPage implements OnInit {
 
   registerUser(){
 
+    //  Variables iniciales
+
     this.error = 0;
+    this.spinner.show();
 
     $(".error").hide();
     $(".success").hide();
@@ -97,6 +102,8 @@ export class RegisterPage implements OnInit {
 
         if(result.length > 0){
 
+          this.spinner.hide();
+
           $("input").val("");
             this.msg = "El usuario ya se encuentra registrado";
             $(".warning").show();
@@ -112,6 +119,8 @@ export class RegisterPage implements OnInit {
           createUser.append("profile", $("#perfil").val());
 
           this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+            this.spinner.hide();
 
             $("input").val("");
             this.msg = "Se registro el usuario correctamente";

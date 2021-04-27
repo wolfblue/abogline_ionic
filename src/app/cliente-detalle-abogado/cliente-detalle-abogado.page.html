@@ -4,91 +4,24 @@
 
     <form>
 
-      <div class="informacion success alert-primary" role="alert">
-        {{this.msg}}
-      </div>
-    
-      <div class="informacion warning alert-warning" role="alert">
-        {{this.msg}}
-      </div>
-    
-      <div class="informacion error alert-danger" role="alert">
-        {{this.msg}}
-      </div>
+      <table id="buscarAbogado" class="table table-striped table-bordered">
 
-      <div class="mb-3">
-        <label for="field1" class="form-label">
-          Nombre Completo
-        </label>
-        <p id="field1"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field2" class="form-label">
-          Genero
-        </label>
-        <p id="field2"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field3" class="form-label">
-          Cédula
-        </label>
-        <p id="field3"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field4" class="form-label">
-          Dirección
-        </label>
-        <p id="field4"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field5" class="form-label">
-          Abogado con
-        </label>
-        <p id="field5"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field6" class="form-label">
-          Universidad de egreso en Derecho
-        </label>
-        <p id="field6"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field7" class="form-label">
-          Número de tarjeta o licencia
-        </label>
-        <p id="field7"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field8" class="form-label">
-          Cuenta con experiencia laboral en el ejercicio del Derecho
-        </label>
-        <p id="field8"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field9" class="form-label">
-          Años de experiencia
-        </label>
-        <p id="field9"></p>
-      </div>
-
-      <div class="mb-3">
-        <label for="field10" class="form-label">
-          Cuenta con alguna investigación disciplinaria por parte del Consejo Superior de la Judicatura
-        </label>
-        <p id="field10"></p>
-      </div>
-
-      <div class="mb-3">
-        <button type="button" class="btn btn-primary" (click)="aceptarAbogado()">Aceptar abogado</button>
-      </div>
+        <thead>
+  
+          <tr>
+            <th>Nombre</th>
+            <th>Abogado con</th>
+            <th>Universidad</th>
+            <th>Años de experiencia</th>
+            <th>Costo de consulta</th>
+            <th colspan="2">Acciones</th>
+          </tr>
+  
+        </thead>
+  
+        <tbody></tbody>
+  
+      </table>
 
     </form>
 

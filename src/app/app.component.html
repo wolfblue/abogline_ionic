@@ -59,6 +59,8 @@
 
   </ion-content>
 
+  <ngx-spinner></ngx-spinner>
+
 </ion-app>
 
 <div class="modal modalConfirm" tabindex="-1" role="dialog">
@@ -74,6 +76,20 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary modal-continuar">Continuar</button>
         <button type="button" class="btn btn-secondary modal-cancelar" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modalConfirmNotification" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mnTitle"></h5>
+      </div>
+      <div class="modal-body mnMessage"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary modal-continuar" data-dismiss="modal">Continuar</button>
       </div>
     </div>
   </div>

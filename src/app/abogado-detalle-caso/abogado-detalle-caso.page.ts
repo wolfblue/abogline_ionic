@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -21,7 +22,8 @@ export class AbogadoDetalleCasoPage implements OnInit {
   constructor(
 
     private http:HttpClient,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
 
   ) {}
 
@@ -40,28 +42,6 @@ export class AbogadoDetalleCasoPage implements OnInit {
   location(ruta){
 
     window.location = ruta;
-
-  }
-
-  /************************************************************************************* */
-
-  /**
-   * Modal confirmar
-   */
-
-   modalConfirmar(titulo,body){
-
-    var _this = this;
-
-    $(".modal-title").html(titulo);
-    $(".modal-body").html(body);
-    $(".modalConfirm").modal("toggle");
-    $(".modalContinuar").unbind("click");
-
-    $(".modal-continuar").click(function(){
-      _this.aplicarCaso();
-      $(".modalConfirm").modal("toggle");
-    });
 
   }
 
@@ -144,6 +124,61 @@ export class AbogadoDetalleCasoPage implements OnInit {
         }); 
 
       }
+
+    });
+
+  }
+
+  /************************************************************************************* */
+
+  /**
+   * Modal confirmar
+   */
+
+   modalConfirmar(titulo,body){
+
+    var _this = this;
+
+    $(".modal-title").html(titulo);
+    $(".modal-body").html(body);
+    $(".modalConfirm").modal("toggle");
+    $(".modalContinuar").unbind("click");
+
+    $(".modal-continuar").click(function(){
+      _this.solicitarConsulta();
+      $(".modalConfirm").modal("toggle");
+    });
+
+  }
+
+  /************************************************************************************* */
+
+  /**
+   * Solicitar consulta
+   */
+
+  solicitarConsulta(){
+
+    //  Variables iniciales
+
+    var abogado = JSON.parse(sessionStorage.getItem('abogado'));
+    var caso = JSON.parse(sessionStorage.getItem('caso'));
+
+    this.spinner.show();
+
+    //  Realizar solicitud
+
+    let solicitarConsulta = new FormData();
+
+    solicitarConsulta.append("idCaso",caso.id);
+    solicitarConsulta.append("emailCliente",caso.email);
+    solicitarConsulta.append("emailAbogado",sessionStorage.getItem("email"));
+
+    this.postModel("solicitarConsulta",solicitarConsulta).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+
+      this.location("/");
 
     });
 

@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
 import {AbogadoDetalleCasoPage} from '../abogado-detalle-caso/abogado-detalle-caso.page'
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -24,7 +25,8 @@ export class AbogadoBuscarCasoPage implements OnInit {
 
     private http:HttpClient,
     private router: Router,
-    private AbogadoDetalleCasoPage: AbogadoDetalleCasoPage
+    private AbogadoDetalleCasoPage: AbogadoDetalleCasoPage,
+    private spinner: NgxSpinnerService
 
   ) { 
 
@@ -54,11 +56,20 @@ export class AbogadoBuscarCasoPage implements OnInit {
 
    getCasos(){
      
+    //  Variables iniciales
+
     var _this = this;
+    this.spinner.show();
 
-    let getDataCaso = new FormData();
+    //  Consultar todos los casos que no se han enviado solicitud
 
-    this.postModel("getDataCaso",getDataCaso).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+    let getCasos = new FormData();
+
+    getCasos.append("emailAbogado",sessionStorage.getItem("email"));
+
+    this.postModel("getCasos",getCasos).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
 
       this.casos = result;
 
