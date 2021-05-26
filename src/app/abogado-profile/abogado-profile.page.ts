@@ -378,9 +378,6 @@ export class AbogadoProfilePage implements OnInit {
 
       });
 
-      if(_this.pathFile)
-        contInputEnter +=1;
-
       if(_this.pathPhoto)
         contInputEnter +=1;
 
