@@ -122,6 +122,15 @@ export class ClienteCasoPage implements OnInit {
         if($("#"+field).val() == 2)
           this.casoField2Vali2 = 2;
 
+        //  Activar o desactivar campo cual es tu problema
+
+        if($("#"+field).val() == 1)
+          $(".casoField4").hide();
+        else
+          $(".casoField4").show();
+
+
+
       break;
 
       /*----------------------------------------------------------------*/
@@ -170,6 +179,18 @@ export class ClienteCasoPage implements OnInit {
 
         if($("#"+field).val() == 8)
           this.casoField4Vali2 = 5;
+
+        //  Actualizar selectpicker
+
+        $('#casoField4').hide();
+        $('#casoField4').selectpicker("destroy");
+
+        setTimeout(function(){
+
+          $('#casoField4').selectpicker();
+          $('#casoField4').show();
+
+        },1000);
 
       break;
 
@@ -299,7 +320,21 @@ export class ClienteCasoPage implements OnInit {
       setTimeout(function(){
 
         $("#casoField3").val(caso.field3);
-        $("#casoField4").val(caso.field4);
+
+        //  Aplicar select multiple
+
+        var casoField4Data = caso.field4.split(",");
+
+        for(var i = 0; i<casoField4Data.length; i++){
+
+          casoField4Data[i] = parseInt(casoField4Data[i]);
+
+        }
+
+        $("#casoField4").selectpicker();
+        $("#casoField4").selectpicker('val', casoField4Data);
+        $("#casoField4").selectpicker('refresh');
+
         _this.changeField("casoField4");
 
         setTimeout(function(){

@@ -4,18 +4,6 @@
 
     <form>
 
-      <div class="informacion success alert-primary" role="alert">
-        {{this.msg}}
-      </div>
-  
-      <div class="informacion warning alert-warning" role="alert">
-        {{this.msg}}
-      </div>
-  
-      <div class="informacion error alert-danger" role="alert">
-        {{this.msg}}
-      </div>
-
       <label>
         <p class="label-txt">Usuario (*):</p>
         <input type="text" class="input" id="user">
@@ -58,7 +46,20 @@
         <input type="checkbox" class="input" id="termsCliente"> &nbsp;
         Acepta los términos y condiciones(*):
       </label>
-      <button (click)="modalConfirmar('Registrar usuario','¿ Esta seguro de continuar con la información diligenciada ?')">Registrarse</button>
+      <button (click)="validateRegister()">Registrarse</button>
+
+      <div class="informacion success alert-primary" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion warning alert-warning" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion error alert-danger" role="alert">
+        {{this.msg}}
+      </div>
+
     </form>
 
   </div>

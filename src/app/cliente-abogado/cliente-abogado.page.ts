@@ -18,6 +18,7 @@ export class ClienteAbogadoPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
   msg:any = "";
   error: any = 0;
+  photo:any = "";
 
   constructor(
 
@@ -58,6 +59,7 @@ export class ClienteAbogadoPage implements OnInit {
     $("#university").html(abogado.university);
     $("#years").html(abogado.years);
     $("#price").html("$" + parseInt(abogado.price).toLocaleString());
+    this.photo = `${environment.backend}`+abogado.photo;
 
   }
 

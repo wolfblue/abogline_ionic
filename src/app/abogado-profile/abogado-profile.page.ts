@@ -3,6 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import { NgxSpinnerService  } from "ngx-spinner";
 
 declare var $;
 
@@ -18,11 +19,15 @@ export class AbogadoProfilePage implements OnInit {
   error: any = 0;
   
   tmpFile:any = "";
+  tmpFilePhoto:any = "";
   tmpFormat:any = "";
+  tmpFormatPhoto:any = "";
   pathFile:any = "";
+  pathPhoto:any = "";
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private spinner: NgxSpinnerService
   ) {
 
     this.getDataAbogado();
@@ -30,7 +35,6 @@ export class AbogadoProfilePage implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   postModel(Metodo: string, data: FormData) {
@@ -51,6 +55,45 @@ export class AbogadoProfilePage implements OnInit {
     $(".warning").hide();
 
     switch(field){
+
+      case "photo":
+
+        var ext = $("#photo").val().split('.').pop().toLowerCase();
+
+        this.tmpFormatPhoto = ext;
+
+        console.log(ext);
+  
+        if($.inArray(ext, ['png']) == -1) {
+          
+          this.msg = "Solo se permiten cargar formatos (.png)";
+          $(".error").show();
+  
+        }else{
+  
+          let reader = new FileReader();
+  
+          if(event.target.files && event.target.files.length) {
+  
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+  
+            reader.onloadend = function () {
+              
+              _this.tmpFilePhoto = reader.result;
+
+              _this.pathPhoto = "";
+  
+              if(confirm("Desea visualizar la foto de perfil"))
+                window.open(URL.createObjectURL(event.target.files[0]));
+  
+            }
+  
+          }
+  
+        }
+
+      break;
 
       case "cv":
 
@@ -104,7 +147,7 @@ export class AbogadoProfilePage implements OnInit {
 
       case "pleasures":
 
-        if($("#pleasures").val() == "9")
+        if($("#pleasures").val().includes("9"))
           $("#pleasures_other").prop("disabled",false);
         else{
           $("#pleasures_other").prop("disabled",true);
@@ -115,6 +158,11 @@ export class AbogadoProfilePage implements OnInit {
 
     }
 
+    console.log("ingreso");
+
+    //  Actualizar estado
+    this.porcentajeEstado();
+
   }
 
   /**
@@ -122,6 +170,8 @@ export class AbogadoProfilePage implements OnInit {
    */
 
    register(){
+
+    this.spinner.show();
 
     this.error = 0;
 
@@ -141,9 +191,22 @@ export class AbogadoProfilePage implements OnInit {
       !$("#experience").val() ||
       !$("#investigate").val() ||
       !$("#pleasures").val() ||
-      !$("#price").val() ||
-      !$("#cv").val()
+      !$("#price").val()
     ){
+
+      $("input").each(function(){
+
+        if(!$(this).val())
+          console.log($(this).prop("id")+": Sin valor");
+
+      });
+
+      $("select").each(function(){
+
+        if(!$(this).val())
+          console.log($(this).prop("id")+": Sin valor");
+
+      });
 
       this.error = 1;
       this.msg = "Faltan campos por diligenciar";
@@ -172,8 +235,12 @@ export class AbogadoProfilePage implements OnInit {
       abogadosUpdate.append("price", $("#price").val());
       abogadosUpdate.append("cv", this.tmpFile);
       abogadosUpdate.append("format", this.tmpFormat);
+      abogadosUpdate.append("photo", this.tmpFilePhoto);
+      abogadosUpdate.append("formatPhoto", this.tmpFormatPhoto);
 
       this.postModel("abogadosUpdate",abogadosUpdate).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+        this.spinner.hide();
 
         this.msg = "Se actualizó la información correctamente";
         $(".success").show();
@@ -184,8 +251,12 @@ export class AbogadoProfilePage implements OnInit {
 
     //  Mostrar errores
 
-    if(this.error == 1)
+    if(this.error == 1){
+
+      this.spinner.hide();
       $(".error").show();
+
+    }
 
    }
 
@@ -194,6 +265,8 @@ export class AbogadoProfilePage implements OnInit {
     */
 
     getDataAbogado(){
+
+      this.spinner.show();
 
       var _this = this;
 
@@ -214,6 +287,8 @@ export class AbogadoProfilePage implements OnInit {
         
         _this.postModel("getDataAbogados",getDataAbogados).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
+          //console.log(result);
+
           if(result.length > 0){
 
             //  Asignar valores
@@ -228,11 +303,11 @@ export class AbogadoProfilePage implements OnInit {
             $("#experience").val(result[0].experience);
             $("#years").val(result[0].years);
             $("#investigate").val(result[0].investigate);
-            $("#pleasures").val(result[0].pleasures);
             $("#pleasures_other").val(result[0].pleasures_other);
             $("#price").val(result[0].price);
             
             _this.pathFile = `${environment.backend}`+result[0].cv;
+            _this.pathPhoto = `${environment.backend}`+result[0].photo;
 
             //  Desbloquear campos
 
@@ -242,47 +317,86 @@ export class AbogadoProfilePage implements OnInit {
             if(result[0].pleasures == "9")
               $("#pleasures_other").prop("disabled",false);
 
+            //  Aplicar select multiple
+
+            var pleasuresData = result[0].pleasures.split(",");
+
+            for(var i = 0; i<pleasuresData.length; i++){
+
+              pleasuresData[i] = parseInt(pleasuresData[i]);
+
+            }
+
+            $("#pleasures").selectpicker();
+            $("#pleasures").selectpicker('val', pleasuresData);
+            $("#pleasures").selectpicker('refresh');
+
+            _this.spinner.hide();
+
+            _this.porcentajeEstado();
+
+          }else{
+            _this.spinner.hide();
           }
 
         });
 
-        //  Porcentaje de registro
-
-        setTimeout(function(){
-
-          var contInput = 0;
-          var contInputEnter = 0;
-
-          $("#formAbogado input").each(function(){
-
-            contInput +=1;
-
-            if($(this).val())
-              contInputEnter +=1;
-
-          });
-
-          $("#formAbogado select").each(function(){
-
-            contInput +=1;
-
-            if($(this).val())
-              contInputEnter +=1;
-
-          });
-
-          if(_this.pathFile)
-            contInputEnter +=1;
-
-          var percent = (100/contInput*contInputEnter).toFixed(0);
-
-          $('.progress-bar').css('width', percent+'%');
-          $('.progress-bar').attr('aria-valuenow', percent);
-          $('.progress-bar').text(percent+'%');
-
-        },2000);
-
       },500);
+
+    }
+
+    /********************************************************************** */
+
+    /**
+     * Porcentaje de registro
+     */
+
+    porcentajeEstado(){
+
+      var _this = this;
+
+      //  Porcentaje de registro
+
+      var contInput = 0;
+      var contInputEnter = 0;
+
+      $("#formAbogado input").each(function(){
+
+        contInput +=1;
+
+        if($(this).val())
+          contInputEnter +=1;
+
+      });
+
+      $("#formAbogado select").each(function(){
+
+        contInput +=1;
+
+        if($(this).val())
+          contInputEnter +=1;
+
+      });
+
+      if(_this.pathFile)
+        contInputEnter +=1;
+
+      if(_this.pathPhoto)
+        contInputEnter +=1;
+
+      //  Cuantos años
+      contInputEnter  +=1;
+
+      //  Otra rama
+      contInputEnter  +=1;
+
+      console.log("Porcentaje de estado: " + contInput + " | " + contInputEnter);
+
+      var percent = (100/contInput*contInputEnter).toFixed(0);
+
+      $('.progress-bar').css('width', percent+'%');
+      $('.progress-bar').attr('aria-valuenow', percent);
+      $('.progress-bar').text(percent+'%');
 
     }
 

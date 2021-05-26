@@ -40,6 +40,19 @@ export class ClienteProfilePage implements OnInit {
   /*********************************************************************************** */
 
   /**
+   * Change de los campos
+   */
+
+   changeField(field, event){
+
+    //  Actualizar porcentaje de estado
+    this.porcentajeEstado();
+
+   }
+
+  /*********************************************************************************** */
+
+  /**
     * Obtener los datos del abogado
     */
 
@@ -75,38 +88,12 @@ export class ClienteProfilePage implements OnInit {
           $("#emailCliente").val(result[0].email2);
           $("#phone").val(result[0].phone);
 
+          //  Actualizar porcentaje de estado
+          _this.porcentajeEstado();
+
         }
 
       });
-
-      setTimeout(function(){
-
-        var contInput = 0;
-        var contInputEnter = 1;
-
-        $("#formCliente input").each(function(){
-          contInput +=1;
-
-          if($(this).val())
-            contInputEnter +=1;
-
-        });
-
-        $("#formCliente select").each(function(){
-          contInput +=1;
-
-          if($(this).val())
-            contInputEnter +=1;
-
-        });
-
-        var percent = (100/contInput*contInputEnter).toFixed(0);
-
-        $('.progress-bar').css('width', percent+'%');
-        $('.progress-bar').attr('aria-valuenow', percent);
-        $('.progress-bar').text(percent+'%');
-
-      },2000);
 
     },500);
 
@@ -176,5 +163,52 @@ export class ClienteProfilePage implements OnInit {
       $(".error").show();
 
    }
+
+   /********************************************************************** */
+
+    /**
+     * Porcentaje de registro
+     */
+
+     porcentajeEstado(){
+
+      var _this = this;
+
+      //  Porcentaje de registro
+
+      var contInput = 0;
+      var contInputEnter = 1;
+
+      $("#formCliente input").each(function(){
+
+        contInput +=1;
+
+        if($(this).val() && $(this).prop("id") != "passwordCliente"){
+          contInputEnter +=1;
+          //console.log($(this).prop("id"));
+        }
+
+      });
+
+      $("#formCliente select").each(function(){
+
+        contInput +=1;
+
+        if($(this).val()){
+          contInputEnter +=1;
+          //console.log($(this).prop("id"));
+        }
+
+      });
+
+      //console.log("Porcentaje de estado:" + contInput + "|" + contInputEnter);
+
+      var percent = (100/contInput*contInputEnter).toFixed(0);
+
+      $('.progress-bar').css('width', percent+'%');
+      $('.progress-bar').attr('aria-valuenow', percent);
+      $('.progress-bar').text(percent+'%');
+
+    }
 
 }

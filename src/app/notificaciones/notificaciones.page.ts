@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Router} from '@angular/router';
 import { NgxSpinnerService  } from "ngx-spinner";
+import {AppComponent} from '../app.component';
 
 declare var $;
 
@@ -24,7 +25,8 @@ export class NotificacionesPage implements OnInit {
 
     private http:HttpClient,
     private router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private appComponent: AppComponent
 
   ) { 
 
@@ -145,7 +147,13 @@ export class NotificacionesPage implements OnInit {
 
         notificacionLeido.append("id", $(this).find(".id").val());
 
-        _this.postModel("notificacionLeido",notificacionLeido).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+        _this.postModel("notificacionLeido",notificacionLeido).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+          //  Actualizar notificaciones en el header
+
+          _this.appComponent.getNotificaciones();
+
+        });
 
       });
 

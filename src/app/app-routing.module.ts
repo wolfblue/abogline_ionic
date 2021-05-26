@@ -62,6 +62,14 @@ const routes: Routes = [
   {
     path: 'cliente-abogado',
     loadChildren: () => import('./cliente-abogado/cliente-abogado.module').then( m => m.ClienteAbogadoPageModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
+  },
+  {
+    path: 'abogado-caso-proceso',
+    loadChildren: () => import('./abogado-caso-proceso/abogado-caso-proceso.module').then( m => m.AbogadoCasoProcesoPageModule)
   }
 ];
 

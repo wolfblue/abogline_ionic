@@ -66,37 +66,46 @@
 
       <!--  Campo 4 -->
       
-      <label>
-        <p class="label-txt">¿Cuál es tu problema? (*):</p>
-        <select class="input" id="casoField4" (change)="changeField('casoField4')" multiple>
-          <option value="">- Seleccionar -</option>
-          <option value="1" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Acoso laboral</option>
-          <option value="2" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Alimentos a hijos o conyugues</option>
-          <option value="3" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Capitulaciones</option>
-          <option value="4" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Con tu EPS</option>
-          <option value="5" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Contratos</option>
-          <option value="6" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 4">Declaración de renta</option>
-          <option value="7" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Deterioro de tu salud a causa de la responsabilidad médica</option>
-          <option value="8" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Despido sin justa causa</option>
-          <option value="9" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Dineros adeudados</option>
-          <option value="10" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Divorcios</option>
-          <option value="11" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Emancipación</option>
-          <option value="12" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Herencias</option>
-          <option value="13" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Inpugnación de paternidad</option>
-          <option value="14" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Matrimonio</option>
-          <option value="15" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Omisión médica</option>
-          <option value="16" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Prestaciones sociales (Prima, vacaciones, cesantías, etc)</option>
-          <option value="17" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 4">Problemas de deudas impuestos</option>
-          <option value="18" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Saldos y/o pagos adeudados por el empleador</option>
-          <option value="19" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Seguridad social (Salud, Pensión ARL)</option>
-          <option value="20" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Tus bienes</option>
-          <option value="21" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Violencia intrafamiliar</option>
-          <option value="22" *ngIf="casoField2Vali1 == 1">Otro</option>
-        </select>
-        <div class="line-box">
-          <div class="line"></div>
+      <div class="row">
+        <label class="casoField4">
+          <p class="label-txt">¿Cuál es tu problema? (*):</p>
+        </label>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="form-group">
+            <select class="selectpicker show-menu-arrow" data-max-options-text="Máximo 2 registros" data-none-selected-text="Seleccionar" data-width="fit" data-size="5"  multiple data-max-options="2" multiple data-live-search="false" id="casoField4" (change)="changeField('casoField4')">
+              <option value="1" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Acoso laboral</option>
+              <option value="2" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Alimentos a hijos o conyugues</option>
+              <option value="3" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Capitulaciones</option>
+              <option value="4" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Con tu EPS</option>
+              <option value="5" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Contratos</option>
+              <option value="6" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 4">Declaración de renta</option>
+              <option value="7" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Deterioro de tu salud a causa de la responsabilidad médica</option>
+              <option value="8" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Despido sin justa causa</option>
+              <option value="9" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Dineros adeudados</option>
+              <option value="10" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Divorcios</option>
+              <option value="11" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Emancipación</option>
+              <option value="12" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Herencias</option>
+              <option value="13" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Inpugnación de paternidad</option>
+              <option value="14" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Matrimonio</option>
+              <option value="15" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 5">Omisión médica</option>
+              <option value="16" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Prestaciones sociales (Prima, vacaciones, cesantías, etc)</option>
+              <option value="17" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 4">Problemas de deudas impuestos</option>
+              <option value="18" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 2">Saldos y/o pagos adeudados por el empleador</option>
+              <option value="19" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Seguridad social (Salud, Pensión ARL)</option>
+              <option value="20" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 3">Tus bienes</option>
+              <option value="21" *ngIf="casoField4Vali1 == 1 && casoField4Vali2 == 1">Violencia intrafamiliar</option>
+              <option value="22" *ngIf="casoField2Vali1 == 1">Otro</option>
+            </select>
+          </div>
         </div>
-      </label>
+      </div>
+
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
 
       <!--  Campo 5 -->
 

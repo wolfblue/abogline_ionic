@@ -70,6 +70,8 @@ export class ClienteBuscarCasoPage implements OnInit {
 
     this.postModel("getDataCaso",getDataCaso).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
+      console.log(result);
+
       this.spinner.hide();
 
       this.casos = result;
@@ -84,6 +86,9 @@ export class ClienteBuscarCasoPage implements OnInit {
         buscarCaso += " <td>"+result[i].field2Desc+"</td>";
         buscarCaso += " <td>"+result[i].field7Desc+"</td>";
         buscarCaso += " <td>";
+        buscarCaso += "   <input type='hidden' value='" + result[i].abogado_fullname + "' id='abogado'>";
+        buscarCaso += "   <input type='hidden' value='" + result[i].abogado + "' id='abogado_email'>";
+        buscarCaso += "   <input type='hidden' value='" + result[i].id + "' id='id_caso'>";
         buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-info verDetalle'>Ver Detalle</button>";
 
         //  Permitir editar el caso cuando no se ha iniciado un proceso
@@ -94,7 +99,12 @@ export class ClienteBuscarCasoPage implements OnInit {
         //  Permitir consultar abogado cuando no se ha realizado merge con alguno
 
         if(!result[i].abogado)
-          buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-success verAbogado'>Consultar Abogado</button>";
+          buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-success verAbogado'>Abogados</button>";
+
+        //  Permitir agendar cuando ya hay un merge entre el cliente y el abogado
+
+        if(result[i].abogado)
+          buscarCaso += "   <button type='button' id='"+i+"' class='btn btn-success agendar'>Agendar reunión</button>";
 
         buscarCaso += " </td>";
         buscarCaso += "</tr>";
@@ -136,6 +146,54 @@ export class ClienteBuscarCasoPage implements OnInit {
         sessionStorage.setItem('caso',JSON.stringify(_this.casos[$(this).prop('id')]));
 
         _this.location('cliente-detalle-abogado');
+
+      });
+
+      //  Evento agendar reunión
+
+      $(".agendar").click(function(){
+
+        $(".modalAgendar").modal("show");
+        $("#agendarAbogado").val($(this).parent().find("#abogado").val());
+        $("#agendarAbogadoEmail").val($(this).parent().find("#abogado_email").val());
+        $("#agendarIdCaso").val($(this).parent().find("#id_caso").val());
+        $("#agendarFecha").prop("min",(new Date()).toISOString().split('.')[0]);
+
+        $(".eventoAgendar").unbind("click");
+        $(".eventoAgendar").click(function(){
+
+          _this.spinner.show();
+          $(".modalAgendar").modal("hide");
+
+          if(!$("#agendarFecha").val()){
+
+            $("#agendarFecha").css("border","1px solid red");
+
+          }else{
+
+            let agendarReunion = new FormData();
+
+            agendarReunion.append("email_cliente",sessionStorage.getItem("email"));
+            agendarReunion.append("email_abogado",$("#abogado_email").val());
+            agendarReunion.append("date_meeting",$("#agendarFecha").val());
+            agendarReunion.append("id_caso",$("#agendarIdCaso").val());
+
+            _this.postModel("agendarReunion",agendarReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              _this.spinner.hide();
+
+              _this.msg = "Se envio notificación al abogado para la asistencia de la reunión el día " + $("#agendarFecha").val() + ", le informaremos cuando el abogado acepte la reunión";
+              $(".success").show();
+
+              setTimeout(function(){
+                _this.location("cliente-buscar-caso");
+              },10000);
+
+            });
+
+          }
+
+        });
 
       });
 

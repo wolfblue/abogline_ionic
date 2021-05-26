@@ -254,7 +254,6 @@ td{
 
 #container {
   text-align: center;
-  padding-top: 10% !important;
   padding-bottom: 8%;
   left: 0;
   right: 0;
@@ -310,4 +309,8 @@ form{
 
 .loading-text{
   text-align: center;
+}
+
+.hide{
+  display:none;
 }

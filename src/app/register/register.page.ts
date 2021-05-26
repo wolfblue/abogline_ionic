@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { count, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { NgxSpinnerService  } from "ngx-spinner";
+import {AppComponent} from '../app.component';
+import {Router} from '@angular/router';
 
 declare var $;
 
@@ -17,10 +19,13 @@ export class RegisterPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
   msg:any = "";
   error: any = 0;
+  errorRegister:any = false;
 
   constructor(
     private http:HttpClient,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private appComponent: AppComponent,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -47,7 +52,7 @@ export class RegisterPage implements OnInit {
     $(".modalContinuar").unbind("click");
 
     $(".modal-continuar").click(function(){
-      _this.registerUser();
+      _this.registerUser(true);
       $(".modalConfirm").modal("toggle");
     });
 
@@ -59,7 +64,9 @@ export class RegisterPage implements OnInit {
    * Registar usuario
    */
 
-  registerUser(){
+  registerUser(confirmar){
+
+    var _this = this;
 
     //  Variables iniciales
 
@@ -88,6 +95,17 @@ export class RegisterPage implements OnInit {
 
     }
 
+    //  Verificar si el correo electrónico es válido
+
+    var emailData = $("#email").val().split("@");
+
+    if(this.error == 0 && emailData.length == 1){
+
+      this.error = 1;
+      this.msg = "El correo electrónico no es válido";
+
+    }
+
     //  Verificar si el usuario existe
 
     if(this.error == 0){
@@ -108,25 +126,50 @@ export class RegisterPage implements OnInit {
             this.msg = "El usuario ya se encuentra registrado";
             $(".warning").show();
 
+          this.errorRegister = true;
+
         }else{
 
-          let createUser = new FormData();
+          //  Verificar si ya confirmo el usuario
 
-          createUser.append("active", "1");
-          createUser.append("user", $("#user").val());
-          createUser.append("email", $("#email").val());
-          createUser.append("password", $("#password").val());
-          createUser.append("profile", $("#perfil").val());
+          if(confirmar == true){
 
-          this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+            let createUser = new FormData();
 
+            createUser.append("active", "1");
+            createUser.append("user", $("#user").val());
+            createUser.append("email", $("#email").val());
+            createUser.append("password", $("#password").val());
+            createUser.append("profile", $("#perfil").val());
+
+            this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+              this.msg = "Se registro el usuario correctamente";
+              $(".success").show();
+
+              sessionStorage.setItem("email", $("#email").val());
+              sessionStorage.setItem("user", $("#user").val());
+              sessionStorage.setItem("profile", $("#perfil").val());
+
+              setTimeout(function(){
+    
+                _this.spinner.hide();
+                $(".success").hide();
+                $("input").val("");
+
+                _this.appComponent.validateAuth();
+                _this.router.navigateByUrl('home');
+    
+              },2000);
+
+            });
+
+          }else{
+
+            this.errorRegister = false;
             this.spinner.hide();
 
-            $("input").val("");
-            this.msg = "Se registro el usuario correctamente";
-            $(".success").show();
-
-          });
+          }
 
         }
 
@@ -136,9 +179,29 @@ export class RegisterPage implements OnInit {
 
     //  Mostrar errores
 
-    if(this.error == 1)
-      $(".error").show();
+    if(this.error == 1){
 
-  } 
+      $(".error").show();
+      this.errorRegister = true;
+      this.spinner.hide();
+
+    }
+
+  }
+
+  /************************************************************************************* */
+
+  /**
+   * Validar campos antes del registro
+   */
+
+  validateRegister(){
+
+    this.registerUser(false);
+
+    if(this.errorRegister == false)
+      this.modalConfirmar('Registrar usuario','¿ Esta seguro de continuar con la información diligenciada ?');
+
+  }
 
 }

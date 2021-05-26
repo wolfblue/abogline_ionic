@@ -8,21 +8,21 @@
       </div>
       <label>
         <p class="label-txt">Nombres (*):</p>
-        <input type="text" class="input" id="nameCliente">
+        <input type="text" class="input" id="nameCliente" (change)="changeField('nameCliente',$event)">
         <div class="line-box">
           <div class="line"></div>
         </div>
       </label>
       <label>
         <p class="label-txt">Apellidos (*):</p>
-        <input type="text" class="input" id="lastnameCliente">
+        <input type="text" class="input" id="lastnameCliente" (change)="changeField('lastnameCliente',$event)">
         <div class="line-box">
           <div class="line"></div>
         </div>
       </label>
       <label>
         <p class="label-txt">Tipo de identificación (*):</p>
-        <select class="input" id="idTypeCliente">
+        <select class="input" id="idTypeCliente" (change)="changeField('idTypeCliente',$event)">
           <option value="1">CC</option>
           <option value="2">CE</option>
           <option value="3">Pasaporte</option>
@@ -33,14 +33,14 @@
       </label>
       <label>
         <p class="label-txt">Identificación (*):</p>
-        <input type="number" class="input" id="identificationCliente">
+        <input type="number" class="input" id="identificationCliente" (change)="changeField('identificationCliente',$event)">
         <div class="line-box">
           <div class="line"></div>
         </div>
       </label>
       <label>
         <p class="label-txt">Correo eléctronico(*):</p>
-        <input type="email" class="input" id="emailCliente">
+        <input type="email" class="input" id="emailCliente" (change)="changeField('emailCliente',$event)">
         <div class="line-box">
           <div class="line"></div>
         </div>
@@ -61,7 +61,7 @@
       </label>
       <label>
         <p class="label-txt">Teléfono de contacto(*):</p>
-        <input type="text" class="input" id="phone">
+        <input type="text" class="input" id="phone" (change)="changeField('phone',$event)">
         <div class="line-box">
           <div class="line"></div>
         </div>
