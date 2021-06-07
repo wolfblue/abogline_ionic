@@ -78,7 +78,7 @@ export class ClienteCasoPage implements OnInit {
     $(".modalContinuar").unbind();
 
     $(".modal-continuar").click(function(){
-      _this.casoRegister();
+      _this.confirmarRegistro();
       $(".modalConfirm").modal("toggle");
     });
 
@@ -127,7 +127,7 @@ export class ClienteCasoPage implements OnInit {
         if($("#"+field).val() == 1)
           $(".casoField4").hide();
         else
-          $(".casoField4").show();
+          $(".casoField4").show(); 
 
 
 
@@ -192,6 +192,17 @@ export class ClienteCasoPage implements OnInit {
 
         },1000);
 
+        //  Activar o desactivar campo cual es tu problema
+
+        if($("#"+field).val() == 3 || $("#"+field).val() == 11)
+          $(".casoField4").hide();
+        else{
+
+          if($("#casoField1").val() != 1)
+            $(".casoField4").show(); 
+
+        }
+
       break;
 
       /*----------------------------------------------------------------*/
@@ -242,9 +253,9 @@ export class ClienteCasoPage implements OnInit {
     $(".success").hide();
     $(".warning").hide();
 
-    //  Calidar campos obligatorios
+    //  Validar campos obligatorios
 
-    if(!$("#casoField1").val() || !$("#casoField2").val() || $("#casoField4").val().length == 0 || $("#casoField6").val().length == 0 || !$("#casoField7").val()){
+    if(!$("#casoField1").val() || !$("#casoField2").val() || $("#casoField6").val().length == 0 || !$("#casoField7").val()){
 
       this.error = 1;
       this.msg = "Faltan campos que son obligatorios por diligenciar";
@@ -253,41 +264,21 @@ export class ClienteCasoPage implements OnInit {
 
     //  Registrar caso
 
-    if(this.error == 0){
+    if(this.error == 0){ //  Sin errores
 
-      let casosUpdate = new FormData();
-
-      casosUpdate.append("id", this.idCaso);
-      casosUpdate.append("email", sessionStorage.getItem('email'));
-      casosUpdate.append("field1", $("#casoField1").val());
-      casosUpdate.append("field2", $("#casoField2").val());
-      casosUpdate.append("field3", $("#casoField3").val());
-      casosUpdate.append("field4", $("#casoField4").val().toString());
-      casosUpdate.append("field5", $("#casoField5").val());
-      casosUpdate.append("field6", $("#casoField6").val());
-      casosUpdate.append("field7", $("#casoField7").val());
-
-      this.postModel("casosUpdate",casosUpdate).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
-
-        this.msg = "Se registró el caso correctamente";
-        $(".success").show();
-
-        setTimeout(function(){
-
-          $(".success").hide();
-
-          _this.location('home'); 
-
-        },3000);
-
-      });
+      _this.spinner.hide();
+      _this.modalConfirmar('Registrar caso','¿ Esta seguro de continuar con la información diligenciada ?');
 
     }
 
     //  Mostrar errores
 
-    if(this.error == 1)
+    if(this.error == 1){
+
       $(".error").show();
+      this.spinner.hide();
+
+    }
 
   }
 
@@ -321,27 +312,31 @@ export class ClienteCasoPage implements OnInit {
 
         $("#casoField3").val(caso.field3);
 
-        //  Aplicar select multiple
+        //  Aplicar select multiple field4
 
-        var casoField4Data = caso.field4.split(",");
+        if(caso.field4){  //  Tiene valor asignado el field4
 
-        for(var i = 0; i<casoField4Data.length; i++){
+          var casoField4Data = caso.field4.split(",");
 
-          casoField4Data[i] = parseInt(casoField4Data[i]);
+          for(var i = 0; i<casoField4Data.length; i++){
 
-        }
+            casoField4Data[i] = parseInt(casoField4Data[i]);
 
-        $("#casoField4").selectpicker();
-        $("#casoField4").selectpicker('val', casoField4Data);
-        $("#casoField4").selectpicker('refresh');
+          }
 
-        _this.changeField("casoField4");
+          $("#casoField4").selectpicker();
+          $("#casoField4").selectpicker('val', casoField4Data);
+          $("#casoField4").selectpicker('refresh');
 
-        setTimeout(function(){
+          _this.changeField("casoField4");
 
-          $("#casoField5").val(caso.field5);
+          setTimeout(function(){
 
-        },800);
+            $("#casoField5").val(caso.field5);
+
+          },800);
+
+        }  
 
       },800);
 
@@ -349,6 +344,52 @@ export class ClienteCasoPage implements OnInit {
 
     $("#casoField6").html(caso.field6);
     $("#casoField7").val(caso.field7);
+
+  }
+
+  /*********************************************************************************** */
+
+  /**
+   * Confirmar registro del caso
+   */
+
+  confirmarRegistro(){
+
+    this.spinner.show();
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Registrar caso
+
+    let casosUpdate = new FormData();
+
+      casosUpdate.append("id", this.idCaso);
+      casosUpdate.append("email", sessionStorage.getItem('email'));
+      casosUpdate.append("field1", $("#casoField1").val());
+      casosUpdate.append("field2", $("#casoField2").val());
+      casosUpdate.append("field3", $("#casoField3").val());
+      casosUpdate.append("field4", $("#casoField4").val().toString());
+      casosUpdate.append("field5", $("#casoField5").val());
+      casosUpdate.append("field6", $("#casoField6").val());
+      casosUpdate.append("field7", $("#casoField7").val());
+
+      this.postModel("casosUpdate",casosUpdate).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+        this.spinner.hide();
+
+        this.msg = "Se registró el caso correctamente";
+        $(".success").show();
+
+        setTimeout(function(){
+
+          $(".success").hide();
+
+          _this.location('home'); 
+
+        },3000);
+
+      });
 
   }
 

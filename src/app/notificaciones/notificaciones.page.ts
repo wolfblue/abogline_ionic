@@ -109,6 +109,7 @@ export class NotificacionesPage implements OnInit {
         buscarNotificaciones += "   <input class='id' type='hidden' value='" + result[i].id + "' />";
         buscarNotificaciones += "   <input class='tipo' type='hidden' value='" + result[i].tipo + "' />";
         buscarNotificaciones += "   <input class='message' type='hidden' value='" + result[i].message + "' />";
+        buscarNotificaciones += "   <input class='idCaso' type='hidden' value='" + result[i].id_caso + "' />";
         buscarNotificaciones +=     result[i].tipo;
         buscarNotificaciones += " </td>";
         buscarNotificaciones += " <td>"+result[i].created_at+"</td>";
@@ -138,8 +139,45 @@ export class NotificacionesPage implements OnInit {
 
         $(".modalConfirmNotification").modal("show");
         $(".mnTitle").html($(this).find(".tipo").val());
-        $(".mnMessage").html($(this).find(".message").val());
+
+        var message = $(this).find(".message").val();
+
+        //  Agregar botón detalle del caso cuando aplique
+
+        if($(this).find(".idCaso").val()){
+
+          message += "<br><br>";
+          message += "<button type'button' data-dismiss='modal' class='btn btn-primary irCaso' id='"+$(this).find(".idCaso").val()+"'>Ir al caso</button>";
+
+        }
+
+        $(".mnMessage").html(message);
         $(this).css("background","#ffffff");
+
+        //  Agregar evento para ir al caso
+
+        $(".irCaso").unbind();
+
+        $(".irCaso").click(function(){
+
+          _this.spinner.show();
+
+          //  Consultar datos del caso
+
+          let getDataCasoEspecifico = new FormData();
+
+          getDataCasoEspecifico.append("idCaso", $(this).prop("id"));
+
+          _this.postModel("getDataCasoEspecifico",getDataCasoEspecifico).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            _this.spinner.hide();
+
+            sessionStorage.setItem("caso",JSON.stringify(result[0]));
+            _this.location("/abogado-detalle-caso");
+
+          });
+
+        });
 
         //  Actualizar notificación como leído
 

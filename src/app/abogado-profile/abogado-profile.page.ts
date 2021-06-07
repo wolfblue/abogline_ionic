@@ -30,7 +30,8 @@ export class AbogadoProfilePage implements OnInit {
     private spinner: NgxSpinnerService
   ) {
 
-    this.getDataAbogado();
+    if(sessionStorage.getItem("email"))
+      this.getDataAbogado();
 
   }
 
@@ -327,16 +328,28 @@ export class AbogadoProfilePage implements OnInit {
 
             }
 
-            $("#pleasures").selectpicker();
-            $("#pleasures").selectpicker('val', pleasuresData);
-            $("#pleasures").selectpicker('refresh');
+            setTimeout(function(){
+
+              $("#pleasures").selectpicker();
+              $("#pleasures").selectpicker('val', pleasuresData);
+              $("#pleasures").selectpicker('refresh');
+
+            },1000);
 
             _this.spinner.hide();
 
             _this.porcentajeEstado();
 
           }else{
+
+            setTimeout(function(){
+
+              $("#pleasures").selectpicker();
+
+            },1000);
+
             _this.spinner.hide();
+
           }
 
         });
@@ -386,8 +399,6 @@ export class AbogadoProfilePage implements OnInit {
 
       //  Otra rama
       contInputEnter  +=1;
-
-      console.log("Porcentaje de estado: " + contInput + " | " + contInputEnter);
 
       var percent = (100/contInput*contInputEnter).toFixed(0);
 

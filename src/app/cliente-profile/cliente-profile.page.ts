@@ -25,7 +25,9 @@ export class ClienteProfilePage implements OnInit {
   ) { 
 
     //  Obtener los datos del abogado
-    this.getDataCliente();
+
+    if(sessionStorage.getItem("email")) //  Auntenticado
+      this.getDataCliente();
 
   }
 

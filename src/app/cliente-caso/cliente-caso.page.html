@@ -4,18 +4,6 @@
 
     <form>
 
-      <div class="informacion success alert-primary" role="alert">
-        {{this.msg}}
-      </div>
-  
-      <div class="informacion warning alert-warning" role="alert">
-        {{this.msg}}
-      </div>
-  
-      <div class="informacion error alert-danger" role="alert">
-        {{this.msg}}
-      </div>
-
       <!--  Campo 1 -->
 
       <label>
@@ -66,13 +54,13 @@
 
       <!--  Campo 4 -->
       
-      <div class="row">
-        <label class="casoField4">
+      <div class="row casoField4">
+        <label>
           <p class="label-txt">¿Cuál es tu problema? (*):</p>
         </label>
       </div>
 
-      <div class="row">
+      <div class="row casoField4">
         <div>
           <div class="form-group">
             <select class="selectpicker show-menu-arrow" data-max-options-text="Máximo 2 registros" data-none-selected-text="Seleccionar" data-width="fit" data-size="5"  multiple data-max-options="2" multiple data-live-search="false" id="casoField4" (change)="changeField('casoField4')">
@@ -103,7 +91,7 @@
         </div>
       </div>
 
-      <div class="line-box">
+      <div class="line-box casoField4">
         <div class="line"></div>
       </div>
 
@@ -141,7 +129,19 @@
         </div>
       </label>
       
-      <button (click)="modalConfirmar('Registrar caso','¿ Esta seguro de continuar con la información diligenciada ?')">Registrar Caso</button>
+      <button class="registrarCaso" (click)="casoRegister()">Registrar Caso</button>
+
+      <div class="informacion success alert-primary" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion warning alert-warning" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion error alert-danger" role="alert">
+        {{this.msg}}
+      </div>
 
     </form>
 

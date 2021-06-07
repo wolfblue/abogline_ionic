@@ -118,7 +118,7 @@ export class ClienteDetalleAbogadoPage implements OnInit {
 
       //  Datatable casos
 
-      $('#buscarAbogado thead tr').clone(true).appendTo( '#buscarAbogado thead' );
+      $('#buscarAbogado thead tr').clone(true).appendTo( '#buscarAbogado thead' ); 
       $('#buscarAbogado thead tr:eq(1) th').each( function (i) {
           var title = $(this).text();
 

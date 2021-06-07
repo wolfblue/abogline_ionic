@@ -19,7 +19,7 @@ export class RegisterPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
   msg:any = "";
   error: any = 0;
-  errorRegister:any = false;
+  proceso = false;
 
   constructor(
     private http:HttpClient,
@@ -52,7 +52,7 @@ export class RegisterPage implements OnInit {
     $(".modalContinuar").unbind("click");
 
     $(".modal-continuar").click(function(){
-      _this.registerUser(true);
+      _this.confirmarRegistro();
       $(".modalConfirm").modal("toggle");
     });
 
@@ -64,7 +64,7 @@ export class RegisterPage implements OnInit {
    * Registar usuario
    */
 
-  registerUser(confirmar){
+  registerUser(){ 
 
     var _this = this;
 
@@ -118,7 +118,7 @@ export class RegisterPage implements OnInit {
 
       this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-        if(result.length > 0){
+        if(result.length > 0){  //  El usuario no existe
 
           this.spinner.hide();
 
@@ -126,50 +126,12 @@ export class RegisterPage implements OnInit {
             this.msg = "El usuario ya se encuentra registrado";
             $(".warning").show();
 
-          this.errorRegister = true;
+        }else{  //  El usuario existe
 
-        }else{
+          this.spinner.hide();
 
-          //  Verificar si ya confirmo el usuario
-
-          if(confirmar == true){
-
-            let createUser = new FormData();
-
-            createUser.append("active", "1");
-            createUser.append("user", $("#user").val());
-            createUser.append("email", $("#email").val());
-            createUser.append("password", $("#password").val());
-            createUser.append("profile", $("#perfil").val());
-
-            this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
-
-              this.msg = "Se registro el usuario correctamente";
-              $(".success").show();
-
-              sessionStorage.setItem("email", $("#email").val());
-              sessionStorage.setItem("user", $("#user").val());
-              sessionStorage.setItem("profile", $("#perfil").val());
-
-              setTimeout(function(){
-    
-                _this.spinner.hide();
-                $(".success").hide();
-                $("input").val("");
-
-                _this.appComponent.validateAuth();
-                _this.router.navigateByUrl('home');
-    
-              },2000);
-
-            });
-
-          }else{
-
-            this.errorRegister = false;
-            this.spinner.hide();
-
-          }
+          //  Confirmar con el usuario el registro
+          this.modalConfirmar('Registrar usuario','¿ Esta seguro de continuar con la información diligenciada ?');
 
         }
 
@@ -182,25 +144,64 @@ export class RegisterPage implements OnInit {
     if(this.error == 1){
 
       $(".error").show();
-      this.errorRegister = true;
       this.spinner.hide();
 
     }
 
   }
 
-  /************************************************************************************* */
+  /************************************************************************************** */
 
   /**
-   * Validar campos antes del registro
+   *  Confirmar registro
    */
 
-  validateRegister(){
+  confirmarRegistro(){
 
-    this.registerUser(false);
+    //  Variables iniciales
+    var _this = this;
 
-    if(this.errorRegister == false)
-      this.modalConfirmar('Registrar usuario','¿ Esta seguro de continuar con la información diligenciada ?');
+    //  Registrar usuario
+
+    if(_this.proceso == false){ //  Verificar que no halla otro proceso ejecutandose
+
+      _this.spinner.show();
+
+      _this.proceso = true;
+
+      let createUser = new FormData();
+
+      createUser.append("active", "1");
+      createUser.append("user", $("#user").val());
+      createUser.append("email", $("#email").val());
+      createUser.append("password", $("#password").val());
+      createUser.append("profile", $("#perfil").val());
+
+      this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+        this.msg = "Se registro el usuario correctamente";
+        $(".success").show();
+
+        sessionStorage.setItem("email", $("#email").val());
+        sessionStorage.setItem("user", $("#user").val());
+        sessionStorage.setItem("profile", $("#perfil").val());
+
+        setTimeout(function(){
+
+          _this.spinner.hide();
+
+          $(".modalConfirm").modal("hide");
+          $(".success").hide();
+          $("input").val("");
+
+          _this.appComponent.validateAuth();
+          _this.router.navigateByUrl('home');
+
+        },2000);
+
+      });
+
+    }
 
   }
 
