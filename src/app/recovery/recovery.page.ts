@@ -65,6 +65,7 @@ export class RecoveryPage implements OnInit {
 
       getUser.append("email", $("#emailRecovery").val());
       getUser.append("password", '');
+      getUser.append("login", "0");
 
       this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 

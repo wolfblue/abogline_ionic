@@ -149,9 +149,9 @@ export class AbogadoProfilePage implements OnInit {
       case "pleasures":
 
         if($("#pleasures").val().includes("9"))
-          $("#pleasures_other").prop("disabled",false);
+          $(".pleasures_other").show();
         else{
-          $("#pleasures_other").prop("disabled",true);
+          $(".pleasures_other").hide();
           $("#pleasures_other").val("");
         }
 
@@ -279,7 +279,7 @@ export class AbogadoProfilePage implements OnInit {
 
         //  Ocultar campos
 
-        $("#pleasures_other").prop("disabled",true);
+        $(".pleasures_other").hide();
         $("#years").prop("disabled",true);
 
         let getDataAbogados = new FormData();

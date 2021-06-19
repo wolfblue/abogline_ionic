@@ -108,6 +108,7 @@ export class ClienteAbogadoPage implements OnInit {
     solicitarConsulta.append("idCaso",caso.id);
     solicitarConsulta.append("emailCliente",sessionStorage.getItem("email"));
     solicitarConsulta.append("emailAbogado",abogado.email);
+    solicitarConsulta.append("emailOrigen",sessionStorage.getItem("email"));
 
     this.postModel("solicitarConsulta",solicitarConsulta).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 

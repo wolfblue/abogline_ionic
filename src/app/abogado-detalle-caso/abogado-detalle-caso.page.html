@@ -53,11 +53,19 @@
 
       <button 
         type="button" 
-        class="btn btn-success" 
+        class="btn btn-danger btnRechazar" 
+        (click)="modalRechazar('Rechazar solicitud','¿ Esta seguro de rechazar la solicitud ?')"
+      >
+        Rechazar solicitud
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn-success btnSolicitud" 
         (click)="modalConfirmar('Solicitar consulta','¿ Esta seguro de enviar al cliente una solicitud de consulta para este caso ?')"
       >
         Solicitar consulta
-      </button>
+      </button> 
 
     </form>
 

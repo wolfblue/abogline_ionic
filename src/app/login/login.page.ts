@@ -67,6 +67,7 @@ export class LoginPage implements OnInit {
 
       getUser.append("email", $("#emailLogin").val());
       getUser.append("password", $("#passwordLogin").val());
+      getUser.append("login", "1");
 
       this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 

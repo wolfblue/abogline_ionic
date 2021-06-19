@@ -115,6 +115,7 @@ export class RegisterPage implements OnInit {
       getUser.append("user", $("#user").val());
       getUser.append("email", $("#email").val());
       getUser.append("password", "");
+      getUser.append("login", "0");
 
       this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 

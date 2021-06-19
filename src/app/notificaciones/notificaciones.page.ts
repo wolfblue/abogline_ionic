@@ -110,6 +110,7 @@ export class NotificacionesPage implements OnInit {
         buscarNotificaciones += "   <input class='tipo' type='hidden' value='" + result[i].tipo + "' />";
         buscarNotificaciones += "   <input class='message' type='hidden' value='" + result[i].message + "' />";
         buscarNotificaciones += "   <input class='idCaso' type='hidden' value='" + result[i].id_caso + "' />";
+        buscarNotificaciones += "   <input class='estadoProceso' type='hidden' value='" + result[i].estadoProceso + "' />";
         buscarNotificaciones +=     result[i].tipo;
         buscarNotificaciones += " </td>";
         buscarNotificaciones += " <td>"+result[i].created_at+"</td>";
@@ -144,7 +145,7 @@ export class NotificacionesPage implements OnInit {
 
         //  Agregar botón detalle del caso cuando aplique
 
-        if($(this).find(".idCaso").val()){
+        if($(this).find(".idCaso").val() && $(this).find(".estadoProceso").val() != "3"){
 
           message += "<br><br>";
           message += "<button type'button' data-dismiss='modal' class='btn btn-primary irCaso' id='"+$(this).find(".idCaso").val()+"'>Ir al caso</button>";
@@ -167,6 +168,7 @@ export class NotificacionesPage implements OnInit {
           let getDataCasoEspecifico = new FormData();
 
           getDataCasoEspecifico.append("idCaso", $(this).prop("id"));
+          getDataCasoEspecifico.append("emailLogin", sessionStorage.getItem("email"));
 
           _this.postModel("getDataCasoEspecifico",getDataCasoEspecifico).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 

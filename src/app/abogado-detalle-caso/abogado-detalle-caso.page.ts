@@ -61,6 +61,9 @@ export class AbogadoDetalleCasoPage implements OnInit {
     $("#field6").html(caso.field6);
     $("#field7").html(caso.field7Desc);
 
+    //  Validar si esta pendiente de aprobar o rechazar
+    this.aprobarRechazarCaso(caso.hasProceso,caso.emailOrigen);
+
   }
 
   /***************************************************************************** */
@@ -152,6 +155,26 @@ export class AbogadoDetalleCasoPage implements OnInit {
   }
 
   /************************************************************************************* */
+  //  MODAL RECHAZAR
+  /************************************************************************************* */
+
+   modalRechazar(titulo,body){
+
+    var _this = this;
+
+    $(".modal-title").html(titulo);
+    $(".modal-body").html(body);
+    $(".modalConfirm").modal("toggle");
+    $(".modalContinuar").unbind("click");
+
+    $(".modal-continuar").click(function(){
+      _this.rechazarSolicitud();
+      $(".modalConfirm").modal("toggle");
+    });
+
+  }
+
+  /************************************************************************************* */
 
   /**
    * Solicitar consulta
@@ -173,8 +196,63 @@ export class AbogadoDetalleCasoPage implements OnInit {
     solicitarConsulta.append("idCaso",caso.id);
     solicitarConsulta.append("emailCliente",caso.email);
     solicitarConsulta.append("emailAbogado",sessionStorage.getItem("email"));
+    solicitarConsulta.append("emailOrigen",sessionStorage.getItem("email"));
 
     this.postModel("solicitarConsulta",solicitarConsulta).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+
+      this.location("/");
+
+    });
+
+  }
+
+  /*********************************************************************************************** */
+  //  APROBAR O RECHAZAR SOLICITUD
+  /*********************************************************************************************** */
+
+  aprobarRechazarCaso(hasProceso,emailOrigen){
+
+    if(hasProceso == "S"){
+
+      $(".btnSolicitud").html("Aprobar solicitud");
+
+      if(emailOrigen == sessionStorage.getItem("email")){
+
+        $(".btnRechazar").hide();
+        $(".btnSolicitud").hide();
+
+      }
+
+    }else{
+
+      $(".btnRechazar").hide();
+      
+    }
+
+  }
+
+  /*********************************************************************************************** */
+  //  RECHAZAR SOLICITUD
+  /*********************************************************************************************** */
+
+  rechazarSolicitud(){
+
+    //  Variables iniciales
+    var caso = JSON.parse(sessionStorage.getItem('caso'));
+
+    this.spinner.show();
+
+    //  Realizar solicitud
+
+    let rechazarSolicitud = new FormData();
+
+    rechazarSolicitud.append("idCaso",caso.id);
+    rechazarSolicitud.append("emailCliente",caso.email);
+    rechazarSolicitud.append("emailAbogado",sessionStorage.getItem("email"));
+
+    this.postModel("rechazarSolicitud",rechazarSolicitud).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
       this.spinner.hide();
 
