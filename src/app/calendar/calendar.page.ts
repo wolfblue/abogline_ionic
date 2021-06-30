@@ -24,6 +24,11 @@ import {
   CalendarView,
 } from 'angular-calendar';
 
+import { NgxSpinnerService  } from "ngx-spinner";
+import { environment } from '../../environments/environment';
+import {HttpClient} from "@angular/common/http";
+import { takeUntil } from 'rxjs/operators';
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -47,6 +52,8 @@ declare var $;
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage implements OnInit {
+
+  private unsubscribe$ = new Subject<void>();
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
@@ -79,22 +86,26 @@ export class CalendarPage implements OnInit {
     },
   ];
 
-  refresh: Subject<any> = new Subject();
+  refresh: Subject<any> = new Subject(); 
 
-  events: CalendarEvent[] = [
-    {
-      start: new Date('2021-04-07 01:00:00'),
-      end: new Date('2021-04-07 00:00:00'),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: false,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal) { }
+  constructor(
+    private modal: NgbModal,
+    private spinner: NgxSpinnerService,
+    private http:HttpClient
+  ) {
+
+    this.getReuniones();
+
+  }
+
+  postModel(Metodo: string, data: FormData) {
+    let url = `${environment.apiUrl}` + Metodo;
+    return this.http.post(url, data);
+  }
 
   ngOnInit() {
 
@@ -136,8 +147,8 @@ export class CalendarPage implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    //this.modalData = { event, action };
+    //this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
@@ -196,6 +207,49 @@ export class CalendarPage implements OnInit {
       });
 
     },200);
+
+  }
+
+  /********************************************************************************* */
+  //  OBTENER REUNIONES
+  /********************************************************************************* */
+
+  getReuniones(){
+
+    var _this = this;
+
+    _this.spinner.show();
+
+    let getReuniones = new FormData();
+
+    getReuniones.append("email",sessionStorage.getItem("email"));
+
+    this.postModel("getReuniones",getReuniones).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        var fechaEvento = "";
+
+        for(var i = 0; i < result.length; i++){
+
+          fechaEvento = result[0].date_meeting;
+          fechaEvento = fechaEvento.replace("T"," ");
+
+          this.events.push(
+            {
+              start: new Date(fechaEvento),
+              end: new Date(fechaEvento),
+              title: 'Reunión',
+              color: colors.red,
+              allDay: false,
+            }
+          );
+
+        }
+
+      }
+
+    });
 
   }
 

@@ -30,7 +30,9 @@ export class AbogadoCasoProcesoPage implements OnInit {
     private ClienteDetalleAbogadoPage: ClienteDetalleAbogadoPage,
     private spinner: NgxSpinnerService
 
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit(){
 
@@ -126,6 +128,90 @@ export class AbogadoCasoProcesoPage implements OnInit {
         $("#abogadoCasosProceso").show();
 
       },1000);
+
+    });
+
+   }
+
+   /******************************************************************************** */
+   // DETALLE DEL CASO
+   /******************************************************************************** */
+
+   detalleCaso(caso){
+
+    var _this = this;
+
+    console.log(caso);
+
+    sessionStorage.setItem('caso',JSON.stringify(caso));
+
+    _this.location('abogado-detalle-caso');
+
+   }
+
+   /******************************************************************************** */
+   // AGENDAR
+   /******************************************************************************** */
+
+   agendar(caso){
+
+    var _this = this;
+
+    this.spinner.show();
+
+    //  Obtener datos del cliente
+
+    let getDataClientes = new FormData();
+
+    getDataClientes.append("email",caso.email);
+
+    _this.postModel("getDataClientes",getDataClientes).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+
+      $(".modalAgendar").modal("show");
+      $(".titleAgendar").html("Cliente:");
+      $("#agendarAbogado").val(result[0].name + " " + result[0].lastname);
+      $("#agendarAbogadoEmail").val($(this).parent().find("#abogado_email").val());
+      $("#agendarIdCaso").val($(this).parent().find("#id_caso").val());
+      $("#agendarFecha").prop("min",(new Date()).toISOString().split('.')[0]);
+
+      $(".eventoAgendar").unbind("click");
+      $(".eventoAgendar").click(function(){
+
+        _this.spinner.show();
+        $(".modalAgendar").modal("hide");
+
+        if(!$("#agendarFecha").val()){
+
+          $("#agendarFecha").css("border","1px solid red");
+
+        }else{
+
+          let agendarReunion = new FormData();
+
+          agendarReunion.append("email_cliente",caso.email);
+          agendarReunion.append("email_abogado",sessionStorage.getItem("email"));
+          agendarReunion.append("date_meeting",$("#agendarFecha").val());
+          agendarReunion.append("id_caso",caso.id);
+          agendarReunion.append("email_aprobacion",caso.email);
+
+          _this.postModel("agendarReunion",agendarReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            _this.spinner.hide();
+
+            _this.msg = "Se envio notificación al cliente para la asistencia de la reunión el día " + $("#agendarFecha").val() + ", le informaremos cuando el abogado acepte la reunión";
+            $(".success").show();
+
+            setTimeout(function(){
+              _this.location("cliente-buscar-caso");
+            },10000);
+
+          });
+
+        }
+
+      });
 
     });
 

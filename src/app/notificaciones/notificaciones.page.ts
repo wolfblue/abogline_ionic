@@ -111,6 +111,7 @@ export class NotificacionesPage implements OnInit {
         buscarNotificaciones += "   <input class='message' type='hidden' value='" + result[i].message + "' />";
         buscarNotificaciones += "   <input class='idCaso' type='hidden' value='" + result[i].id_caso + "' />";
         buscarNotificaciones += "   <input class='estadoProceso' type='hidden' value='" + result[i].estadoProceso + "' />";
+        buscarNotificaciones += "   <input class='idReunion' type='hidden' value='" + result[i].idReunion + "' />";
         buscarNotificaciones +=     result[i].tipo;
         buscarNotificaciones += " </td>";
         buscarNotificaciones += " <td>"+result[i].created_at+"</td>";
@@ -137,6 +138,8 @@ export class NotificacionesPage implements OnInit {
       //  Abrir modal notificación
 
       $(".notificacion").click(function(){
+
+        sessionStorage.setItem("idReunion",$(this).find(".idReunion").val());
 
         $(".modalConfirmNotification").modal("show");
         $(".mnTitle").html($(this).find(".tipo").val());
@@ -175,6 +178,8 @@ export class NotificacionesPage implements OnInit {
             _this.spinner.hide();
 
             sessionStorage.setItem("caso",JSON.stringify(result[0]));
+            sessionStorage.setItem("notificacion","true");
+
             _this.location("/abogado-detalle-caso");
 
           });

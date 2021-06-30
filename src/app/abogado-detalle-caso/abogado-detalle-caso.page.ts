@@ -18,6 +18,7 @@ export class AbogadoDetalleCasoPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
   msg:any = "";
   error: any = 0;
+  fechaReunion:any = "";
 
   constructor(
 
@@ -29,8 +30,19 @@ export class AbogadoDetalleCasoPage implements OnInit {
 
   ngOnInit() {
 
+    $(".btnReunion").hide();
+
+    this.spinner.show();
+    $("form").hide();
+
     //  Obtener detalle del caso
     this.getDataCaso();
+
+    //  Obtener si ya se hizo merge
+    this.getMergeCaso();
+
+    //  Consultar si tiene reuniones pendientes por aprobar
+    this.getReunionesPendientes();
 
   }
 
@@ -200,8 +212,6 @@ export class AbogadoDetalleCasoPage implements OnInit {
 
     this.postModel("solicitarConsulta",solicitarConsulta).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-      this.spinner.hide();
-
       this.location("/");
 
     });
@@ -228,6 +238,11 @@ export class AbogadoDetalleCasoPage implements OnInit {
     }else{
 
       $(".btnRechazar").hide();
+
+      //  Ocultar botón solicitar consulta cuando viene de notificación
+
+      if(sessionStorage.getItem("notificacion") == "true")
+        $(".btnSolicitud").hide();
       
     }
 
@@ -257,6 +272,105 @@ export class AbogadoDetalleCasoPage implements OnInit {
       this.spinner.hide();
 
       this.location("/");
+
+    });
+
+  }
+
+  /***************************************************************************************** */
+  //  OBTENER SI YA UN CASO TIENE MERGE
+  /***************************************************************************************** */
+
+  getMergeCaso(){
+
+    var _this = this;
+    var caso = JSON.parse(sessionStorage.getItem('caso'));
+
+    let getMergeCaso = new FormData();
+
+    getMergeCaso.append("idCaso",caso.id);
+
+    _this.postModel("getMergeCaso",getMergeCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        $(".btnRechazar").hide();
+        $(".btnSolicitud").hide();
+
+      }
+
+    });
+
+  }
+
+  /************************************************************************************* */
+  //  MODAL CONFIRMAR REUNION
+  /************************************************************************************* */
+
+  modalConfirmarReunion(titulo,body){
+
+    var _this = this;
+
+    $(".modal-title").html(titulo);
+    $(".modal-body").html(body);
+    $(".modalConfirm").modal("toggle");
+    $(".modalContinuar").unbind("click");
+
+    $(".modal-continuar").click(function(){
+      _this.aprobarReunion();
+      $(".modalConfirm").modal("toggle");
+    });
+
+  }
+
+  /************************************************************************************* */
+  //  APROBAR REUNION
+  /************************************************************************************* */
+
+  aprobarReunion(){
+
+    this.spinner.show();
+
+    var _this = this;
+
+    let aprobarReunion = new FormData();
+
+    aprobarReunion.append("idReunion",sessionStorage.getItem("idReunion"));
+
+    _this.postModel("aprobarReunion",aprobarReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+
+      this.location("/");
+
+    });
+
+  }
+
+  /************************************************************************************* */
+  //  CONSULTAR REUNIONES PENDIENTES
+  /************************************************************************************* */
+
+  getReunionesPendientes(){
+
+    var _this = this;
+
+    let getReunionesPendientes = new FormData();
+
+    getReunionesPendientes.append("idReunion",sessionStorage.getItem("idReunion"));
+    getReunionesPendientes.append("email",sessionStorage.getItem("email"));
+
+    _this.postModel("getReunionesPendientes",getReunionesPendientes).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      this.spinner.hide();
+      $("form").show();
+
+      if(result.length > 0){
+
+        $(".btnReunion").show();
+        _this.fechaReunion = result[0].date_meeting;
+
+      }
 
     });
 

@@ -177,6 +177,7 @@ export class ClienteBuscarCasoPage implements OnInit {
             agendarReunion.append("email_abogado",$("#abogado_email").val());
             agendarReunion.append("date_meeting",$("#agendarFecha").val());
             agendarReunion.append("id_caso",$("#agendarIdCaso").val());
+            agendarReunion.append("email_aprobacion",$("#abogado_email").val());
 
             _this.postModel("agendarReunion",agendarReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 

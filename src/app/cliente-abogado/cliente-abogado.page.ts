@@ -52,6 +52,7 @@ export class ClienteAbogadoPage implements OnInit {
 
    getDataAbogado(){
 
+    var _this = this;
     var abogado = JSON.parse(sessionStorage.getItem('abogado'));
 
     $("#fullname").html(abogado.fullname);
@@ -60,6 +61,9 @@ export class ClienteAbogadoPage implements OnInit {
     $("#years").html(abogado.years);
     $("#price").html("$" + parseInt(abogado.price).toLocaleString());
     this.photo = `${environment.backend}`+abogado.photo;
+
+    //  Consultar si ya se inicio un proceso con el abogado
+    _this.getProcesoAbogado();
 
   }
 
@@ -115,6 +119,34 @@ export class ClienteAbogadoPage implements OnInit {
       this.spinner.hide();
 
       this.location("/");
+
+    });
+
+  }
+
+  /********************************************************************************************* */
+  // Consultar si ya se inicio un proceso con el abogado
+  /********************************************************************************************* */
+
+  getProcesoAbogado(){
+
+    var _this = this;
+    var abogado = JSON.parse(sessionStorage.getItem('abogado'));
+    var caso = JSON.parse(sessionStorage.getItem('caso'));
+
+    let getProcesoAbogado = new FormData();
+
+    getProcesoAbogado.append("idCaso",caso.id);
+    getProcesoAbogado.append("emailAbogado",abogado.email);
+
+    this.postModel("getProcesoAbogado",getProcesoAbogado).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        //  Ocultar botón solicitar consulta
+        $(".solicitarConsulta").hide();
+
+      }
 
     });
 

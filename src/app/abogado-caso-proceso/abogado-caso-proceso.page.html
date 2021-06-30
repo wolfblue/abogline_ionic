@@ -37,7 +37,10 @@
             <td>{{caso.field1Desc}}</td>
             <td>{{caso.field2Desc}}</td>
             <td>{{caso.field7Desc}}</td>
-            <td></td>
+            <td>
+              <button type='button' class='btn btn-info verDetalle' (click)="detalleCaso(caso)">Ver Detalle</button>
+              <button type='button' class='btn btn-success agendar' (click)="agendar(caso)">Agendar reunión</button>
+            </td>
           </tr>
 
         </tbody>
