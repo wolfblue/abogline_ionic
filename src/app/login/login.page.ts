@@ -63,40 +63,39 @@ export class LoginPage implements OnInit {
 
     if(this.error == 0){
 
-      let getUser = new FormData();
+      let apiAboglineLoginConsultarUsuarioActivo = new FormData();
 
-      getUser.append("email", $("#emailLogin").val());
-      getUser.append("password", $("#passwordLogin").val());
-      getUser.append("login", "1");
+      apiAboglineLoginConsultarUsuarioActivo.append("usuarioEmail", $("#emailLogin").val());
+      apiAboglineLoginConsultarUsuarioActivo.append("password", $("#passwordLogin").val());
 
-      this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+      this.postModel("apiAboglineLoginConsultarUsuarioActivo",apiAboglineLoginConsultarUsuarioActivo).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-        if(result.length > 0){
+        //  Loading hide
+        this.spinner.hide();
 
-          this.msg = "Autenticado correctamente";
-          $(".success").show();
-          this.spinner.hide();
+        if(result.length > 0){  // Existe el usuario
 
-          setTimeout(function(){
+          //  Actualizar datos de sesión
 
-            $(".success").hide();
-
-            sessionStorage.setItem("email", result[0].email);
-            sessionStorage.setItem("user", result[0].user);
-            sessionStorage.setItem("profile",result[0].profile);
-            $("input").val("");
-
-            _this.appComponent.validateAuth();
-            _this.router.navigateByUrl('home');
-
-          },1000);
-
-        }else{
-
+          sessionStorage.setItem("usuario", result[0].usuario);
+          sessionStorage.setItem("email", result[0].email);
+          sessionStorage.setItem("perfil",result[0].perfil);
+          
+          //  Limpiar campos del formulario
           $("input").val("");
+
+          //  Ir al home
+          window.location.href = 'home';
+
+        }else{  //  El usuario no existe
+
+          //  Limpiar campos del formulario
+          $("input").val("");
+
+          //  Mostrar mensaje de error de autenticación
+
           this.msg = "Los datos ingresados no son válidos";
           $(".warning").show();
-          _this.spinner.hide();
 
         }
 

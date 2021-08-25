@@ -110,16 +110,13 @@ export class RegisterPage implements OnInit {
 
     if(this.error == 0){
 
-      let getUser = new FormData();
+      let apiAboglineRegisterConsultarUsuario = new FormData();
 
-      getUser.append("user", $("#user").val());
-      getUser.append("email", $("#email").val());
-      getUser.append("password", "");
-      getUser.append("login", "0");
+      apiAboglineRegisterConsultarUsuario.append("usuario", $("#user").val());
 
-      this.postModel("getUser",getUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+      this.postModel("apiAboglineRegisterConsultarUsuario",apiAboglineRegisterConsultarUsuario).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-        if(result.length > 0){  //  El usuario no existe
+        if(result.length > 0){  //  El usuario existe
 
           this.spinner.hide();
 
@@ -127,7 +124,7 @@ export class RegisterPage implements OnInit {
             this.msg = "El usuario ya se encuentra registrado";
             $(".warning").show();
 
-        }else{  //  El usuario existe
+        }else{  //  El usuario no existe
 
           this.spinner.hide();
 
@@ -151,58 +148,60 @@ export class RegisterPage implements OnInit {
 
   }
 
-  /************************************************************************************** */
-
-  /**
-   *  Confirmar registro
-   */
+  /**************************************************************************** */
+  //  CONFIRMAR REGISTRO DE USUARIO
+  /**************************************************************************** */
 
   confirmarRegistro(){
 
     //  Variables iniciales
     var _this = this;
 
+    //  Loading show
+    _this.spinner.show();
+
     //  Registrar usuario
 
-    if(_this.proceso == false){ //  Verificar que no halla otro proceso ejecutandose
+    let apiAboglineRegisterRegistrarUsuario = new FormData();
 
-      _this.spinner.show();
+    apiAboglineRegisterRegistrarUsuario.append("usuario", $("#user").val());
+    apiAboglineRegisterRegistrarUsuario.append("email", $("#email").val());
+    apiAboglineRegisterRegistrarUsuario.append("password", $("#password").val());
+    apiAboglineRegisterRegistrarUsuario.append("perfil", $("#perfil").val());
 
-      _this.proceso = true;
+    this.postModel("apiAboglineRegisterRegistrarUsuario",apiAboglineRegisterRegistrarUsuario).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
 
-      let createUser = new FormData();
+      //  Mensaje satisfactorio
 
-      createUser.append("active", "1");
-      createUser.append("user", $("#user").val());
-      createUser.append("email", $("#email").val());
-      createUser.append("password", $("#password").val());
-      createUser.append("profile", $("#perfil").val());
+      this.msg = "Se registro el usuario correctamente";
+      $(".success").show();
 
-      this.postModel("createUser",createUser).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+      //  Actualizar variables de sesión
 
-        this.msg = "Se registro el usuario correctamente";
-        $(".success").show();
+      sessionStorage.setItem("usuario", $("#user").val());
+      sessionStorage.setItem("email", $("#email").val());
+      sessionStorage.setItem("perfil", $("#perfil").val());
 
-        sessionStorage.setItem("email", $("#email").val());
-        sessionStorage.setItem("user", $("#user").val());
-        sessionStorage.setItem("profile", $("#perfil").val());
+      setTimeout(function(){
 
-        setTimeout(function(){
+        //  Loading hide
+        _this.spinner.hide();
 
-          _this.spinner.hide();
+        //  Ocultar modal
+        $(".modalConfirm").modal("hide");
 
-          $(".modalConfirm").modal("hide");
-          $(".success").hide();
-          $("input").val("");
+        //  Ocultar mensaje satisfactorio
+        $(".success").hide();
 
-          _this.appComponent.validateAuth();
-          _this.router.navigateByUrl('home');
+        //  Limpiar campos del formulario
+        $("input").val("");
 
-        },2000);
+        //  Ir al home
+        window.location.href = "home";
 
-      });
+      },2000);
 
-    }
+    });
 
   }
 

@@ -8,7 +8,7 @@
         <div class="col-md-4">
           <div class="btn-group">
             <div
-              class="btn btn-primary"
+              class="btn btn-primary anterior"
               mwlCalendarPreviousView
               [view]="view"
               [(viewDate)]="viewDate"
@@ -17,7 +17,7 @@
               Anterior
             </div>
             <div
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-secondary hoy"
               mwlCalendarToday
               [(viewDate)]="viewDate"
             >
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
+          <h3 class="mesActual">{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
         </div>
         <div class="col-md-4">
           <div class="btn-group">

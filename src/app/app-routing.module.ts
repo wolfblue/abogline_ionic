@@ -20,56 +20,44 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'abogado-profile',
-    loadChildren: () => import('./abogado-profile/abogado-profile.module').then( m => m.AbogadoProfilePageModule)
-  },
-  {
     path: 'recovery',
     loadChildren: () => import('./recovery/recovery.module').then( m => m.RecoveryPageModule)
-  },
-  {
-    path: 'cliente-caso',
-    loadChildren: () => import('./cliente-caso/cliente-caso.module').then( m => m.ClienteCasoPageModule)
-  },
-  {
-    path: 'cliente-profile',
-    loadChildren: () => import('./cliente-profile/cliente-profile.module').then( m => m.ClienteProfilePageModule)
-  },
-  {
-    path: 'abogado-buscar-caso',
-    loadChildren: () => import('./abogado-buscar-caso/abogado-buscar-caso.module').then( m => m.AbogadoBuscarCasoPageModule)
-  },
-  {
-    path: 'abogado-detalle-caso',
-    loadChildren: () => import('./abogado-detalle-caso/abogado-detalle-caso.module').then( m => m.AbogadoDetalleCasoPageModule)
   },
   {
     path: 'notificaciones',
     loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
   },
   {
-    path: 'cliente-buscar-caso',
-    loadChildren: () => import('./cliente-buscar-caso/cliente-buscar-caso.module').then( m => m.ClienteBuscarCasoPageModule)
-  },
-  {
-    path: 'cliente-detalle-caso',
-    loadChildren: () => import('./cliente-detalle-caso/cliente-detalle-caso.module').then( m => m.ClienteDetalleCasoPageModule)
-  },
-  {
-    path: 'cliente-detalle-abogado',
-    loadChildren: () => import('./cliente-detalle-abogado/cliente-detalle-abogado.module').then( m => m.ClienteDetalleAbogadoPageModule)
-  },
-  {
-    path: 'cliente-abogado',
-    loadChildren: () => import('./cliente-abogado/cliente-abogado.module').then( m => m.ClienteAbogadoPageModule)
-  },
-  {
     path: 'calendar',
     loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
   },
   {
-    path: 'abogado-caso-proceso',
-    loadChildren: () => import('./abogado-caso-proceso/abogado-caso-proceso.module').then( m => m.AbogadoCasoProcesoPageModule)
+    path: 'register-caso',
+    loadChildren: () => import('./register-caso/register-caso.module').then( m => m.RegisterCasoPageModule)
+  },
+  {
+    path: 'consultar-caso',
+    loadChildren: () => import('./consultar-caso/consultar-caso.module').then( m => m.ConsultarCasoPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'solicitudes',
+    loadChildren: () => import('./solicitudes/solicitudes.module').then( m => m.SolicitudesPageModule)
+  },
+  {
+    path: 'agendar',
+    loadChildren: () => import('./agendar/agendar.module').then( m => m.AgendarPageModule)
+  },
+  {
+    path: 'pagos',
+    loadChildren: () => import('./pagos/pagos.module').then( m => m.PagosPageModule)
+  },
+  {
+    path: 'abogados',
+    loadChildren: () => import('./abogados/abogados.module').then( m => m.AbogadosPageModule)
   }
 ];
 

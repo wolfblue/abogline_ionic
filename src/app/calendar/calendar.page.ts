@@ -58,9 +58,7 @@ export class CalendarPage implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
 
   modalData: {
@@ -87,18 +85,19 @@ export class CalendarPage implements OnInit {
   ];
 
   refresh: Subject<any> = new Subject(); 
-
   events: CalendarEvent[] = [];
-
   activeDayIsOpen: boolean = false;
 
   constructor(
+
     private modal: NgbModal,
     private spinner: NgxSpinnerService,
     private http:HttpClient
+
   ) {
 
-    this.getReuniones();
+    //  Consultar información de la página
+    this.getInfoPage();
 
   }
 
@@ -210,42 +209,65 @@ export class CalendarPage implements OnInit {
 
   }
 
-  /********************************************************************************* */
-  //  OBTENER REUNIONES
-  /********************************************************************************* */
+  /**************************************************************************** */
+  //  CONSULTAR INFORMACIÓN DE LA PÁGINA
+  /**************************************************************************** */
 
-  getReuniones(){
+  getInfoPage(){
+
+    //  Variables iniciales
 
     var _this = this;
+    var reunion = "";
 
     _this.spinner.show();
 
-    let getReuniones = new FormData();
+    //  Consultar información
 
-    getReuniones.append("email",sessionStorage.getItem("email"));
+    let apiAboglineCalendarGetInfo = new FormData();
 
-    this.postModel("getReuniones",getReuniones).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+    apiAboglineCalendarGetInfo.append("usuario",sessionStorage.getItem("usuario"));
 
-      if(result.length > 0){
+    _this.postModel("apiAboglineCalendarGetInfo",apiAboglineCalendarGetInfo).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.spinner.hide();
+
+      if(result[0].agenda.length > 0){
 
         var fechaEvento = "";
 
-        for(var i = 0; i < result.length; i++){
+        for(var i = 0; i < result[0].agenda.length; i++){
 
-          fechaEvento = result[0].date_meeting;
+          fechaEvento = result[0].agenda[i].fecha;
           fechaEvento = fechaEvento.replace("T"," ");
 
-          this.events.push(
+          //  Definir título de la reunión
+
+          if(sessionStorage.getItem("perfil") == "cliente")
+            reunion = "Reunión con el abogado " + fechaEvento;
+          else
+            reunion = "Reunión con el cliente " + fechaEvento;
+
+
+          _this.events.push(
             {
               start: new Date(fechaEvento),
               end: new Date(fechaEvento),
-              title: 'Reunión',
-              color: colors.red,
+              title: reunion,
+              color: colors.blue,
               allDay: false,
             }
           );
 
         }
+
+        $(".anterior").click();
+        $(".mesActual").hide();
+
+        setTimeout(() => {
+          $(".hoy").click();
+          $(".mesActual").show();
+        },1000)
 
       }
 

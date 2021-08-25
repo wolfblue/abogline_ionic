@@ -4,8 +4,6 @@ import {Router} from '@angular/router';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../environments/environment';
-import {AbogadoProfilePage} from './abogado-profile/abogado-profile.page';
-import {ClienteProfilePage} from './cliente-profile/cliente-profile.page';
 
 declare var $;
 
@@ -17,18 +15,18 @@ declare var $;
 export class AppComponent {
 
   private unsubscribe$ = new Subject<void>();
-  public design = 0;
   public email = "";
   public auth: any = 0;
   public mainActive: any = "inicio";
   public profile = sessionStorage.getItem("profile");
   public notificacionesTotal: any = "0";
 
+  design = 0;
+  usuario:any = "";
+
   constructor(
     private http:HttpClient,
-    private router: Router,
-    private AbogadoProfilePage: AbogadoProfilePage,
-    private ClienteProfilePage: ClienteProfilePage
+    private router: Router
   ) {
 
     var _this = this;
@@ -37,19 +35,11 @@ export class AppComponent {
 
   ngOnInit() {
 
+    //  Variables iniciales
     var _this = this;
     
     //  Validar autenticación
     this.validateAuth();
-
-    //  Activar opción menú principal
-
-    setTimeout(function(){
-
-      $(".main").removeClass("active");
-      $("."+_this.mainActive).addClass("active");
-
-    },1500);
 
   }
 
@@ -59,28 +49,29 @@ export class AppComponent {
   }
 
   /************************************************************************************* */
+  //  Redireccionar
+  /************************************************************************************* */
 
   location(ruta){
 
     //  Limpiar variables de sesión
-    sessionStorage.setItem('caso','0');
+    sessionStorage.setItem("idCaso","0");
 
-    window.location = ruta;
+    //  Redireccionar
+    window.location.href = ruta;
 
   }
 
   /************************************************************************************* */
-
-  /**
-   * Validar autenticación
-   */
+  //  Validar autenticación
+  /************************************************************************************* */
 
   validateAuth(){
 
     //  Variables iniciales
     var _this = this;
 
-    if(sessionStorage.getItem("email")){
+    if(sessionStorage.getItem("usuario")){  //  Sesión abierta
 
       //  Ocultar botones
 
@@ -97,10 +88,8 @@ export class AppComponent {
 
       this.auth = 1;
       this.email = sessionStorage.getItem("email");
-      this.profile = sessionStorage.getItem("profile");
-
-      //  Obtener total notificaciones
-      this.getNotificaciones();
+      this.profile = sessionStorage.getItem("perfil");
+      this.usuario = sessionStorage.getItem("usuario");
 
     }else{
 
@@ -125,54 +114,19 @@ export class AppComponent {
 
    logout(){
 
-    sessionStorage.setItem("email","");
+      //  Limpiar variables de sesión
+
+      sessionStorage.setItem("email","");
+      sessionStorage.setItem("usuario","");
+      sessionStorage.setItem("perfil","");
+
+      //  Limpiar variables
+      this.usuario = "";
 
     this.auth = 0;
     this.email = "";
     this.validateAuth();
     this.router.navigateByUrl("home");
-
-   }
-
-   /**
-    * Dirigir actualizar perfil de usuario
-    */
-
-   profileLink(){
-
-    if(sessionStorage.getItem("profile") == "cliente"){
-
-      this.router.navigateByUrl("cliente-profile");
-      this.ClienteProfilePage.getDataCliente();
-
-
-    }else{
-
-      this.router.navigateByUrl("abogado-profile");
-      this.AbogadoProfilePage.getDataAbogado();
-
-    }
-
-  }
-
-  /************************************************************************ */
-
-  /**
-   * Obtener todas las notificaciones de un usuario
-   */
-
-   getNotificaciones(){
-
-    let getNotificacion = new FormData();
-
-    getNotificacion.append("email", sessionStorage.getItem("email"));
-    getNotificacion.append("tipo", "1");
-
-    this.postModel("getNotificacion",getNotificacion).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
-
-      this.notificacionesTotal = result.length;
-
-    });
 
    }
 

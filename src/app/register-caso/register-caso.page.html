@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+
+  <div class="contenido">
+
+    <h3>Registrar caso</h3>
+
+    <div id="campo1" *ngIf="campo1Show == true">
+      <p>¿Con quién tiene problemas? (*):</p>
+      <select (change)="changeField('campo1')">
+        <option value="">- Seleccionar -</option>
+        <ng-container *ngFor="let lista of listas">
+          <option *ngIf="lista.tipo2 == 1" value='{{lista.id}}'>{{lista.valor}}</option>
+        </ng-container>
+      </select>
+    </div>
+  
+    <div id="campo2" *ngIf="campo2Show == true">
+      <p>¿Sobre que trata tu caso? (*):</p>
+      <select (change)="changeField('campo2')">
+        <option value="">- Seleccionar -</option>
+        <ng-container *ngFor="let lista of listas">
+          <option *ngIf="lista.tipo2 == 2" value='{{lista.id}}'>{{lista.valor}}</option>
+        </ng-container>
+      </select>
+    </div>
+  
+    <div id="campo3" *ngIf="campo3Show == true">
+      <p>Cual:</p>
+      <input type="text" />
+    </div>
+  
+    <div id="campo4" *ngIf="campo4Show == true">
+      <p>¿Cuál es tu problema? (*):</p>
+      <select (change)="changeField('campo4')">
+        <option value="">- Seleccionar -</option>
+        <ng-container *ngFor="let lista of listas">
+          <option *ngIf="lista.tipo2 == 3" value='{{lista.id}}'>{{lista.valor}}</option>
+        </ng-container>
+      </select>
+    </div>
+  
+    <div id="campo5" *ngIf="campo5Show == true">
+      <p>Cual:</p>
+      <input type="text" />
+    </div>
+  
+    <div id="campo6" *ngIf="campo6Show == true">
+      <p>Cuentanos de tu caso (*):</p>
+      <textarea></textarea>
+    </div>
+  
+    <div id="campo7" *ngIf="campo7Show == true">
+      <p>¿Ya se inició un proceso ante un juzgado o entidad para su solución? (*):</p>
+      <select>
+        <option value="">- Seleccionar -</option>
+        <ng-container *ngFor="let lista of listas">
+          <option *ngIf="lista.tipo2 == 4" value='{{lista.id}}'>{{lista.valor}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <p>
+      <button (click)="registrarCaso()">Registrar</button>
+    </p>
+
+  </div>
+
+</ion-content>
