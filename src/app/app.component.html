@@ -1,0 +1,138 @@
+<ion-app>
+
+  <ion-header [translucent]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-align-self-start" [class.border]="design == 1">
+          <img (click)="location('home')" src="/assets/images/logo.png" width="30%">
+        </ion-col>
+        <ion-col class="ion-align-self-end tRight" [class.border]="design == 1">
+
+          <ion-grid>
+            <ion-row>
+
+              <ion-col *ngIf="!usuario" class="ion-align-self-center headerLeft" [class.border]="design == 1">
+                <ion-button class="register" color="secondary" (click)="location('register')">Registrarse</ion-button>
+                <ion-button class="login" color="primary" (click)="location('login')">Iniciar Sesión</ion-button>
+              </ion-col>
+
+              <ion-col *ngIf="usuario" class="ion-align-self-center headerLeft" [class.border]="design == 1">
+                <a class="email" (click)="location('profile')">{{this.email}}</a>
+                <a (click)="logout()">Cerrar sesión</a>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mainPrincipal" *ngIf="auth == 1">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link main inicio" (click)="location('home')">Inicio</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('register-caso')">Registrar Caso</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('consultar-caso')">Consultar Caso</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('abogados')">Consultar abogados</a>
+          <a *ngIf="profile == 'abogado'" class="nav-item nav-link main" (click)="location('consultar-caso')">Buscar Caso</a>
+          <a class="nav-item nav-link main" (click)="location('solicitudes')">Solicitudes</a>
+          <a class="nav-item nav-link main" (click)="location('agendar')">Agendar</a>
+          <a class="nav-item nav-link main" (click)="location('calendar')">Calendario</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('pagos')">Pagos</a>
+        </div>
+      </div>
+    </nav>
+
+  </ion-header>
+
+  <ion-content>
+
+    <ion-router-outlet></ion-router-outlet>
+
+  </ion-content>
+
+  <ngx-spinner></ngx-spinner>
+
+</ion-app>
+
+<!--------------------------------------------------------------------------------------->
+
+<!--  Modal confirmación -->
+
+<div class="modal modalConfirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary modal-continuar">Continuar</button>
+        <button type="button" class="btn btn-secondary modal-cancelar" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--------------------------------------------------------------------------------------->
+
+<!--  Modal confirmación notificación -->
+
+<div class="modal modalConfirmNotification" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mnTitle"></h5>
+      </div>
+      <div class="modal-body mnMessage"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary modal-continuar" data-dismiss="modal">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--------------------------------------------------------------------------------------->
+
+<!--  Modal agendar reunión -->
+
+<div class="modal modalAgendar" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agendar reunión</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label style="width:100%!important;">
+            <p class="label-txt titleAgendar">Abogado:</p>
+            <input type="hidden" id="agendarAbogadoEmail">
+            <input type="hidden" id="agendarIdCaso">
+            <input type="text" class="input" id="agendarAbogado" style="width:100%!important;" disabled>
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+          <label>
+            <p class="label-txt">Fecha de reunión:</p>
+            <input type="datetime-local" step="2" class="input" id="agendarFecha">
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary eventoAgendar">Agendar</button>
+        <button type="button" class="btn btn-secondary modal-cancelar" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

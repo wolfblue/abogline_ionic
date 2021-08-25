@@ -1,0 +1,7 @@
+{
+  "name": "abogline",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

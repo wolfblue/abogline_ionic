@@ -1,0 +1,31 @@
+<ion-content [fullscreen]="true">
+
+  <div id="container">
+
+    <form>
+
+      <div class="informacion success alert-primary" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion warning alert-warning" role="alert">
+        {{this.msg}}
+      </div>
+  
+      <div class="informacion error alert-danger" role="alert">
+        {{this.msg}}
+      </div>
+
+      <label>
+        <p class="label-txt">Correo Electrónico (*):</p>
+        <input type="text" class="input" id="emailRecovery">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+      <button (click)="recoveryPassword()">Recuperar contraseña</button>
+    </form>
+
+  </div>
+  
+</ion-content>

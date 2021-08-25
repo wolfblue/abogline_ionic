@@ -1,0 +1,48 @@
+<ion-content [fullscreen]="true">
+
+  <div class="contenido">
+
+    <h3>Solicitudes</h3>
+
+    <table id="solicitudes" width="100%">
+
+      <thead>
+
+        <tr>
+
+          <th width="7%">Caso</th>
+          <th>Quien solicita</th>
+          <th>Tipo de solicitud</th>
+          <th>Fecha de solicitud</th>
+          <th>Acciones</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <ng-container *ngFor="let solicitud of solicitudes">
+
+          <tr>
+
+            <td>{{solicitud.id_caso}}</td>
+            <td>{{solicitud.solicita}}</td>
+            <td>{{solicitud.descripcion}}</td>
+            <td>{{solicitud.fecha}}</td>
+            <td>
+              <button (click)="aceptarSolicitud(solicitud.id)">Aceptar solicitud</button>
+              <button (click)="rechazarSolicitud(solicitud.id)">Rechazar solicitud</button>
+            </td>
+
+          </tr>
+
+        </ng-container>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</ion-content>
