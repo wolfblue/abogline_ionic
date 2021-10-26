@@ -113,4 +113,14 @@ export class SolicitudesPage implements OnInit {
 
   }
 
+  /**************************************************************************** */
+  //  RESPONDER DOCUMENTOS
+  /**************************************************************************** */
+
+  responderDocumentos(idSolicitud){
+
+    window.location.href = "/cargar-documentacion";
+
+  }
+
 }

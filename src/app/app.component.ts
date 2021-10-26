@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import {Router} from '@angular/router';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../environments/environment';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $;
 
@@ -14,19 +15,23 @@ declare var $;
 })
 export class AppComponent {
 
+  @ViewChild("modalRegistoMain", {static: false}) modalRegistoMain: TemplateRef<any>;
+
   private unsubscribe$ = new Subject<void>();
   public email = "";
   public auth: any = 0;
   public mainActive: any = "inicio";
   public profile = sessionStorage.getItem("profile");
   public notificacionesTotal: any = "0";
-
+  
+  closeResult = '';
   design = 0;
   usuario:any = "";
 
   constructor(
     private http:HttpClient,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
 
     var _this = this;
@@ -129,5 +134,52 @@ export class AppComponent {
     this.router.navigateByUrl("home");
 
    }
+
+   /**************************************************************************** */
+  //  MODAL
+  /**************************************************************************** */
+
+  open(content) {
+
+    this.modalService.open(content,{ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+
+  }
+
+  /**************************************************************************** */
+  //  REGISTRARSE DESDE EL MENÚ
+  /**************************************************************************** */
+
+  registrarseMain(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    // Abrir modal
+    _this.open(_this.modalRegistoMain);
+
+    //  Editar estilos
+
+    setTimeout(function(){
+      $(".modal-content").css("background","none");
+      $(".modal-content").css("border","0px solid");
+      $(".modal-dialog").css("margin-top","13%");
+    },20);
+
+  }
 
 }

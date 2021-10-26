@@ -1,0 +1,228 @@
+@font-face {
+    font-family: 'Lato';
+    src: 
+        url('/assets/fonts/Lato/Lato-Black.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-BlackItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Bold.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-BoldItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Hairline.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-HairlineItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Heavy.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-HeavyItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Italic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Light.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-LightItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Medium.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-MediumItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Regular.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Semibold.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-SemiboldItalic.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-Thin.ttf')  format('truetype'),
+        url('/assets/fonts/Lato/Lato-ThinItalic.ttf')  format('truetype');
+}
+
+@font-face {
+    font-family: 'Calibri';
+    src: url('/assets/fonts/Calibri/calibri.ttf')  format('truetype'),
+        url('/assets/fonts/Calibri/calibrib.ttf')  format('truetype'),
+        url('/assets/fonts/Calibri/calibrii.ttf')  format('truetype'),
+        url('/assets/fonts/Calibri/calibril.ttf')  format('truetype'),
+        url('/assets/fonts/Calibri/calibrili.ttf')  format('truetype'),
+        url('/assets/fonts/Calibri/calibriz.ttf')  format('truetype');
+}
+p{
+    font-family: Lato;
+}
+a{
+    font-family: Lato;
+}
+div{
+    font-family: Lato;
+}
+.cursor:hover{
+    cursor:pointer;
+    opacity:0.4;
+}
+.center{
+    text-align:center;
+}
+.color1{
+    background-color: #D8D9DD;
+}
+.row2{
+    background-image: url(/assets/images/banner_ejemplo.png);
+    background-position: center;
+    background-size: 100%;
+    min-height: 281px;
+}
+.row3{
+    background-color: #D8D9DD;
+    padding-bottom: 4%;
+}
+.col31{
+    
+}
+.col32{
+    
+}
+.col33{
+    
+}
+.row4{
+}
+.col41{
+    background-image: url(/assets/images/mockup_app.png);
+    background-position: center;
+    background-size: 100% 100%;
+    padding-bottom: 7%;
+}
+.col42{
+    background-color: #8B8B8C;
+}
+.row5{
+    background-image: url("/assets/images/banner_inferior.png");
+    background-position: center;
+    background-size: 100% 100%;
+}
+.col51{
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+.col52{
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+.col53{
+    
+}
+.logo2{
+    position: relative;
+    left: 60%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.logo2 img{
+    width: 20%;
+}
+.submain{
+    width: 75%;
+    margin: 7% 0% 0% 14%;
+}
+.titleMain{
+    color: #041836;
+    font-weight: bold;
+    padding-top: 2%;
+    font-size: 18px;
+    font-family: Lato;
+}
+.mantenteAlDia{
+    text-align: center;
+    padding-top: 5%;
+    color: #071A39;
+    font-weight: 800;
+    font-size: 18px;
+}
+.logotipoAbogline{
+    width: 42%;
+    margin-top: 22%;
+}
+.descargaNuestraApp{
+    margin-top: 6%;
+    color: #041835;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 17px;
+    font-family: 'Calibri';
+}
+.googlePlay{
+    margin-top: 3%;
+    width: 76%;
+}
+.appStore{
+    margin-top: 9%;
+    width: 76%;
+}
+.copyright{
+    background: #00475C;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 0.5% 0% 0.5% 5%;
+    margin: 0%;
+    font-family: Calibri;
+}
+.title2{
+    color: #041836;
+    font-weight: 800;
+    padding-top: 2%;
+    font-size: 22px;
+}
+.title3{
+    color: #041836;
+    font-weight: 500;
+    padding-top: 2%;
+    font-size: 17px;
+    margin: 0%;
+    line-height: 19px;
+    font-family: 'Calibri';
+}
+.input1{
+    background: #788392;
+    border: 0px solid;
+    border-radius: 5px;
+    width: 92%;
+    padding-left: 5%;
+    font-style: italic;
+    color:#ffffff;
+}
+.input1::placeholder{
+    color:#ffffff;
+}
+.p1{
+    margin-top: 3%;
+    font-size: 10px;
+    font-family: 'Calibri';
+}
+.siguenosIcon{
+    width: 70%;
+}
+.paddingEmpty{
+    padding: 0%;
+}
+.redes{
+    width: 60%;
+    margin: auto;
+}
+.icon247{
+    width: 60%;
+    margin-top: 2%;
+}
+.copyright2{
+    float: right;
+    margin-right: 5%;
+    font-family: 'Calibri';
+}
+.servicioCliente{
+    margin-bottom:0%;
+}
+.facebookWidget{
+    padding-bottom:2%;
+}
+
+.registraTuCaso:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.consultarAbogados:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.agendaCita:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}

@@ -58,6 +58,42 @@ const routes: Routes = [
   {
     path: 'abogados',
     loadChildren: () => import('./abogados/abogados.module').then( m => m.AbogadosPageModule)
+  },
+  {
+    path: 'solicitar-documentacion',
+    loadChildren: () => import('./solicitar-documentacion/solicitar-documentacion.module').then( m => m.SolicitarDocumentacionPageModule)
+  },
+  {
+    path: 'cargar-documentacion',
+    loadChildren: () => import('./cargar-documentacion/cargar-documentacion.module').then( m => m.CargarDocumentacionPageModule)
+  },
+  {
+    path: 'consultar-documentacion',
+    loadChildren: () => import('./consultar-documentacion/consultar-documentacion.module').then( m => m.ConsultarDocumentacionPageModule)
+  },
+  {
+    path: 'seguimiento',
+    loadChildren: () => import('./seguimiento/seguimiento.module').then( m => m.SeguimientoPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule)
+  },
+  {
+    path: 'admin-agendas',
+    loadChildren: () => import('./admin-agendas/admin-agendas.module').then( m => m.AdminAgendasPageModule)
+  },
+  {
+    path: 'admin-plantillas',
+    loadChildren: () => import('./admin-plantillas/admin-plantillas.module').then( m => m.AdminPlantillasPageModule)
   }
 ];
 

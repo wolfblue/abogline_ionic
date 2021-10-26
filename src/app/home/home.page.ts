@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, TemplateRef } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  @ViewChild("modalRegistoMain", {static: false}) modalRegistoMain: TemplateRef<any>;
+
+  closeResult = '';
+
+  constructor(
+    private modalService: NgbModal
+  ) {}
 
 }

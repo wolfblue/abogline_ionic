@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true">
+
+  <div class="contenido">
+
+    <h3>Cargar documentación</h3>
+
+    <div>
+      <p>Seleccionar caso (*):</p>
+      <select id="idCaso" (change)="cargarPeticiones()">
+        <option value="">- Seleccionar -</option>
+        <ng-container *ngFor="let caso of casos">
+          <option *ngIf="caso.estado != 'registrado'" value='{{caso.id}}'>{{caso.id}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="peticiones">
+
+      <table id="peticionesDT" width="100%">
+
+        <thead>
+  
+          <tr>
+  
+            <th>Fecha de solicitud</th>
+            <th>Tipo de información</th>
+            <th>Observación</th>
+            <th>Respuesta</th>
+            <th>Acciones</th>
+  
+          </tr>
+  
+        </thead>
+  
+        <tbody>
+  
+          <ng-container *ngFor="let peticion of peticiones">
+  
+            <tr>
+  
+              <td>{{peticion.creado}}</td>
+              <td>{{peticion.tipo_informacion}}</td>
+              <td>{{peticion.observacion}}</td>
+              <td>
+                <input [attr.id]="peticion.id" [attr.class]="'respuesta'+peticion.id+' anexo'" type="file" *ngIf="peticion.tipo_informacion == 'Documento'" />
+                <textarea [attr.class]="'respuesta'+peticion.id" *ngIf="peticion.tipo_informacion != 'Documento'"></textarea>
+              </td>
+              <td>
+                <button (click)="enviarRespuesta(peticion.id,peticion.tipo_informacion,peticion.id_peticion)">Enviar respuesta</button>
+              </td>
+  
+            </tr>
+  
+          </ng-container>
+  
+        </tbody>
+  
+      </table>
+
+    </div>
+
+  </div>
+
+</ion-content> 

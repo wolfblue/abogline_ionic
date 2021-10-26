@@ -1,32 +1,50 @@
 <ion-app>
 
   <ion-header [translucent]="true">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="ion-align-self-start" [class.border]="design == 1">
-          <img (click)="location('home')" src="/assets/images/logo.png" width="30%">
-        </ion-col>
-        <ion-col class="ion-align-self-end tRight" [class.border]="design == 1">
 
-          <ion-grid>
-            <ion-row>
+    <div class="row">
 
-              <ion-col *ngIf="!usuario" class="ion-align-self-center headerLeft" [class.border]="design == 1">
-                <ion-button class="register" color="secondary" (click)="location('register')">Registrarse</ion-button>
-                <ion-button class="login" color="primary" (click)="location('login')">Iniciar Sesión</ion-button>
-              </ion-col>
+      <div class="col-md-5">
+        <img class="logoHeader cursor" (click)="location('home')" src="/assets/images/logo_header.png">
+      </div>
 
-              <ion-col *ngIf="usuario" class="ion-align-self-center headerLeft" [class.border]="design == 1">
-                <a class="email" (click)="location('profile')">{{this.email}}</a>
-                <a (click)="logout()">Cerrar sesión</a>
-              </ion-col>
+      <div class="col-md-7">
+        
+        <div class="row">
 
-            </ion-row>
-          </ion-grid>
+          <div class="col-md-7">
+            
+            <div class="row menuPrincipalHeader">
+              
+              <div class="col-4 quienesSomos cursor">¿Quiénes Somos?</div>
+              <div class="col-4 nosotros cursor">Nosotros</div>
+              <div class="col-4 cursor">Contáctenos</div>
 
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+            </div>
+
+          </div>
+
+          <div class="col-md-5">
+
+            <div class="row">
+
+              <div class="col-md-6 registrarse">
+                <button class="cursor" (click)="registrarseMain()">REGISTRARSE ></button>
+              </div>
+
+              <div class="col-md-6 iniciarSesion">
+                <button class="cursor" (click)="location('login')">INICIAR SESIÓN ></button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light mainPrincipal" *ngIf="auth == 1">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,10 +57,17 @@
           <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('consultar-caso')">Consultar Caso</a>
           <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('abogados')">Consultar abogados</a>
           <a *ngIf="profile == 'abogado'" class="nav-item nav-link main" (click)="location('consultar-caso')">Buscar Caso</a>
-          <a class="nav-item nav-link main" (click)="location('solicitudes')">Solicitudes</a>
-          <a class="nav-item nav-link main" (click)="location('agendar')">Agendar</a>
-          <a class="nav-item nav-link main" (click)="location('calendar')">Calendario</a>
+          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('solicitudes')">Solicitudes</a>
+          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('agendar')">Agendar</a>
+          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('calendar')">Calendario</a>
           <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('pagos')">Pagos</a>
+          <a *ngIf="profile == 'abogado'" class="nav-item nav-link main" (click)="location('solicitar-documentacion')">Solicitar documentación</a>
+          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('cargar-documentacion')">Cargar documentación</a>
+          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('consultar-documentacion')">Consultar documentos</a>
+          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('seguimiento')">Seguimiento</a>
+          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('usuarios')">Usuarios</a>
+          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('admin-agendas')">Agendas</a>
+          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('admin-plantillas')">Plantillas</a>
         </div>
       </div>
     </nav>
@@ -136,3 +161,36 @@
     </div>
   </div>
 </div>
+
+<!--  MODAL REGISTRO SELECCIÓN DE PERFIL -->
+
+<ng-template #modalRegistoMain let-modal id="modal1">
+
+  <div class="modal-body">
+
+    <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
+
+    <div class="bodyModalRegistroMain">
+
+      <p class="center perfilTitle">PERFIL</p>
+      <p class="center escogePerfilTitle">Escoge tú perfil por favor.</p>
+      
+      <div class="row seleccionaPerfil">
+
+        <div class="col-md-6 center">
+          <img src="/assets/images/boton_cliente.png" class="botonCliente" />
+        </div>
+
+        <div class="col-md-6 center">
+          <img src="/assets/images/boton_abogado.png" class="botonAbogado" />
+        </div>
+
+      </div>
+
+      <p class="center registraBienvenido">¡Bienvenido a la <br/>Familia Abogline!</p>
+
+    </div>
+      
+  </div>
+
+</ng-template>

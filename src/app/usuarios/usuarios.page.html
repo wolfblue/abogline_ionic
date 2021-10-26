@@ -1,0 +1,88 @@
+<ion-content [fullscreen]="true">
+
+  <div class="contenido">
+
+    <h3>Usuarios</h3>
+
+    <table id="usuarios" width="100%">
+
+      <thead>
+
+        <tr>
+
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Perfil</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <ng-container *ngFor="let usuario of usuarios;let i = index">
+
+          <tr>
+
+            <td>{{usuario.usuario}}</td>
+            <td>{{usuario.email}}</td>
+            <td>{{usuario.perfil}}</td>
+            <td>{{usuario.nombres}}</td>
+            <td>{{usuario.apellidos}}</td>
+            <td>{{usuario.estado}}</td>
+            <td>
+              <button (click)="editarUsuario(i)">Editar usuario</button>
+            </td>
+
+          </tr>
+
+        </ng-container>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!--  MODAL -->
+
+  <ng-template #modalEditUser let-modal id="modal1">
+
+    <div class="modal-header">
+
+      <h4 class="modal-title" id="modal-basic-title">Editar usuario</h4>
+
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <p>Usuario:</p>
+      <input type="text" id="usuario" disabled />
+      
+      <p>Nombres:</p>
+      <input type="text" id="nombres"/>
+
+      <p>Apellidos:</p>
+      <input type="text" id="apellidos"/>
+        
+    </div>
+
+    <div class="modal-footer">
+      
+      <button type="button" class="btn btn-outline-dark" (click)="actualizarUsuario()">
+        Actualizar
+      </button>
+
+    </div>
+
+  </ng-template>
+
+</ion-content>

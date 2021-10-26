@@ -244,9 +244,9 @@ export class CalendarPage implements OnInit {
           //  Definir título de la reunión
 
           if(sessionStorage.getItem("perfil") == "cliente")
-            reunion = "Reunión con el abogado " + fechaEvento;
+            reunion = "Reunión con el abogado " + fechaEvento + ", link: <a target='_blank' href='" + result[0].agenda[i].link + "'>" + result[0].agenda[i].link + "</a>";
           else
-            reunion = "Reunión con el cliente " + fechaEvento;
+            reunion = "Reunión con el cliente " + fechaEvento + ", link: <a target='_blank' href='" + result[0].agenda[i].link + "'>" + result[0].agenda[i].link + "</a>";
 
 
           _this.events.push(

@@ -73,6 +73,13 @@ export class LoginPage implements OnInit {
         //  Loading hide
         this.spinner.hide();
 
+        //  Validar si es admin y no esta por la url correcta
+
+        var url = this.router.url;
+
+        if(url.split("login").length > 1 && result[0].usuario == "admin")
+          result = [];
+
         if(result.length > 0){  // Existe el usuario
 
           //  Actualizar datos de sesión

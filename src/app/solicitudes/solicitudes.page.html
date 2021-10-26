@@ -31,8 +31,9 @@
             <td>{{solicitud.descripcion}}</td>
             <td>{{solicitud.fecha}}</td>
             <td>
-              <button (click)="aceptarSolicitud(solicitud.id)">Aceptar solicitud</button>
-              <button (click)="rechazarSolicitud(solicitud.id)">Rechazar solicitud</button>
+              <button *ngIf="solicitud.tipo != 'documentos'" (click)="aceptarSolicitud(solicitud.id)">Aceptar solicitud</button>
+              <button *ngIf="solicitud.tipo != 'documentos'" (click)="rechazarSolicitud(solicitud.id)">Rechazar solicitud</button>
+              <button *ngIf="solicitud.tipo == 'documentos'" (click)="responderDocumentos(solicitud.id)">Responder</button>
             </td>
 
           </tr>
