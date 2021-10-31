@@ -116,7 +116,7 @@ export class UsuariosPage implements OnInit {
   //  ACTUALIZAR USUARIO
   /**************************************************************************** */
 
-  actualizarUsuario(i){
+  actualizarUsuario(){
 
     // Variables iniciales
     var _this = this;

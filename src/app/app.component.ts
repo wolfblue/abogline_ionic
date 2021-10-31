@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../environments/environment';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $;
 
@@ -16,6 +16,8 @@ declare var $;
 export class AppComponent {
 
   @ViewChild("modalRegistoMain", {static: false}) modalRegistoMain: TemplateRef<any>;
+  @ViewChild("modalRegistoForm", {static: false}) modalRegistoForm: TemplateRef<any>;
+  @ViewChild("modalAutenticacion", {static: false}) modalAutenticacion: TemplateRef<any>;
 
   private unsubscribe$ = new Subject<void>();
   public email = "";
@@ -27,6 +29,7 @@ export class AppComponent {
   closeResult = '';
   design = 0;
   usuario:any = "";
+  modal : NgbModalRef;
 
   constructor(
     private http:HttpClient,
@@ -135,29 +138,15 @@ export class AppComponent {
 
    }
 
-   /**************************************************************************** */
+  /**************************************************************************** */
   //  MODAL
   /**************************************************************************** */
 
   open(content) {
-
-    this.modalService.open(content,{ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-
+    this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
+    this.modal.result.then((e) => {
+        console.log("dialogo cerrado")
+    });        
   }
 
   /**************************************************************************** */
@@ -177,8 +166,429 @@ export class AppComponent {
     setTimeout(function(){
       $(".modal-content").css("background","none");
       $(".modal-content").css("border","0px solid");
-      $(".modal-dialog").css("margin-top","13%");
     },20);
+
+  }
+
+  /**************************************************************************** */
+  //  REGISTRO SELECCIÓN DE PERFIL
+  /**************************************************************************** */
+
+  registerProfile(profile){
+
+    //  Variables iniciales
+    var _this = this;
+
+    // Abrir modal
+    _this.modal.close();
+    _this.open(_this.modalRegistoForm);
+
+    //  Editar estilos
+
+    setTimeout(function(){
+      $(".modal-content").css("background","none");
+      $(".modal-content").css("border","0px solid");
+    },20);
+
+  }
+
+  /**************************************************************************** */
+  //  AUTENTICACIÓN
+  /**************************************************************************** */
+
+  autenticacion(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Cerrar modal
+
+    if(_this.modal)
+      _this.modal.close();
+
+    // Abrir modal
+    _this.open(_this.modalAutenticacion);
+
+    //  Editar estilos
+
+    setTimeout(function(){
+      $(".modal-content").css("background","none");
+      $(".modal-content").css("border","0px solid");
+      $(".bodyModalRegistroMain").css("min-height","270px");
+    },20);
+
+  }
+
+  /**************************************************************************** */
+  //  REGISTRARSE
+  /**************************************************************************** */
+
+  registrarse(){
+
+    // Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+    var fieldError = "";
+    var fieldErrorImage = "";
+
+    // Valores por defecto
+
+    $(".msgError").html("");
+    $(".msgError").hide();
+    $(".inputUsuario").css("background","url('/assets/images/input_usuario.png')");
+    $(".inputUsuario").css("background-size","100% 100%");
+    $(".inputEmail").css("background","url('/assets/images/input_email.png')");
+    $(".inputEmail").css("background-size","100% 100%");
+    $(".inputPassword").css("background","url('/assets/images/input_password.png')");
+    $(".inputPassword").css("background-size","100% 100%");
+    $(".inputConfirmPassword").css("background","url('/assets/images/input_confirm_password.png')");
+    $(".inputConfirmPassword").css("background-size","100% 100%");
+   
+    // Validar campos obligatorios
+
+    if(error == 0 && !$("#registerUsuario").val()){
+
+      error = 1;
+      msg = "El usuario es obligatorio.";
+      fieldError = ".inputUsuario";
+      fieldErrorImage = "input_usuario_rojo.png";
+
+    }
+
+    if(error == 0 && !$("#registerEmail").val()){
+
+      error = 1;
+      msg = "El e-mail es obligatorio.";
+      fieldError = ".inputEmail";
+      fieldErrorImage = "input_email_rojo.png";
+
+    }
+
+    if(error == 0 && !$("#registerPassword").val()){
+
+      error = 1;
+      msg = "La contraseña es obligatoria.";
+      fieldError = ".inputPassword";
+      fieldErrorImage = "input_password_rojo.png";
+
+    }
+
+    if(error == 0 && !$("#registerConfirmPassword").val()){
+
+      error = 1;
+      msg = "El E-mail es obligatorio.";
+      fieldError = ".inputConfirmPassword";
+      fieldErrorImage = "input_confirm_password_rojo.png";
+
+    }
+
+    //  Validar email válido
+
+    if(error == 0){
+
+      var emailData = $("#registerEmail").val().split("@");
+
+      if(emailData.length < 2){
+
+        error = 1;
+        msg = "El e-mail no es válido.";
+        fieldError = ".inputEmail";
+        fieldErrorImage = "input_email_rojo.png";
+
+      }
+
+    }
+
+    //  Validar que el usuario contenga mínimo 6 caracteres
+
+    if(error == 0 && $(".inputUsuario").val().length < 6){
+
+      error = 1;
+      msg = "El usuario debe contener mínimo 6 caracteres.";
+      fieldError = ".inputUsuario";
+      fieldErrorImage = "input_usuario_rojo.png";
+
+    }
+
+    //  Validar que la contraseña contenga mínimo 6 caracteres
+
+    if(error == 0 && $(".inputPassword").val().length < 6){
+
+      error = 1;
+      msg = "La contraseña debe contener mínimo 6 caracteres.";
+      fieldError = ".inputPassword";
+      fieldErrorImage = "input_confirm_password_rojo.png";
+
+    }
+
+    //  Validar que las contraseñas coincidan
+
+    if(error == 0 && ( $(".inputPassword").val() != $(".inputConfirmPassword").val() ) ){
+
+      error = 1;
+      msg = "Las contraseñas no coinciden.";
+      fieldError = ".inputConfirmPassword";
+      fieldErrorImage = "input_confirm_password_rojo.png";
+
+    }
+
+    // Mostrar errores
+
+    if(error == 1){
+
+      $(".msgError").html(msg);
+      $(".msgError").show();
+      $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
+      $(fieldError).css("background-size","100% 100%");
+
+    }
+
+    //  Validar terminos
+
+    if(error == 0 && $("#checkTerminos").prop("checked") == false){
+
+      error = 1;
+      $(".msgError").html("Debe aceptar los términos y condiciones");
+      $(".msgError").show();
+
+    }
+
+    //  Validar que el usuario no se encuentre registrado
+
+    if(error == 0){
+
+      let apiUsuariosGetUser = new FormData();
+
+      apiUsuariosGetUser.append("usuario",$("#registerUsuario").val());
+
+      _this.postModel("apiUsuariosGetUser",apiUsuariosGetUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        if(result.length > 0){
+
+          $(".msgError").html("El usuario ya se encuentra registrado.");
+          $(".msgError").show();
+
+        }else{
+
+          //  Registrar usuario
+
+          let apiUsuariosInsertUser = new FormData();
+
+          apiUsuariosInsertUser.append("usuario",$("#registerUsuario").val());
+          apiUsuariosInsertUser.append("email",$("#registerEmail").val());
+          apiUsuariosInsertUser.append("password",$("#registerPassword").val());
+
+          _this.postModel("apiUsuariosInsertUser",apiUsuariosInsertUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            $("#registerUsuario").val("");
+            $("#registerEmail").val("");
+            $("#registerPassword").val("");
+
+            $(".msgSuccess").html("Se registro el usuario correctamente");
+            $(".msgSuccess").show();
+            
+            setTimeout(function(){
+              _this.modal.close();
+            },3000);
+
+          });
+
+        }
+
+      });
+
+    }
+
+  }
+
+  /**************************************************************************** */
+  //  AUTENTICACIÓN
+  /**************************************************************************** */
+
+  autenticacionAction(){
+
+    // Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+    var fieldError = "";
+    var fieldErrorImage = "";
+
+    // Valores por defecto
+
+    $(".msgErrorLogin").html("");
+    $(".msgErrorLogin").hide();
+    $("#loginUsuario").css("background","url('/assets/images/input_usuario.png')");
+    $("#loginUsuario").css("background-size","100% 100%");
+    $("#loginPassword").css("background","url('/assets/images/input_password.png')");
+    $("#loginPassword").css("background-size","100% 100%");
+   
+    // Validar campos obligatorios
+
+    if(error == 0 && !$("#loginUsuario").val()){
+
+      error = 1;
+      msg = "El usuario es obligatorio.";
+      fieldError = "#loginUsuario";
+      fieldErrorImage = "input_usuario_rojo.png";
+
+    }
+
+    if(error == 0 && !$("#loginPassword").val()){
+
+      error = 1;
+      msg = "La contraseña es obligatoria.";
+      fieldError = "#loginPassword";
+      fieldErrorImage = "input_password_rojo.png";
+
+    }   
+
+    // Mostrar errores
+
+    if(error == 1){
+
+      $(".msgErrorLogin").html(msg);
+      $(".msgErrorLogin").show();
+      $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
+      $(fieldError).css("background-size","100% 100%");
+
+    }
+
+    //  Validar que el usuario se encuentre registrado
+
+    if(error == 0){
+
+      let apiUsuariosGetUser = new FormData();
+
+      apiUsuariosGetUser.append("usuario",$("#loginUsuario").val());
+
+      _this.postModel("apiUsuariosGetUser",apiUsuariosGetUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        if(result.length == 0){
+
+          $(".msgErrorLogin").html("El usuario no se encuentra registrado.");
+          $(".msgErrorLogin").show();
+          
+        }else{
+
+          //  Validar contraseña del usuario
+
+          let apiUsuariosGetUserPassword = new FormData();
+
+          apiUsuariosGetUserPassword.append("usuario",$("#loginUsuario").val());
+          apiUsuariosGetUserPassword.append("password",$("#loginPassword").val());
+
+          _this.postModel("apiUsuariosGetUserPassword",apiUsuariosGetUserPassword).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            if(result.length == 0){
+
+              $(".msgErrorLogin").html("La contraseña no es válida.");
+              $(".msgErrorLogin").show();
+
+            }else{
+
+              //  Autenticar
+
+              $(".msgSuccessLogin").html("Autenticado correctamente");
+              $(".msgSuccessLogin").show();
+
+              setTimeout(function(){
+                _this.modal.close();
+              },3000);
+
+            }
+
+          });
+
+        }
+
+      });
+
+    }
+
+  }
+
+  /**************************************************************************** */
+  //  OLVIDAR CONTRASEÑA
+  /**************************************************************************** */
+
+  olvidarPassword(){
+
+    // Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+    var fieldError = "";
+    var fieldErrorImage = "";
+
+    // Valores por defecto
+
+    $(".msgErrorLogin").html("");
+    $(".msgErrorLogin").hide();
+    $("#loginUsuario").css("background","url('/assets/images/input_usuario.png')");
+    $("#loginUsuario").css("background-size","100% 100%");
+   
+    // Validar campos obligatorios
+
+    if(error == 0 && !$("#loginUsuario").val()){
+
+      error = 1;
+      msg = "El usuario es obligatorio.";
+      fieldError = "#loginUsuario";
+      fieldErrorImage = "input_usuario_rojo.png";
+
+    }
+
+    // Mostrar errores
+
+    if(error == 1){
+
+      $(".msgErrorLogin").html(msg);
+      $(".msgErrorLogin").show();
+      $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
+      $(fieldError).css("background-size","100% 100%");
+
+    } 
+
+    //  Validar que el usuario se encuentre registrado
+
+    if(error == 0){
+
+      let apiUsuariosGetUser = new FormData();
+
+      apiUsuariosGetUser.append("usuario",$("#loginUsuario").val());
+
+      _this.postModel("apiUsuariosGetUser",apiUsuariosGetUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        if(result.length == 0){
+
+          $(".msgErrorLogin").html("El usuario no se encuentra registrado.");
+          $(".msgErrorLogin").show();
+
+        }else{
+
+          //  Enviar correo para recordar contraseña
+
+          if(error == 0){
+
+            $(".msgSuccessLogin").html("Se envio correo electrónico para recordar contraseña");
+            $(".msgSuccessLogin").show();
+
+            setTimeout(function(){
+              _this.modal.close();
+            },3000);
+
+          }
+
+        }
+
+      });
+
+    }
 
   }
 

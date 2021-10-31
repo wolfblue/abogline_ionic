@@ -33,7 +33,7 @@
               </div>
 
               <div class="col-md-6 iniciarSesion">
-                <button class="cursor" (click)="location('login')">INICIAR SESIÓN ></button>
+                <button class="cursor" (click)="autenticacion()">INICIAR SESIÓN ></button>
               </div>
 
             </div>
@@ -178,16 +178,93 @@
       <div class="row seleccionaPerfil">
 
         <div class="col-md-6 center">
-          <img src="/assets/images/boton_cliente.png" class="botonCliente" />
+          <img src="/assets/images/boton_cliente.png" class="botonCliente" (click)="registerProfile('cliente')"/>
         </div>
 
         <div class="col-md-6 center">
-          <img src="/assets/images/boton_abogado.png" class="botonAbogado" />
+          <img src="/assets/images/boton_abogado.png" class="botonAbogado" (click)="registerProfile('abogado')" />
         </div>
 
       </div>
 
       <p class="center registraBienvenido">¡Bienvenido a la <br/>Familia Abogline!</p>
+
+    </div>
+      
+  </div>
+
+</ng-template>
+
+<!--  MODAL REGISTRO FORMULARIO -->
+
+<ng-template #modalRegistoForm let-modal id="modal2">
+
+  <div class="modal-body">
+
+    <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
+
+    <div class="bodyModalRegistroMain center">
+
+      <input id="registerUsuario" type="text" class="inputRegister inputUsuario" placeholder="Usuario (*):" />
+      <input id="registerEmail" type="text" class="inputRegister inputEmail" placeholder="Correo Electrónico (*):" />
+      <input id="registerPassword" type="password" class="inputRegister inputPassword" placeholder="Contraseña (*):" />
+      <input id="registerConfirmPassword" type="password" class="inputRegister inputConfirmPassword" placeholder="Confirmar Contraseña (*):" />
+
+      <p class="msgError"></p>
+      <p class="msgSuccess"></p>
+
+      <div class="capaTerminos">
+        <input id="checkTerminos" type="checkbox" class="checkTerminos"/>
+        <span class="terminos">Acepta los términos y condiciones (*)</span>
+      </div>
+
+      <div class="capaSesion">
+        <span class="tieneCuenta">¿Ya tienes una cuenta?</span>
+        <span class="iniciaSesion" (click)="autenticacion()">Inicia sesión</span>
+      </div>
+
+      <div class="registrarseButton cursor">
+        <img src="/assets/images/registrarse.png" (click)="registrarse()" />
+      </div>
+
+    </div>
+      
+  </div>
+
+</ng-template>
+
+<!--  MODAL AUTENTICACIÓN -->
+
+<ng-template #modalAutenticacion let-modal id="modal3">
+
+  <div class="modal-body">
+
+    <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
+
+    <div class="bodyModalAutenticacion center">
+
+      <input id="loginUsuario" type="text" class="inputRegister inputUsuario" placeholder="Usuario o Correo Electrónico (*):" />
+      <input id="loginPassword" type="password" class="inputRegister inputPassword" placeholder="Contraseña (*):" />
+
+      <p class="msgErrorLogin"></p>
+      <p class="msgSuccessLogin"></p>
+
+      <div class="row capaTerminos">
+
+        <div class="col-md-6">
+          <input type="checkbox" class="checkTerminos"/>
+          <span class="terminos cursor">Recordarme</span>
+        </div>
+
+        <div class="col-md-6">
+          <span class="terminos cursor" (click)="olvidarPassword()">¿Olvidó la contraseña?</span>
+        </div>
+        
+      </div>
+
+      <div class="iniciarSesionButton cursor">
+        <img src="/assets/images/iniciar_sesion.png" (click)="autenticacionAction()" />
+      </div>
 
     </div>
       

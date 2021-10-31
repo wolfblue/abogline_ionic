@@ -116,7 +116,7 @@ export class AdminAgendasPage implements OnInit {
   //  ACTUALIZAR USUARIO
   /**************************************************************************** */
 
-  actualizarLink(i){
+  actualizarLink(){
 
     // Variables iniciales
     var _this = this;
