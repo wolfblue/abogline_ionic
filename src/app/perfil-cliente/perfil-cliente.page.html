@@ -1,0 +1,212 @@
+<div class="row heightFull">
+
+  <div class="col-md-2 background1 center paddingRight0">
+
+    <div class="center">
+      <img class="perfilCargaFoto" src="/assets/images/perfil_carga_foto.png" />
+      <input type="file" id="photo" style="display: none;" />
+    </div>
+
+    <p class="usuario">{{nombres}} {{apellidos}}</p>
+
+    <div>
+      <img class="cursor" src="/assets/images/perfil_activo.png" />
+    </div>
+
+    <div>
+      <img class="cursor" src="/assets/images/politica_privacidad.png" />
+    </div>
+
+    <div>
+      <img class="cursor" src="/assets/images/pqrs.png" />
+    </div>
+
+    <div>
+      <img class="cursor" src="/assets/images/acerca_de.png" />
+    </div>
+
+  </div>
+
+  <div class="col-md-10 registerForm">
+
+    <div class="row registerFormContainer">
+
+      <div class="col-6 registerFormCapa1">
+
+        <p class="titleRegister">CONFIGURA TU PERFIL</p>
+
+        <p class="pField1">Nombres</p>
+        <div><input type="text" id="nombres" value="{{nombres}}" /></div>
+
+        <p class="pField1">Apellidos</p>
+        <div><input type="text" id="apellidos" value="{{apellidos}}"/></div>
+
+        <p class="pField1">Usuario</p>
+        <div><input type="text" id="usuario" disabled value="{{usuario}}"/></div>
+
+        <p class="pField1">Correo eléctronico</p>
+        <div><input type="text" id="email" value="{{email}}"/></div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <p class="pField1">Tipo de identificación</p>
+            <div>
+              <select id="tipoIdentificacion">
+                <option value=""></option>
+                <ng-container *ngFor="let item of tiposDocumentos">
+                  <option value="item.tipo_documento">{{item.tipo_documento}}</option>
+                </ng-container>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <p class="pField1">Identificación</p>
+            <div><input type="text" id="identificacion" value="{{identificacion}}"/></div>
+
+          </div>
+
+        </div>
+
+        <p class="pField1">Género</p>
+        <div>
+          <select id="genero">
+            <option value=""></option>
+            <ng-container *ngFor="let item of generos">
+              <option value="item.genero">{{item.genero}}</option>
+            </ng-container>
+          </select>
+        </div>
+
+        <p class="pField1">Teléfono de contacto</p>
+        <div><input type="text" id="telefonoContacto" value="{{telefonoContacto}}"/></div>
+
+        <p class="pField1">Ciudad</p>
+        <div>
+          <select id="ciudad">
+            <option value=""></option>
+            <ng-container *ngFor="let item of ciudades">
+              <option value="item.ciudad">{{item.ciudad}}</option>
+            </ng-container>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="col-6 registerFormCapa2">
+
+        <p class="pField1">Facebook</p>
+        <div><input type="text" id="facebook" value="{{facebook}}"/></div>
+
+        <p class="pField1">Twitter</p>
+        <div><input type="text" id="twitter" value="{{twitter}}"/></div>
+
+        <p class="pField1">Instagram</p>
+        <div><input type="text" id="instagram" value="{{instagram}}"/></div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <p class="pField1">
+              <input type="checkbox" id="notificacionEmail" />
+              <span class="notificacionEmail">Notificación Email</span>
+            </p>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <p class="pField2">
+              <input type="checkbox" id="notificacionSMS" />
+              <span class="notificacionSMS">Notificación SMS</span>
+            </p>
+
+          </div>
+
+        </div>
+
+        <p class="msgPerfil"></p>
+
+        <div>
+          <img class="perfilActualizar cursor" src="/assets/images/perfil_actualizar.png" (click)="actualizar()" />
+        </div>
+
+        <div class="changePassword">
+
+          <p class="pField1">Contraseña Anterior</p>
+          <div><input type="password" id="passwordOld" /></div>
+
+          <p class="pField1">Nueva Contraseña</p>
+          <div><input type="password" id="password" /></div>
+
+          <p class="pField1">Confirmar Contraseña</p>
+          <div><input type="password" id="passwordConfirm" /></div>
+
+          <p class="msgPassword"></p>
+
+          <div>
+            <img class="perfilActualizar cursor" src="/assets/images/perfil_cambiar.png" (click)="cambiarPassword()"/>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row formRegister2">
+
+      <div class="col">
+      
+        <div class="row">
+
+          <div class="col-md-6 titleRegister">TU ACTIVIDAD</div>
+          <div class="col-md-6 textRight">Activo desde: <b>{{activoDesde}}</b></div>
+  
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="center" scope="col f12" width="18%">Registro</th>
+              <th class="center" scope="col f12" width="18%">Completa tu perfil</th>
+              <th class="center" scope="col f12" width="18%">Crea tu caso</th>
+              <th class="center" scope="col f12" width="18%">Busca tu caso</th>
+              <th class="center" scope="col f12" width="18%">Disfruta la experiencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td class="center" *ngIf="registro=='true'"><img class="pasosImg" src="/assets/images/paso1_true.png"></td>
+              <td class="center" *ngIf="registro=='false'"><img class="pasosImg" src="/assets/images/paso1_red.png"></td>
+
+              <td class="center" *ngIf="completaPerfil=='true'"><img class="pasosImg" src="/assets/images/paso2_true.png"></td>
+              <td class="center" *ngIf="completaPerfil=='false'"><img class="pasosImg" src="/assets/images/paso2_red.png"></td>
+
+              <td class="center" *ngIf="creaCaso=='true'"><img class="pasosImg" src="/assets/images/paso3_true.png"></td>
+              <td class="center" *ngIf="creaCaso=='false'"><img class="pasosImg" src="/assets/images/paso3_red.png"></td> 
+
+              <td class="center" *ngIf="buscaCaso=='true'"><img class="pasosImg" src="/assets/images/paso4_true.png"></td>
+              <td class="center" *ngIf="buscaCaso=='false'"><img class="pasosImg" src="/assets/images/paso4_red.png"></td>
+
+              <td class="center" *ngIf="disfrutaExperiencia=='true'"><img class="pasosImg" src="/assets/images/paso5_true.png"></td>
+              <td class="center" *ngIf="disfrutaExperiencia=='false'"><img class="pasosImg" src="/assets/images/paso5_red.png"></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

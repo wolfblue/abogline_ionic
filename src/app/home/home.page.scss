@@ -53,7 +53,8 @@ div{
     background-image: url(/assets/images/banner_ejemplo.png);
     background-position: center;
     background-size: 100%;
-    min-height: 523px;
+    min-height: 36%;
+    background-repeat: no-repeat;
 }
 .row3{
     background-color: #D8D9DD;
@@ -170,7 +171,7 @@ div{
     background: #788392;
     border: 0px solid;
     border-radius: 5px;
-    width: 92%;
+    width: 100%;
     padding-left: 5%;
     font-style: italic;
     color:#ffffff;
@@ -225,4 +226,16 @@ div{
     transform: scale(1.1);
     cursor:pointer;
     opacity:0.8;
+}
+
+.socialFacebook{
+    margin-left: 12%;
+}
+
+.btnEnviar{
+    width:62%;
+}
+
+.paadingR0{
+    padding-right: 0%;
 }

@@ -1,0 +1,173 @@
+th{
+    border: 0px solid;
+}
+
+p{
+    width: 100%;
+}
+
+input{
+    border-top: 0px solid;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    border-bottom: 1px solid gray;
+    margin-bottom: 6%;
+    width: 100%;
+}
+
+select{
+    border-top: 0px solid;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    border-bottom: 1px solid gray;
+    margin-bottom: 6%;
+    width: 100%;
+}
+
+#notificacionEmail, #notificacionSMS{
+    width: auto;
+}
+
+.paddingRight0{
+    padding-right: 0%;
+}
+
+.heightFull{
+    height:100%;
+}
+
+.background1{
+    background: #7F7F7F;
+}
+
+.center{
+    text-align: center;
+}
+
+.perfilCargaFoto{
+    width: 90%;
+    padding-left: 4%;
+    padding-top: 6%;
+    border-radius: 50%;
+    min-height: 190px;
+    max-height: 190px;
+}
+
+.usuario{
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.itemMain{
+    color: #00475C;
+    font-weight: bold;
+    border-top: 2px solid#ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+.marginAuto{
+    margin: auto;
+}
+
+.cursor:hover{
+    cursor: pointer;
+    opacity:0.4;
+}
+
+.registerForm{
+    padding: 0%;
+    background: #D8D9DD
+}
+
+.registerFormContainer{
+    margin: 2% 4% 2% 2%;
+    background: #ffffff;
+    padding-top: 2%;
+    border-radius: 8px;
+    padding-bottom: 2%;
+}
+
+.registerFormCapa1{
+    padding-left: 5%;
+    padding-right: 3%;
+    border-right: 1px solid#dddddd;
+}
+
+.registerFormCapa2{
+    padding-left: 5%;
+    padding-right: 3%;
+    padding-top: 6%;
+    border-right: 1px solid#dddddd;
+}
+
+.titleRegister{
+    color: #051937;
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 6%;
+}
+
+.pField1{
+    font-style: italic;
+    font-size: 16px;
+    line-height: 0px;
+}
+
+.notificacionEmail{
+    padding-left: 4%;
+}
+
+.notificacionSMS{
+    padding-left: 4%;
+}
+
+.perfilActualizar{
+    width: 30%;
+    padding-top: 3%;
+    float: right;
+}
+
+.changePassword{
+    margin-top: 24%;
+    padding-top: 8%;
+    border-top: 1px solid #dddddd;
+}
+
+.formRegister2{
+    background: #ffffff;
+    margin-left: 2%;
+    margin-top: 3%;
+    margin-right: 4%;
+    margin-bottom: 3%;
+    border-radius: 8px;
+    padding: 2% 3% 2% 4%;
+}
+
+.textRight{
+    text-align: right
+}
+
+.f12{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pasosImg{
+    width: 45%;
+}
+
+.lineaTiempo{
+    width: 10%;
+}
+
+.msgPassword{
+    display:none;
+}
+
+.msgPerfil{
+    display:none;
+}

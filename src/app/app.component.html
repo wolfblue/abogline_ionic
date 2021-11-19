@@ -4,36 +4,50 @@
 
     <div class="row">
 
-      <div class="col-md-5">
+      <div class="col-md-3">
         <img class="logoHeader cursor" (click)="location('home')" src="/assets/images/logo_header.png">
       </div>
 
-      <div class="col-md-7">
+      <div class="col-md-9">
         
-        <div class="row">
+        <div class="row heightFull">
 
-          <div class="col-md-7">
+          <div class="col-md-5">
             
-            <div class="row menuPrincipalHeader">
+            <div class="row heightFull">
               
-              <div class="col-4 quienesSomos cursor">¿Quiénes Somos?</div>
-              <div class="col-4 nosotros cursor">Nosotros</div>
-              <div class="col-4 cursor">Contáctenos</div>
+              <div class="col-4 cursor middle fWhite center mainItem">¿Quiénes Somos?</div>
+              <div class="col-4 cursor middle fWhite center mainItem">Nosotros</div>
+              <div class="col-4 cursor middle fWhite center mainItem">Contáctenos</div>
 
+            </div>
+
+          </div>
+
+          <div class="col-md-2">
+
+            <div class="row heightFull" *ngIf="autenticado==1">
+              <div class="cursor middle fWhite center mainItem">
+                <span class="nameUser" (click)="location('perfil-cliente')">Hola {{usuarioHeader}}</span>
+              </div>
             </div>
 
           </div>
 
           <div class="col-md-5">
 
-            <div class="row">
+            <div class="row heightFull">
 
-              <div class="col-md-6 registrarse">
-                <button class="cursor" (click)="registrarseMain()">REGISTRARSE ></button>
+              <div class="col-md-4 registrarse middle">
+                <button class="cursor" (click)="registrarseMain()" *ngIf="autenticado==0">REGISTRARSE ></button>
               </div>
 
-              <div class="col-md-6 iniciarSesion">
-                <button class="cursor" (click)="autenticacion()">INICIAR SESIÓN ></button>
+              <div class="col-md-4 iniciarSesion middle">
+                <button class="cursor" (click)="autenticacion()" *ngIf="autenticado==0">INICIAR SESIÓN</button>
+              </div>
+
+              <div class="col-md-4 cerrarSesion middle">
+                <button class="cursor" (click)="cerrarSesion()" *ngIf="autenticado==1">CERRAR SESIÓN</button>
               </div>
 
             </div>
@@ -46,31 +60,35 @@
 
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mainPrincipal" *ngIf="auth == 1">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link main inicio" (click)="location('home')">Inicio</a>
-          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('register-caso')">Registrar Caso</a>
-          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('consultar-caso')">Consultar Caso</a>
-          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('abogados')">Consultar abogados</a>
-          <a *ngIf="profile == 'abogado'" class="nav-item nav-link main" (click)="location('consultar-caso')">Buscar Caso</a>
-          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('solicitudes')">Solicitudes</a>
-          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('agendar')">Agendar</a>
-          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('calendar')">Calendario</a>
-          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('pagos')">Pagos</a>
-          <a *ngIf="profile == 'abogado'" class="nav-item nav-link main" (click)="location('solicitar-documentacion')">Solicitar documentación</a>
-          <a *ngIf="profile == 'cliente'" class="nav-item nav-link main" (click)="location('cargar-documentacion')">Cargar documentación</a>
-          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('consultar-documentacion')">Consultar documentos</a>
-          <a *ngIf="profile != 'admin'" class="nav-item nav-link main" (click)="location('seguimiento')">Seguimiento</a>
-          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('usuarios')">Usuarios</a>
-          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('admin-agendas')">Agendas</a>
-          <a *ngIf="profile == 'admin'" class="nav-item nav-link main" (click)="location('admin-plantillas')">Plantillas</a>
+    <div class="row mainPrincipal" *ngIf="autenticado == 1">
+
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal">Inicio</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Registrar caso</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente' || perfil == 'abogado'">Mis casos</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Consultar abogados</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Notificaciones</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Calendario</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipalFinal" *ngIf="perfil == 'cliente'">Pagos pendientes</div>
+
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Busca tu caso</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Notificaciones</div>
+      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Calendario</div>
+
+      <div class="dropdown show" *ngIf="perfil == 'administrador'">
+
+        <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administrar
+        </a>
+      
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="admin-city">Ciudades</a>
+          <a class="dropdown-item" href="admin-genero">Generos</a>
+          <a class="dropdown-item" href="admin-tipo-documento">Tipos de documentos</a>
         </div>
+
       </div>
-    </nav>
+
+    </div>
 
   </ion-header>
 
@@ -79,8 +97,6 @@
     <ion-router-outlet></ion-router-outlet>
 
   </ion-content>
-
-  <ngx-spinner></ngx-spinner>
 
 </ion-app>
 
@@ -253,7 +269,7 @@
 
         <div class="col-md-6">
           <input type="checkbox" class="checkTerminos"/>
-          <span class="terminos cursor">Recordarme</span>
+          <span class="terminos">Recordarme</span>
         </div>
 
         <div class="col-md-6">
@@ -271,3 +287,5 @@
   </div>
 
 </ng-template>
+
+<ngx-spinner></ngx-spinner>

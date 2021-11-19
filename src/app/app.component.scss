@@ -1,3 +1,19 @@
+a:link {
+  text-decoration: none!important;
+}
+
+a:visited {
+  text-decoration: none!important;
+}
+
+a:hover {
+  text-decoration: underline!important;
+}
+
+a:active {
+  text-decoration: underline!important;
+}
+
 h5{
   width:100%;
   text-align: center;
@@ -44,8 +60,8 @@ a:hover{
   padding-right: 1%;
 }
 .logoHeader{
-  width: 45%;
-  padding: 5% 2% 5% 7%;
+  width: 87%;
+  padding: 5% 2% 5% 12%;
 }
 .registrarse{
   padding-right: 0%;
@@ -53,12 +69,11 @@ a:hover{
 .registrarse button{
   color: #031735;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 11px;
   font-family: 'Lato';
   padding: 5% 10% 5% 10%;
   border: 0px;
   border-radius: 6px;
-  margin-top: 23%;
 }
 .iniciarSesion{
   padding-left: 0%;
@@ -66,20 +81,35 @@ a:hover{
 .iniciarSesion button{
   color: #031735;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 11px;
   font-family: 'Lato';
   padding: 5% 10% 5% 10%;
   border: 0px;
   border-radius: 6px;
-  margin-top: 23%;
+  background: #9a999e;
 }
+
+.cerrarSesion{
+  padding-left: 0%;
+}
+
+.cerrarSesion button{
+  color: #031735;
+  font-weight: bold;
+  font-size: 11px;
+  font-family: 'Lato';
+  padding: 5% 10% 5% 10%;
+  border: 0px;
+  border-radius: 6px;
+}
+
 .menuPrincipalHeader div{
   padding-left:0%;
   padding-right:0%;
   font-size: 14px;
   text-align: center;
   color:#ffffff;
-  margin-top: 8%;
+  margin-top: 9%;
 }
 .quienesSomos,.nosotros{
   border-right:1px solid#ffffff;
@@ -281,4 +311,87 @@ a:hover{
   display: none;
   color: green;
   font-style: italic;
+}
+
+.middle{
+  margin:auto;
+}
+
+.fWhite{
+  color:#ffffff;
+}
+
+.mainPrincipal{
+  border-top: 2px solid #CDCFD1;
+  border-bottom: 2px solid #CDCFD1;
+  padding: 0%;
+  background: #0C1F3C;
+  height: auto;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.background1{
+  background: #0C1F3C;
+}
+
+.padding2{
+  padding-left: 2%;
+}
+
+.mainPrincipal a:hover{
+  color:#ffffff;
+}
+
+.bRWhite{
+  border-right:1px solid#ffffff;
+}
+
+.paddingT05{
+  padding-top: 0.5%;
+}
+
+.paddingB05{
+  padding-bottom: 0.5%;
+}
+
+.paddingL4{
+  padding-left: 4%;
+}
+
+.paddingR4{
+  padding-right: 4%;
+}
+
+.heightFull{
+  height: 100%;
+}
+
+.mainItem{
+  width: 100%;
+  margin: auto;
+  vertical-align: middle;
+}
+
+.mainItemPrincipal{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  max-height: 17px;
+  line-height: 0px;
+}
+
+.mainItemPrincipalFinal{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  max-height: 17px;
+  line-height: 0px;
+  border-right: 0px solid;
+}
+
+.administrar{
+  font-weight: bold;
+  font-size: 13px;
+  padding-top: 11%;
+  padding-left: 47%;
 }

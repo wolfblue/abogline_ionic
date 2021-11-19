@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../environments/environment';
 import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from "ngx-spinner";
+import { $$ } from 'protractor';
 
 declare var $;
 
@@ -28,16 +30,34 @@ export class AppComponent {
   
   closeResult = '';
   design = 0;
-  usuario:any = "";
   modal : NgbModalRef;
+
+  autenticado: any = 0;
+  usuario:any = "";
+  perfil: any = "";
+  usuarioHeader: any = "";
 
   constructor(
     private http:HttpClient,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService
   ) {
 
     var _this = this;
+
+    //  Variables de sesión
+
+    if(sessionStorage.getItem("autenticado")){
+
+      this.autenticado = sessionStorage.getItem("autenticado");
+      this.usuario = sessionStorage.getItem("usuario");
+      this.perfil = sessionStorage.getItem("perfil");
+
+      //  Consultar información del usuario
+      this.getUser();
+
+    }
 
   }
 
@@ -61,9 +81,6 @@ export class AppComponent {
   /************************************************************************************* */
 
   location(ruta){
-
-    //  Limpiar variables de sesión
-    sessionStorage.setItem("idCaso","0");
 
     //  Redireccionar
     window.location.href = ruta;
@@ -183,6 +200,9 @@ export class AppComponent {
     _this.modal.close();
     _this.open(_this.modalRegistoForm);
 
+    //  Actualizar variables globales
+    _this.perfil = profile;
+
     //  Editar estilos
 
     setTimeout(function(){
@@ -232,6 +252,9 @@ export class AppComponent {
     var msg = "";
     var fieldError = "";
     var fieldErrorImage = "";
+
+    //  Spinner
+    _this.spinner.show();
 
     // Valores por defecto
 
@@ -343,6 +366,9 @@ export class AppComponent {
       $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
       $(fieldError).css("background-size","100% 100%");
 
+      //  Spinner
+      _this.spinner.hide();
+
     }
 
     //  Validar terminos
@@ -352,6 +378,9 @@ export class AppComponent {
       error = 1;
       $(".msgError").html("Debe aceptar los términos y condiciones");
       $(".msgError").show();
+
+      //  Spinner
+      _this.spinner.hide();
 
     }
 
@@ -370,6 +399,9 @@ export class AppComponent {
           $(".msgError").html("El usuario ya se encuentra registrado.");
           $(".msgError").show();
 
+          //  Spinner
+          _this.spinner.hide();
+
         }else{
 
           //  Registrar usuario
@@ -379,8 +411,12 @@ export class AppComponent {
           apiUsuariosInsertUser.append("usuario",$("#registerUsuario").val());
           apiUsuariosInsertUser.append("email",$("#registerEmail").val());
           apiUsuariosInsertUser.append("password",$("#registerPassword").val());
+          apiUsuariosInsertUser.append("perfil",_this.perfil);
 
           _this.postModel("apiUsuariosInsertUser",apiUsuariosInsertUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            //  Spinner
+            _this.spinner.hide();
 
             $("#registerUsuario").val("");
             $("#registerEmail").val("");
@@ -416,6 +452,9 @@ export class AppComponent {
     var msg = "";
     var fieldError = "";
     var fieldErrorImage = "";
+
+    //  Spinner
+    _this.spinner.show();
 
     // Valores por defecto
 
@@ -455,6 +494,9 @@ export class AppComponent {
       $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
       $(fieldError).css("background-size","100% 100%");
 
+      //  Spinner
+      _this.spinner.hide();
+
     }
 
     //  Validar que el usuario se encuentre registrado
@@ -471,6 +513,9 @@ export class AppComponent {
 
           $(".msgErrorLogin").html("El usuario no se encuentra registrado.");
           $(".msgErrorLogin").show();
+
+          //  Spinner
+          _this.spinner.hide();
           
         }else{
 
@@ -482,6 +527,9 @@ export class AppComponent {
           apiUsuariosGetUserPassword.append("password",$("#loginPassword").val());
 
           _this.postModel("apiUsuariosGetUserPassword",apiUsuariosGetUserPassword).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+            //  Spinner
+            _this.spinner.hide();
 
             if(result.length == 0){
 
@@ -496,7 +544,19 @@ export class AppComponent {
               $(".msgSuccessLogin").show();
 
               setTimeout(function(){
+
+                sessionStorage.setItem("autenticado","1");
+                sessionStorage.setItem("usuario",result[0].usuario);
+                sessionStorage.setItem("perfil",result[0].perfil);
+
+                _this.autenticado = 1;
+                _this.usuario = result[0].usuario;
+                _this.perfil = result[0].perfil;
                 _this.modal.close();
+
+                //  Consultar información del usuario
+                _this.getUser();
+
               },3000);
 
             }
@@ -589,6 +649,56 @@ export class AppComponent {
       });
 
     }
+
+  }
+
+  /**************************************************************************** */
+  //  CERRAR SESIÓN
+  /**************************************************************************** */
+
+  cerrarSesion(){
+
+    // Variables iniciales
+    var _this = this;
+
+    //  Cerrar sesión
+
+    sessionStorage.setItem("autenticado","0");
+    sessionStorage.setItem("usuario","");
+
+    _this.autenticado = 0;
+    _this.usuario = "";
+    _this.location("home");
+    
+  }
+
+  /**************************************************************************** */
+  //  CONSULTAR INFORMACIÓN DEL USUARIO
+  /**************************************************************************** */
+
+  getUser(){
+
+    // Variables iniciales
+    var _this = this;
+
+    //  Valores predeterminados
+    _this.usuarioHeader = _this.usuario;
+
+    //  Consultar información del usuario
+    let apiUsuariosGetUser = new FormData();
+
+    apiUsuariosGetUser.append("usuario",sessionStorage.getItem("usuario"));
+
+    _this.postModel("apiUsuariosGetUser",apiUsuariosGetUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        if(result[0].nombres)          
+          _this.usuarioHeader = result[0].nombres + " " + result[0].apellidos;
+
+      }
+
+    });
 
   }
 
