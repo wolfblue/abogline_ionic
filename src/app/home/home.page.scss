@@ -52,8 +52,8 @@ div{
 .row2{
     background-image: url(/assets/images/banner_ejemplo.png);
     background-position: center;
-    background-size: 100%;
-    min-height: 36%;
+    background-size: 100% 100%;
+    min-height: 350px;
     background-repeat: no-repeat;
 }
 .row3{
@@ -228,14 +228,22 @@ div{
     opacity:0.8;
 }
 
-.socialFacebook{
-    margin-left: 12%;
-}
-
 .btnEnviar{
     width:62%;
 }
 
 .paadingR0{
     padding-right: 0%;
+}
+
+.facebook{
+    padding-right: 0%!important;
+}
+
+.twitter{
+    padding-left: 0%!important;
+}
+
+.twitter iframe{
+    margin-left: -6%!important;
 }

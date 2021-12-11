@@ -1,5 +1,6 @@
 import { Component,ViewChild, TemplateRef } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgxTweetModule } from "ngx-tweet";
 
 @Component({
   selector: 'app-home',

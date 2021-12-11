@@ -1,3 +1,32 @@
+ul {
+  width:92%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: right;
+  color:#ffffff;
+  line-height: 20px;
+}
+
+.mainPrincipal li{
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+}
 a:link {
   text-decoration: none!important;
 }
@@ -21,6 +50,10 @@ h5{
 }
 p{
   width:100%;
+}
+
+#dropdownMenuLink{
+  padding:0%;
 }
 
 .center{
@@ -74,6 +107,7 @@ a:hover{
   padding: 5% 10% 5% 10%;
   border: 0px;
   border-radius: 6px;
+  background: #D9DADE;
 }
 .iniciarSesion{
   padding-left: 0%;
@@ -101,6 +135,7 @@ a:hover{
   padding: 5% 10% 5% 10%;
   border: 0px;
   border-radius: 6px;
+  background: #9a999e;
 }
 
 .menuPrincipalHeader div{
@@ -278,7 +313,7 @@ a:hover{
 .iniciarSesionButton{
   position: absolute;
   width: 60%;
-  margin-top: 6%;
+  margin-top: 0%;
   left: 20%;
 }
 
@@ -394,4 +429,34 @@ a:hover{
   font-size: 13px;
   padding-top: 11%;
   padding-left: 47%;
+}
+
+.marginAuto{
+  margin:auto;
+}
+
+.paddingR4{
+  padding-right: 4%;
+}
+
+.paddingL4{
+  padding-left: 4%;
+}
+
+.borderR1{
+  border-right: 1px solid#ffffff;
+}
+
+.dropdown-item{
+  color: #264558!important;
+  text-align: left!important;
+}
+
+.closeModal{
+  float: right;
+  margin-right: 10%;
+  margin-top: 2%;
+  font-weight: bold;
+  font-size: 15px;
+  color: #0b1e3b;
 }

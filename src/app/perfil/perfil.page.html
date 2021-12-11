@@ -1,0 +1,653 @@
+<div class="row heightFull">
+
+  <div class="col-md-2 background1 center paddingRight0">
+
+    <div class="center">
+      <img class="perfilCargaFoto" src="/assets/images/perfil_carga_foto.png" />
+      <input type="file" id="photo" style="display: none;" />
+    </div>
+
+    <p class="usuario">{{nombres}} {{apellidos}}</p>
+
+    <div>
+      <img class="cursor btnPerfil" src="/assets/images/perfil_activo.png" (click)="menu('perfil')" />
+    </div>
+
+    <div *ngIf="perfil=='abogado'">
+      <img class="cursor btnHojaVida" src="/assets/images/hoja_vida.png" (click)="menu('hojaVida')" />
+    </div>
+
+    <div>
+      <img class="cursor btnPolitica" src="/assets/images/politica_privacidad.png" (click)="menu('politica')" />
+    </div>
+
+    <div>
+      <img class="cursor btnPQRS" src="/assets/images/pqrs.png" (click)="menu('pqrs')" />
+    </div>
+
+    <div>
+      <img class="cursor btnAcerca" src="/assets/images/acerca_de.png" (click)="menu('acerca')" />
+    </div>
+
+  </div>
+
+  <div class="col-md-10 registerForm">
+
+    <div id="perfil">
+
+      <div class="row registerFormContainer">
+
+        <div class="col-6 registerFormCapa1">
+
+          <p class="titleRegister">CONFIGURA TU PERFIL</p>
+
+          <p class="pField1">Nombres</p>
+          <div><input type="text" id="nombres" value="{{nombres}}" /></div>
+
+          <p class="pField1">Apellidos</p>
+          <div><input type="text" id="apellidos" value="{{apellidos}}"/></div>
+
+          <p class="pField1">Usuario</p>
+          <div><input type="text" id="usuario" disabled value="{{usuario}}"/></div>
+
+          <p class="pField1">Correo eléctronico</p>
+          <div><input type="text" id="email" value="{{email}}"/></div>
+
+          <div class="row">
+
+            <div class="col-md-6">
+
+              <p class="pField1">Tipo de identificación</p>
+              <div>
+                <select id="tipoIdentificacion">
+                  <option value=""></option>
+                  <ng-container *ngFor="let item of tiposDocumentos">
+                    <option value="{{item.tipo_documento}}">{{item.tipo_documento}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <p class="pField1">Identificación</p>
+              <div><input type="text" id="identificacion" value="{{identificacion}}"/></div>
+
+            </div>
+
+          </div>
+
+          <div class="row marginTop3" *ngIf="perfil=='abogado'">
+
+            <div class="col-md-6">
+
+              <p class="pField1">Fecha de Nacimiento</p>
+              <div><input type="date" id="nacimiento" value="{{nacimiento}}"/></div>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <p class="pField1">Género</p>
+              <div>
+                <select id="genero">
+                  <option value=""></option>
+                  <ng-container *ngFor="let item of generos">
+                    <option value="{{item.genero}}">{{item.genero}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+
+          <p class="pField1" *ngIf="perfil!='abogado'">Género</p>
+          <div *ngIf="perfil!='abogado'">
+            <select id="genero">
+              <option value=""></option>
+              <ng-container *ngFor="let item of generos">
+                <option value="{{item.genero}}">{{item.genero}}</option>
+              </ng-container>
+            </select>
+          </div>
+
+          <p class="pField1" *ngIf="perfil!='abogado'">Teléfono de contacto</p>
+          <p class="pField1 marginTop3" *ngIf="perfil=='abogado'">Teléfono</p>
+
+          <div><input type="text" id="telefonoContacto" value="{{telefonoContacto}}"/></div>
+
+          <div class="row marginTop3" *ngIf="perfil=='abogado'">
+
+            <div class="col-md-6">
+
+              <p class="pField1">Municipio</p>
+              <div>
+                <select id="municipio">
+                  <option value=""></option>
+                  <ng-container *ngFor="let item of municipios">
+                    <option value="{{item.municipio}}">{{item.municipio}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <p class="pField1">Ciudad</p>
+              <div>
+                <select id="ciudad">
+                  <option value=""></option>
+                  <ng-container *ngFor="let item of ciudades">
+                    <option value="{{item.ciudad}}">{{item.ciudad}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+
+          <p class="pField1" *ngIf="perfil!='abogado'">Ciudad</p>
+          <div *ngIf="perfil!='abogado'">
+            <select id="ciudad">
+              <option value=""></option>
+              <ng-container *ngFor="let item of ciudades">
+                <option value="{{item.ciudad}}">{{item.ciudad}}</option>
+              </ng-container>
+            </select>
+          </div>
+
+          <p class="pField1 marginTop3" *ngIf="perfil=='abogado'">Dirección Residencia</p>
+          <div *ngIf="perfil=='abogado'"><input type="text" id="direccion" value="{{direccion}}"/></div>
+
+        </div>
+
+        <div class="col-6 padding0">
+
+          <div class="registerFormCapa2">
+
+            <p class="pField1">Facebook</p>
+            <div><input type="text" id="facebook" value="{{facebook}}"/></div>
+
+            <p class="pField1">Twitter</p>
+            <div><input type="text" id="twitter" value="{{twitter}}"/></div>
+
+            <p class="pField1">Instagram</p>
+            <div><input type="text" id="instagram" value="{{instagram}}"/></div>
+
+            <div class="row marginB2">
+
+              <div class="col-md-6">
+
+                <div class="form-check form-switch">
+
+                  <div class="row">
+
+                    <div class="col-9 paddingL0">
+                      <label class="form-check-label bold" for="flexSwitchCheckDefaultNotificacionEmail">Notificación Email</label>
+                    </div>
+
+                    <div class="col-3">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefaultNotificacionEmail">
+                    </div>
+
+                  </div>
+                  
+                </div>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <div class="form-check form-switch">
+
+                  <div class="row">
+
+                    <div class="col-9 paddingL0">
+                      <label class="form-check-label bold" for="flexSwitchCheckDefaultNotificacionSMS">Notificación SMS</label>
+                    </div>
+
+                    <div class="col-3">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefaultNotificacionSMS">
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3 paddingRight0">
+
+                <p class="pField2">
+                  <span class="bold compartir">Compartir</span>
+                </p>
+
+              </div>
+
+              <div class="col-md-9">
+
+                <img class="redSocial" src="/assets/images/perfil_facebook.png" (click)="redSocial('facebook')" />
+                <img class="redSocial" src="/assets/images/perfil_twitter.png" (click)="redSocial('twitter')" />
+                <img class="redSocial" src="/assets/images/perfil_instagram.png" (click)="redSocial('instagram')" />
+                <img class="redSocial" src="/assets/images/perfil_linked.png" (click)="redSocial('linked')" />
+                <img class="redSocial" src="/assets/images/perfil_whatsapp.png" (click)="redSocial('whatsapp')" />
+
+              </div>
+
+            </div>
+
+            <p class="msgPerfil"></p>
+
+            <div>
+              <img class="perfilActualizar cursor" src="/assets/images/perfil_actualizar.png" (click)="actualizar()" />
+            </div>
+
+          </div>
+
+          <div class="changePassword backgroundPassword">
+
+            <p class="pField1 backgroundPassword">Contraseña Anterior</p>
+            <div class="backgroundPassword" ><input class="backgroundPassword" type="password" id="passwordOld" /></div>
+
+            <p class="pField1 backgroundPassword">Nueva Contraseña</p>
+            <div><input class="backgroundPassword" type="password" id="password" /></div>
+
+            <p class="pField1 backgroundPassword">Confirmar Contraseña</p>
+            <div><input class="backgroundPassword" type="password" id="passwordConfirm" /></div>
+
+            <p class="msgPassword backgroundPassword"></p>
+
+            <div class="backgroundPassword widthFull textAlignR">
+              <img class="passwordActualizar cursor backgroundPassword" src="/assets/images/perfil_cambiar.png" (click)="cambiarPassword()"/>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="hojaVida">
+
+      <div class="row registerFormContainer registerFormCapa1">
+
+        <p class="titleRegister2 center">HOJA DE VIDA</p>
+
+        <div class="overflowY">
+
+          <div class="row">
+
+          <div class="col-6 borderRightGray">
+
+            <p>Universidad de egreso - Profesional *</p>
+            <input type="text" class="universidad" />
+
+          </div>
+
+          <div class="col-6">
+
+            <p class="marginLeft8">Título Profesional</p>
+            <input type="text" class="universidad marginLeft8" />
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-6 borderRightGray">
+
+            <p>
+              <select class="selectUniversidad selectUniversidad1" (change)="selectTitulo('1')">
+                <option value="">- Agregar otro Título -</option>
+                <ng-container *ngFor="let item of titulos">
+                  <option value="{{item.titulo}}">{{item.titulo}}</option>
+                </ng-container>
+              </select>
+            </p>
+
+            <input type="text" class="universidad" />
+
+          </div>
+
+          <div class="col-6">
+
+            <p class="marginLeft8">Título <span class="titulo1"></span></p>
+            <input type="text" class="universidad marginLeft8" />
+
+          </div>
+
+        </div>
+
+        </div>
+
+        <div class="row presentacion">
+
+          <div class="col titleRegister2 tPresentacion">
+            PRESENTACIÓN
+          </div>
+
+          <div class="col dileClientes">
+            (Dile a tus clientes por qué deben contratarte)
+          </div>
+
+          <div class="col tRight">
+            <img class="informacion" src="/assets/images/informacion.png" />
+            <span>0/160</span>
+          </div>
+
+        </div>
+
+        <textarea class="areaPresentacion"></textarea>
+
+        <div class="row marginTop3">
+
+          <div class="col">Tipo de T.P</div>
+          <div class="col">No. Tarjeta o Licencia</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <select class="selectTipo1">
+              <option>Temporal</option>
+            </select>
+
+          </div>
+
+          <div class="col">
+
+            <input type="text" />
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">¿Cuenta con experiencia laboral en el ejercicio del Derecho?</div>
+          <div class="col">¿Cuánto Tiempo?</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <select class="selectTipo1">
+              <option>SI</option>
+              <option>NO</option>
+            </select>
+
+          </div>
+
+          <div class="col">
+
+            <input type="text" />
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">¿Cuenta con alguna investigación disciplinaria por parte del Consejo Superior de la Juricatura?</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <select class="selectTipo1">
+              <option>SI</option>
+              <option>NO</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">¿Cuál de las siguientes opciones se ajusta a sus gastos en las ramas del derecho o en cuál le gustaría desempeñar laboralmente?</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <select class="selectTipo1">
+              <option>CIVIL</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">¿Cuánto es el promedio que cobra usted por una asesoría jurídica? (Solo asesoría)</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <select class="selectTipo1">
+              <option>$200.000</option>
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row registerFormContainer registerFormCapa1">
+
+        <p class="titleRegister2 center">CARGA DE DOCUMENTOS</p>
+
+        <div class="row">
+
+          <div class="col-6 borderRightGray">
+
+            <div class="row marginBottom3">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-10 marginAuto">Cargar Cédula al 150%</div>
+
+            </div>
+
+            <div class="row marginBottom3">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-10 marginAuto">Cargar Recibo de Servicio Público</div>
+
+            </div>
+
+            <div class="row marginBottom3">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-10 marginAuto">Cargar T.P.</div>
+
+            </div>
+
+          </div>
+
+          <div class="col-6">
+
+            <div class="row marginBottom3 marginLeft5">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-10 marginAuto">Cargar Diploma o Acta de Grado</div>
+
+            </div>
+
+            <div class="row marginBottom3 marginLeft5">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos_rojo.png"></div>
+              <div class="col-10 marginAuto">Especialización</div>
+
+            </div>
+
+            <div class="row marginBottom3 marginLeft5">
+
+              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos_rojo.png"></div>
+              <div class="col-10 marginAuto">Maestría</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="politica">
+
+      <div class="row registerFormContainer registerFormCapa1">
+
+        <p class="titleRegister2">POLÍTICA DE PRIVACIDAD</p>
+
+        <p>{{politicaPrivacidad}}</p>
+
+      </div>
+
+    </div>
+
+    <div id="pqrs">
+
+      <div class="row registerFormContainer registerFormCapa1">
+
+        <p class="titleRegister2">PQRS</p>
+
+        <p>Escribenos tu petición, queja o reclamo a continuación:</p>
+
+        <div>
+          <textarea id="pqrsTextarea" rows="10">{{contenido}}</textarea>
+        </div>
+      
+        <p class="msg"></p>
+      
+        <button class="btn btn-primary btnPQRSEnvio" type="submit" (click)="pqrs()">Enviar PQRS</button>
+
+      </div>
+
+    </div>
+
+    <div id="acerca">
+
+      <div class="row registerFormContainer registerFormCapa1">
+
+        <p class="titleRegister2">ACERCA DE</p>
+
+        <p>{{acercaDe}}</p>
+
+      </div>
+
+    </div>
+
+    <div class="row formRegister2">
+
+      <div class="col">
+      
+        <div class="row">
+
+          <div class="col-md-6 titleRegister">TU ACTIVIDAD</div>
+          <div class="col-md-6 textRight">Activo desde: <b>{{activoDesde}}</b></div>
+  
+        </div>
+
+        <table class="table actividad">
+          <thead>
+            <tr>
+              <th class="center" scope="col f12">Registro</th>
+              <th class="center lineaTiempo" scope="col f12"></th>
+              <th class="center" scope="col f12">Completa tu perfil</th>
+              <th class="center lineaTiempo" scope="col f12"></th>
+
+              <th class="center" scope="col f12" *ngIf="perfil=='cliente'">Crea tu caso</th>
+              <th class="center lineaTiempo" scope="col f12" *ngIf="perfil=='cliente'"></th>
+              <th class="center" scope="col f12" *ngIf="perfil=='cliente'">Busca tu Abogado</th>
+              <th class="center lineaTiempo" scope="col f12" *ngIf="perfil=='cliente'"></th>
+              <th class="center" scope="col f12" *ngIf="perfil=='cliente'">Disfruta la experiencia</th>
+
+              <th class="center" scope="col f12" *ngIf="perfil=='abogado'">Completa tu HV</th>
+              <th class="center lineaTiempo" scope="col f12" *ngIf="perfil=='abogado'"></th>
+              <th class="center" scope="col f12" *ngIf="perfil=='abogado'">Proceso de Validación</th>
+              <th class="center lineaTiempo" scope="col f12" *ngIf="perfil=='abogado'"></th>
+              <th class="center" scope="col f12" *ngIf="perfil=='abogado'">Aprobado</th>
+              <th class="center lineaTiempo" scope="col f12" *ngIf="perfil=='abogado'"></th>
+              <th class="center" scope="col f12" *ngIf="perfil=='abogado'">Busca tus Clientes</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td class="center" *ngIf="registro=='true'"><img class="pasosImg" src="/assets/images/paso1_true.png"></td>
+              <td class="center" *ngIf="registro=='false'"><img class="pasosImg" src="/assets/images/paso1_red.png"></td>
+
+              <td class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
+
+              <td class="center" *ngIf="completaPerfil=='true'"><img class="pasosImg" src="/assets/images/paso2_true.png"></td>
+              <td class="center" *ngIf="completaPerfil=='false'"><img class="pasosImg" src="/assets/images/paso2_red.png"></td>
+
+              <td class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
+
+              <td class="center" *ngIf="creaCaso=='true' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso3_true.png"></td>
+              <td class="center" *ngIf="creaCaso=='false' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso3_red.png"></td>
+
+              <td class="center" *ngIf="hojaVida=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/hoja_true.png"></td>
+              <td class="center" *ngIf="hojaVida=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/hoja_red.png"></td>
+
+              <td class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
+
+              <td class="center" *ngIf="buscaCaso=='true' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso4_true.png"></td>
+              <td class="center" *ngIf="buscaCaso=='false' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso4_red.png"></td>
+
+              <td class="center" *ngIf="validacion=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_true.png"></td>
+              <td class="center" *ngIf="validacion=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_red.png"></td>
+
+              <td class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
+
+              <td class="center" *ngIf="disfrutaExperiencia=='true' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso5_true.png"></td>
+              <td class="center" *ngIf="disfrutaExperiencia=='false' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso5_red.png"></td>
+
+              <td class="center" *ngIf="aprobado=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/aprobado_true.png"></td>
+              <td class="center" *ngIf="aprobado=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/aprobado_red.png"></td>
+
+              <td *ngIf="perfil=='abogado'" class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
+
+              <td class="center" *ngIf="buscaCliente=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/busca_cliente_true.png"></td>
+              <td class="center" *ngIf="buscaCliente=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/busca_cliente_red.png"></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

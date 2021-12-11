@@ -1,0 +1,390 @@
+th{
+    border: 0px solid!important;
+}
+
+tr{
+    border: 0px solid!important;
+}
+
+td{
+    border: 0px solid!important;
+}
+
+p{
+    width: 100%;
+}
+
+input{
+    border-top: 0px solid;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    border-bottom: 1px solid gray;
+    margin-bottom: 6%;
+    width: 100%;
+}
+
+select{
+    border-top: 0px solid;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    border-bottom: 1px solid gray;
+    margin-bottom: 6%;
+    width: 100%;
+}
+
+#pqrsTextarea{
+    width: 100%;
+}
+
+#hojaVida{
+    display:none;
+}
+
+#politica{
+    display:none;
+}
+
+#pqrs{
+    display:none;
+}
+
+#acerca{
+    display:none;
+}
+
+#notificacionEmail, #notificacionSMS{
+    width: auto;
+}
+
+#identificacion{
+    min-height: 41px;
+}
+
+#fechaNacimiento{
+    min-height: 41px;
+}
+
+.paddingRight0{
+    padding-right: 0%;
+}
+
+.heightFull{
+    height:100%;
+}
+
+.background1{
+    background: #7F7F7F;
+}
+
+.center{
+    text-align: center;
+}
+
+.perfilCargaFoto{
+    width: 90%;
+    padding-left: 4%;
+    padding-top: 6%;
+    border-radius: 50%;
+    min-height: 190px;
+    max-height: 190px;
+}
+
+.usuario{
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.itemMain{
+    color: #00475C;
+    font-weight: bold;
+    border-top: 2px solid#ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+.marginAuto{
+    margin: auto;
+}
+
+.cursor:hover{
+    cursor: pointer;
+    opacity:0.4;
+}
+
+.registerForm{
+    padding: 0%;
+    background: #D8D9DD
+}
+
+.registerFormContainer{
+    margin: 2% 4% 2% 2%;
+    background: #ffffff;
+    padding-top: 2%;
+    border-radius: 8px;
+    padding-bottom: 2%;
+}
+
+.registerFormCapa1{
+    padding-left: 5%;
+    padding-right: 3%;
+    border-right: 1px solid#dddddd;
+}
+
+.registerFormCapa2{
+    padding-left: 7%;
+    padding-right: 3%;
+    padding-top: 12%;
+    border-right: 1px solid #dddddd;
+}
+
+.titleRegister{
+    color: #051937;
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 6%;
+}
+
+.titleRegister2{
+    color: #051937;
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 1%;
+}
+
+.pField1{
+    font-style: italic;
+    font-size: 16px;
+    line-height: 0px;
+}
+
+.notificacionEmail{
+    padding-left: 4%;
+}
+
+.notificacionSMS{
+    padding-left: 4%;
+}
+
+.perfilActualizar{
+    width: 30%;
+    padding-top: 3%;
+    float: right;
+}
+
+.perfilActualizar{
+    width: 27%;
+    padding-top: 0%;
+}
+
+.changePassword{
+    margin-top: 9%;
+    padding-top: 6%;
+    padding-left: 8%;
+    padding-right: 4%;
+}
+
+.formRegister2{
+    background: #ffffff;
+    margin-left: 2%;
+    margin-top: 3%;
+    margin-right: 4%;
+    margin-bottom: 3%;
+    border-radius: 8px;
+    padding: 2% 3% 2% 4%;
+}
+
+.textRight{
+    text-align: right
+}
+
+.f12{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pasosImg{
+    width: 45%;
+}
+
+.lineaTiempo{
+    vertical-align: middle;
+    text-align: center;
+    width: 50px;
+}
+
+.lineaTiempo img{
+    width:50%;
+    height: 5px;
+    min-width: 50px;
+    vertical-align: middle;
+}
+
+.msgPassword{
+    display:none;
+}
+
+.msgPerfil{
+    display:none;
+}
+
+.marginTop3{
+    margin-top:3%;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.redSocial{
+    width:7%;
+    margin-right:2%;
+}
+
+.paddingRight0{
+    padding-right: 0%;
+}
+
+.paddingL0{
+    padding-left: 0%;
+}
+
+.marginB2{
+    margin-bottom: 2%;
+}
+
+.compartir{
+    margin-left: 2px;
+}
+
+.padding0{
+    padding:0%;
+}
+
+.backgroundPassword{
+    background: #F2F2F2;
+}
+
+.widthFull{
+    width:100%;
+}
+
+.passwordActualizar{
+    background: #F2F2F2;
+    width:28%;
+    margin-bottom: 3%;
+}
+
+.textAlignR{
+    text-align: right;
+}
+
+.form-check-input:checked{
+    background-color: #0A1D3A;
+    border-color: #0A1D3A;
+}
+
+.form-check-input{
+    background-color: #00475C;
+    border-color: #00475C;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+.actividad th{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.actividad td{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.btnPQRSEnvio{
+    background: #0C1F3C;
+}
+
+.cargaDocumentos{
+    width: 50%;
+}
+
+.cargaDocmentosDiv{
+    padding-right: 0%;
+    text-align: right;
+}
+
+.borderRightGray{
+    border-right: 1px solid#dddddd;
+}
+
+.marginBottom3{
+    margin-bottom: 3%;
+}
+
+.marginLeft5{
+    margin-left: 5%;
+}
+
+.universidad{
+    width: 90%;
+}
+
+.marginLeft8{
+    margin-left: 8%;
+}
+
+.overflowY{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 280px;
+}
+
+.selectUniversidad{
+    height: 18px;
+    font-size: 12px;
+    margin-bottom: 0%;
+    width: 90%;
+}
+
+.presentacion{
+    border-top: 1px solid#dddddd;
+    margin-top: 2%;
+    padding-top: 2%;
+}
+
+.tPresentacion{
+    max-width: 17%;
+    padding-right: 0%;
+}
+
+.tRight{
+    text-align: right;
+}
+
+.informacion{
+    width: 6%;
+    margin-right: 3%;
+}
+
+.dileClientes{
+    color: #1E304B;
+}
+
+.areaPresentacion{
+    border: 1px solid#386E7E;
+    border-radius: 8px;
+    margin-left: 1%;
+    width: 98%;
+    height: 125px;
+}
+
+.selectTipo1{
+    height: 26px;
+    margin-bottom: 3%;
+}
+
+.selectUniversidad{
+    height: 20px;
+    margin: 0%;
+}

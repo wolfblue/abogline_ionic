@@ -175,6 +175,11 @@ export class AppComponent {
     //  Variables iniciales
     var _this = this;
 
+    //  Cerrar modal
+
+    if(_this.modal)
+      _this.modal.close();
+
     // Abrir modal
     _this.open(_this.modalRegistoMain);
 
@@ -418,15 +423,27 @@ export class AppComponent {
             //  Spinner
             _this.spinner.hide();
 
-            $("#registerUsuario").val("");
-            $("#registerEmail").val("");
-            $("#registerPassword").val("");
-
             $(".msgSuccess").html("Se registro el usuario correctamente");
             $(".msgSuccess").show();
             
             setTimeout(function(){
+
+              sessionStorage.setItem("autenticado","1");
+              sessionStorage.setItem("usuario",$("#registerUsuario").val());
+              sessionStorage.setItem("perfil",_this.perfil);
+
+              _this.autenticado = 1;
+              _this.usuario = $("#registerUsuario").val();
+              _this.perfil = _this.perfil;
               _this.modal.close();
+
+              $("#registerUsuario").val("");
+              $("#registerEmail").val("");
+              $("#registerPassword").val("");
+
+              //  Consultar información del usuario
+              _this.getUser();
+
             },3000);
 
           });
@@ -464,6 +481,7 @@ export class AppComponent {
     $("#loginUsuario").css("background-size","100% 100%");
     $("#loginPassword").css("background","url('/assets/images/input_password.png')");
     $("#loginPassword").css("background-size","100% 100%");
+    $(".iniciarSesionButton").css("margin-top","0%");
    
     // Validar campos obligatorios
 
@@ -493,6 +511,7 @@ export class AppComponent {
       $(".msgErrorLogin").show();
       $(fieldError).css("background","url('/assets/images/"+fieldErrorImage+"')");
       $(fieldError).css("background-size","100% 100%");
+      $(".iniciarSesionButton").css("margin-top","0%");
 
       //  Spinner
       _this.spinner.hide();
@@ -513,6 +532,7 @@ export class AppComponent {
 
           $(".msgErrorLogin").html("El usuario no se encuentra registrado.");
           $(".msgErrorLogin").show();
+          $(".iniciarSesionButton").css("margin-top","0%");
 
           //  Spinner
           _this.spinner.hide();
@@ -535,6 +555,7 @@ export class AppComponent {
 
               $(".msgErrorLogin").html("La contraseña no es válida.");
               $(".msgErrorLogin").show();
+              $(".iniciarSesionButton").css("margin-top","0%");
 
             }else{
 
@@ -542,6 +563,7 @@ export class AppComponent {
 
               $(".msgSuccessLogin").html("Autenticado correctamente");
               $(".msgSuccessLogin").show();
+              $(".iniciarSesionButton").css("margin-top","0%");
 
               setTimeout(function(){
 
@@ -693,12 +715,32 @@ export class AppComponent {
 
       if(result.length > 0){
 
-        if(result[0].nombres)          
-          _this.usuarioHeader = result[0].nombres + " " + result[0].apellidos;
+        if(result[0].nombres){
+
+          var nameData = result[0].nombres.split(" ");
+          var lastnameData = result[0].apellidos.split(" ");
+
+          _this.usuarioHeader = nameData[0] + " " + lastnameData[0];
+
+        }
 
       }
 
     });
+
+  }
+
+  /**************************************************************************** */
+  //  CERRAR MODAL
+  /**************************************************************************** */
+
+  closeModal(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Cerrar modal
+    _this.modal.close();
 
   }
 

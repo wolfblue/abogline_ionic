@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxTweetModule } from "ngx-tweet";
+import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +25,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgxSpinnerModule,
     BrowserAnimationsModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    NgbModule
+    NgbModule,
+    NgxTweetModule,
+    NgxTwitterTimelineModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

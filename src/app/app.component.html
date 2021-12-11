@@ -12,24 +12,17 @@
         
         <div class="row heightFull">
 
-          <div class="col-md-5">
+          <div class="col-md-7">
             
             <div class="row heightFull">
-              
-              <div class="col-4 cursor middle fWhite center mainItem">¿Quiénes Somos?</div>
-              <div class="col-4 cursor middle fWhite center mainItem">Nosotros</div>
-              <div class="col-4 cursor middle fWhite center mainItem">Contáctenos</div>
 
-            </div>
+              <ul class="marginAuto">
+                <li (click)="location('perfil')" *ngIf="autenticado==1" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
+                <li class="heightFull paddingL4">Contáctenos</li>
+                <li class="heightFull paddingL4 paddingR4 borderR1">Nosotros</li>
+                <li class="heightFull paddingR4 borderR1">¿Quiénes Somos?</li>
+              </ul>
 
-          </div>
-
-          <div class="col-md-2">
-
-            <div class="row heightFull" *ngIf="autenticado==1">
-              <div class="cursor middle fWhite center mainItem">
-                <span class="nameUser" (click)="location('perfil-cliente')">Hola {{usuarioHeader}}</span>
-              </div>
             </div>
 
           </div>
@@ -39,7 +32,7 @@
             <div class="row heightFull">
 
               <div class="col-md-4 registrarse middle">
-                <button class="cursor" (click)="registrarseMain()" *ngIf="autenticado==0">REGISTRARSE ></button>
+                <button class="cursor" (click)="registrarseMain()" *ngIf="autenticado==0">REGISTRARSE</button>
               </div>
 
               <div class="col-md-4 iniciarSesion middle">
@@ -62,31 +55,33 @@
 
     <div class="row mainPrincipal" *ngIf="autenticado == 1">
 
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal">Inicio</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Registrar caso</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente' || perfil == 'abogado'">Mis casos</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Consultar abogados</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Notificaciones</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'cliente'">Calendario</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipalFinal" *ngIf="perfil == 'cliente'">Pagos pendientes</div>
+      <ul class="marginAuto">
 
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Busca tu caso</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Notificaciones</div>
-      <div class="col-md1 bRWhite paddingL4 paddingR4 paddingT05 paddingB05 cursor mainItemPrincipal" *ngIf="perfil == 'abogado'">Calendario</div>
-
-      <div class="dropdown show" *ngIf="perfil == 'administrador'">
-
-        <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Administrar
-        </a>
-      
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="admin-city">Ciudades</a>
-          <a class="dropdown-item" href="admin-genero">Generos</a>
-          <a class="dropdown-item" href="admin-tipo-documento">Tipos de documentos</a>
-        </div>
-
-      </div>
+        <li class="heightFull paddingR4 borderR1">Inicio</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
+          <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Administrar Perfil
+          </a>
+        
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="admin-acerca">Acerca</a>
+            <a class="dropdown-item" href="admin-city">Ciudades</a>
+            <a class="dropdown-item" href="admin-genero">Generos</a>
+            <a class="dropdown-item" href="admin-municipio">Municipios</a>
+            <a class="dropdown-item" href="admin-politica">Política y privacidad</a>
+            <a class="dropdown-item" href="admin-tipo-documento">Tipos de documentos</a>
+            <a class="dropdown-item" href="admin-titulos-hv">Títulos hoja de vida</a>
+          </div>
+        </li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'">Registrar caso</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente' || perfil == 'abogado'">Mis casos</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1">Notificaciones</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" >Calendario</li>
+        <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'cliente'">Pagos pendientes</li>
+        <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'abogado'">Busca tu caso</li>
+                
+      </ul>
 
     </div>
 
@@ -186,6 +181,8 @@
 
     <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
 
+    <button class="closeModal" (click)="closeModal()">X</button>
+
     <div class="bodyModalRegistroMain">
 
       <p class="center perfilTitle">PERFIL</p>
@@ -219,6 +216,8 @@
 
     <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
 
+    <button class="closeModal" (click)="closeModal()">X</button>
+
     <div class="bodyModalRegistroMain center">
 
       <input id="registerUsuario" type="text" class="inputRegister inputUsuario" placeholder="Usuario (*):" />
@@ -239,7 +238,7 @@
         <span class="iniciaSesion" (click)="autenticacion()">Inicia sesión</span>
       </div>
 
-      <div class="registrarseButton cursor">
+      <div class="registrarseButton">
         <img src="/assets/images/registrarse.png" (click)="registrarse()" />
       </div>
 
@@ -257,13 +256,15 @@
 
     <img src="/assets/images/logo_redondo.png" class="logoRedondo" />
 
+    <button class="closeModal" (click)="closeModal()">X</button>
+
     <div class="bodyModalAutenticacion center">
 
       <input id="loginUsuario" type="text" class="inputRegister inputUsuario" placeholder="Usuario o Correo Electrónico (*):" />
       <input id="loginPassword" type="password" class="inputRegister inputPassword" placeholder="Contraseña (*):" />
 
-      <p class="msgErrorLogin"></p>
-      <p class="msgSuccessLogin"></p>
+      <p><span class="msgErrorLogin"></span></p>
+      <p><span class="msgSuccessLogin"></span></p>
 
       <div class="row capaTerminos">
 
@@ -278,7 +279,12 @@
         
       </div>
 
-      <div class="iniciarSesionButton cursor">
+      <div class="capaSesion">
+        <span class="tieneCuenta">¿No tienes una cuenta?</span>
+        <span class="iniciaSesion" (click)="registrarseMain()">Registrarse</span>
+      </div>
+
+      <div class="iniciarSesionButton">
         <img src="/assets/images/iniciar_sesion.png" (click)="autenticacionAction()" />
       </div>
 
