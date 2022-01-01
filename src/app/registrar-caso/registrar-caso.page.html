@@ -1,0 +1,158 @@
+<div>
+
+  <div class="registrarCaso">REGISTRAR CASO</div>
+
+  <div class="background">
+
+    <div class="background2">
+
+      <div class="conProblemas">¿Con quién tienes problemas?</div>
+
+      <div class="row">
+  
+        <div class="col-md-6">
+
+          <div class="block1">
+
+            <div class="estado"></div>
+  
+            <div class="textBlock">Toda entidad pública u organismo adscrito a los gobiernos nacionales regionales y/o locales</div>
+
+          </div>
+  
+        </div>
+  
+        <div class="col-md-6">
+  
+          <div class="block2">
+
+            <div class="particular"></div>
+  
+            <div class="textBlock">Tu jefe, un amigo, tu familia, conocidos, tu jefe y empresas que son privadas</div>
+
+          </div>
+  
+      </div>
+  
+      <div class="row">
+  
+        <div class="col-md-3">
+  
+          <div>¿Sobre qué trata tu caso?</div>
+  
+          <img class="iconSelect" src="/assets/images/icon_amigo.png" />
+          <select (change)="trataCaso()" id="trataCaso">
+            <option value="amigo">Amigo o conocido</option>
+            <option value="impuestos">Impuestos</option>
+            <option value="jefe">Jefe o empresa</option>
+            <option value="familia">Tu familia</option>
+            <option value="negocio">Tu negocio</option>
+            <option value="delito">Un delito</option>
+            <option value="vulnerabilidad">Vulnerabilidad a tu salud</option>
+            <option value="otro">Otro</option>
+          </select>
+  
+        </div>
+  
+        <div class="col-md-4">
+  
+          <div>¿Cuál es tu problema?</div>
+  
+          <img class="iconSelect2" src="/assets/images/icon_familia.png" />
+          <select id="tuProblema" (change)="cualProblemaChange()">
+
+            <option value="negocio" *ngIf="cualProblema == 'negocio'">Tu negocio</option>
+            <option value="delito" *ngIf="cualProblema == 'delito'">Un delito</option>
+
+            <option value="contratos" *ngIf="cualProblema == 'amigo'">Contratos</option>
+            <option value="dineros adeudados" *ngIf="cualProblema == 'amigo'">Dineros adeudados</option>
+            <option value="tus bienes" *ngIf="cualProblema == 'amigo'">Tus bienes</option>
+            <option value="otro" *ngIf="cualProblema == 'amigo'">Otro</option>
+            
+            <option value="alimentos a hijos o conyuges" *ngIf="cualProblema == 'familia'">Alimentos a hijos o conyuges</option>
+            <option value="capitulaciones" *ngIf="cualProblema == 'familia'">Capitulaciones</option>
+            <option value="divorcios" *ngIf="cualProblema == 'familia'">Divorcios</option>
+            <option value="emancipacion" *ngIf="cualProblema == 'familia'">Emancipacion</option>
+            <option value="herencias" *ngIf="cualProblema == 'familia'">Herencias</option>
+            <option value="impugnacion de paternidad" *ngIf="cualProblema == 'familia'">Impugnacion de paternidad</option>
+            <option value="matrimonio" *ngIf="cualProblema == 'familia'">Matrimonio</option>
+            <option value="viloencia intrafamiliar" *ngIf="cualProblema == 'familia'">Violencia intrafamiliar</option>
+            <option value="otro" *ngIf="cualProblema == 'familia'">Otro</option>
+
+            <option value="declaracion de renta" *ngIf="cualProblema == 'impuestos'">Declaración de renta</option>
+            <option value="problemas de deudas impuestos" *ngIf="cualProblema == 'impuestos'">Problemas de deudas impuestos</option>
+            <option value="otro" *ngIf="cualProblema == 'impuestos'">Otro</option>
+
+            <option value="despido sin justa causa" *ngIf="cualProblema == 'jefe'">Despido sin justa causa</option>
+            <option value="prestaciones sociales" *ngIf="cualProblema == 'jefe'">Prestaciones sociales (Prima, vacaciones, cesantías etc)</option>
+            <option value="saldos y o pagos adeudados por el empleador" *ngIf="cualProblema == 'jefe'">Saldos y/o pagos adeudados por el empleador</option>
+            <option value="seguridad social" *ngIf="cualProblema == 'jefe'">Seguridad social (Salud, pensión, ARL)</option>
+            <option value="otro" *ngIf="cualProblema == 'jefe'">Otro</option>
+
+            <option value="con tu eps" *ngIf="cualProblema == 'vulnerabilidad'">Con tu eps</option>
+            <option value="deterioro de tu salud" *ngIf="cualProblema == 'vulnerabilidad'">Deterioro de tu salud a causa de la responsabilidad médica</option>
+            <option value="omision medica" *ngIf="cualProblema == 'vulnerabilidad'">Omisión médica</option>
+            <option value="otra" *ngIf="cualProblema == 'vulnerabilidad'">Otra</option>
+
+          </select>
+  
+        </div>
+  
+        <div class="col-md-5">
+  
+          <div>¿Ya se inicio un proceso ante un juzgado o entidad para su solución?</div>
+  
+          <select id="proceso">
+            <option>No</option>
+            <option>Si</option>
+          </select>
+  
+        </div>
+  
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3" *ngIf="cualProblema == 'otro'">
+
+          <div>Cual:</div>
+
+          <input type="text" />
+
+        </div>
+
+        <div class="col-md-3" *ngIf="subcategoria == 'otro'"></div>
+
+        <div class="col-md-4" *ngIf="subcategoria == 'otro'">
+
+          <div>Cual:</div>
+
+          <input type="text" />
+
+        </div>
+
+        <div class="col-md-5"></div>
+
+      </div>
+  
+      <div>Cuéntanos tu caso</div>
+  
+      <div>
+  
+        <textarea id="cuentanos"></textarea>
+  
+      </div>
+
+      <div class="msg"></div>
+  
+      <div>
+  
+        <button  (click)="registrarCaso()">REGISTRAR ></button>
+  
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

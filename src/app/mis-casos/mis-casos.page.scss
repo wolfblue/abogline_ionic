@@ -1,0 +1,155 @@
+.contenido{
+    background: #D8D9DD;
+    height: 100%;
+    padding: 0%;
+}
+
+.misCasos{
+    background: #ffffff;
+    color: #0C1F3C;
+    font-weight: bold;
+    font-size: 19px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    padding-left: 23%;
+}
+
+.subContenido{
+    padding: 2%;
+    margin: 2% 4% 2% 4%;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.buscador{
+    float: right;
+    margin-right: 2%;
+}
+
+.buscador input{
+    background: #D8D9DD;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.buscador img{
+    width: 9%;
+    margin-right: 4%;
+}
+
+.filtros div{
+    float: left;
+    color: #0A1D3A;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filtros select{
+    float: left;
+    height: 23px;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.filtros img{
+    width: 2%;
+}
+
+.entradas{
+    padding-right: 9%;
+}
+
+.categoria{
+    margin-right: 2%;
+    width: 16%;
+}
+
+.subcategoria{
+    width: 32%;
+}
+
+.registros{
+    margin-top: 3%;
+}
+
+.encabezado{
+    background: #D8D9DD;
+    padding: 1% 0% 1% 0%;
+    border-radius: 20px;
+}
+
+.encabezado div{
+    font-size: 14px;
+    font-style: italic;
+    border-right: 2px solid #ffffff;
+    text-align: center;
+    margin: 0% 0% 0% 0%;
+    line-height: 19px;
+    vertical-align: middle;
+}
+
+.datos{
+    background: #9A999E;
+    padding: 1% 0% 1% 0%;
+    border-radius: 20px;
+    margin-bottom: 0.1%;
+}
+
+.datos div{
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+    margin: auto;
+    line-height: 19px;
+    vertical-align: middle;
+    text-transform: capitalize;
+}
+
+.iconData{
+    position: absolute;
+    width: 35%;
+    left: 34%;
+    opacity: 0.3;
+    margin-top: -11%;
+}
+
+.iconAcciones{
+    width: 100%;
+}
+
+.iconAcciones img{
+    width:40%;
+}
+
+.iconAcciones div{
+    font-size:11px;
+}
+
+.editar{
+    color:#396172;
+}
+
+.eliminar{
+    color:#AF686C;
+}
+
+.seguimiento{
+    background: #00475C;
+    color: #ffffff;
+    padding: 6% 8% 6% 8%;
+    margin-top: 5%;
+    border-radius: 8px;
+    font-size: 12px;
+    width: 100%;
+}
+
+.consultarAbogados{
+    background: #0C1F3C;
+    color: #ffffff;
+    padding: 6% 8% 6% 8%;
+    margin-top: 5%;
+    border-radius: 8px;
+    font-size: 12px;
+    width: 100%;
+}

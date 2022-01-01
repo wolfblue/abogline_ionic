@@ -290,14 +290,14 @@
           <div class="col-6 borderRightGray">
 
             <p>Universidad de egreso - Profesional *</p>
-            <input type="text" class="universidad" />
+            <input type="text" class="universidad" id="universidad_egreso" (change)="changeFieldHoja('universidad_egreso')" value="{{universidadEgreso}}" />
 
           </div>
 
           <div class="col-6">
 
             <p class="marginLeft8">Título Profesional</p>
-            <input type="text" class="universidad marginLeft8" />
+            <input type="text" class="universidad marginLeft8" id="titulo_profesional" (change)="changeFieldHoja('titulo_profesional')" value="{{tituloProfesional}}" />
 
           </div>
 
@@ -343,12 +343,12 @@
 
           <div class="col tRight">
             <img class="informacion" src="/assets/images/informacion.png" />
-            <span>0/160</span>
+            <span class="maxPresentacion">0/160</span>
           </div>
 
         </div>
 
-        <textarea class="areaPresentacion"></textarea>
+        <textarea class="areaPresentacion" (input)="areaPresentacion()" id="presentacion" (change)="changeFieldHoja('presentacion')">{{presentacion}}</textarea>
 
         <div class="row marginTop3">
 
@@ -361,7 +361,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1">
+            <select class="selectTipo1" id="tipo_tp" (change)="changeFieldHoja('tipo_tp')">
               <option>Temporal</option>
             </select>
 
@@ -369,7 +369,7 @@
 
           <div class="col">
 
-            <input type="text" />
+            <input type="text" id="tarjeta_licencia" (change)="changeFieldHoja('tarjeta_licencia')" value="{{tarjetaLicencia}}" />
 
           </div>
 
@@ -386,7 +386,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1">
+            <select class="selectTipo1" id="experiencia" (change)="changeFieldHoja('experiencia')">
               <option>SI</option>
               <option>NO</option>
             </select>
@@ -395,7 +395,7 @@
 
           <div class="col">
 
-            <input type="text" />
+            <input type="text" id="experiencia_tiempo" (change)="changeFieldHoja('experiencia_tiempo')" value="{{experienciaTiempo}}" />
 
           </div>
 
@@ -411,7 +411,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1">
+            <select class="selectTipo1" id="investigacion" (change)="changeFieldHoja('investigacion')">
               <option>SI</option>
               <option>NO</option>
             </select>
@@ -430,7 +430,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1">
+            <select class="selectTipo1" id="ramas" (change)="changeFieldHoja('ramas')">
               <option>CIVIL</option>
             </select>
 
@@ -448,9 +448,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1">
-              <option>$200.000</option>
-            </select>
+            <input type="text" id="consulta" (change)="changeFieldHoja('consulta')" value="{{consulta}}" />
 
           </div>
 
@@ -468,21 +466,36 @@
 
             <div class="row marginBottom3">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaCedula" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaCedula" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Cargar Cédula al 150%</div>
 
             </div>
 
             <div class="row marginBottom3">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaReciboServicioPublico" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaReciboServicioPublico" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Cargar Recibo de Servicio Público</div>
 
             </div>
 
             <div class="row marginBottom3">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaTp" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaTp" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Cargar T.P.</div>
 
             </div>
@@ -493,21 +506,36 @@
 
             <div class="row marginBottom3 marginLeft5">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaDiploma" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaDiploma" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Cargar Diploma o Acta de Grado</div>
 
             </div>
 
             <div class="row marginBottom3 marginLeft5">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos_rojo.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaEspecializacion" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaEspecializacion" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Especialización</div>
 
             </div>
 
             <div class="row marginBottom3 marginLeft5">
 
-              <div class="col-2 cargaDocmentosDiv"><img class="cargaDocumentos" src="/assets/images/carga_documentos_rojo.png"></div>
+              <div class="col-2 cargaDocmentosDiv">
+                
+                <img class="cargaDocumentos cargaMaestria" src="/assets/images/carga_documentos_rojo.png">
+                <input type="file" id="cargaMaestria" style="display: none;" />
+              
+              </div>
               <div class="col-10 marginAuto">Maestría</div>
 
             </div>

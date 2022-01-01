@@ -27,8 +27,9 @@
     color: #0C1F3C;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 2%;
-    padding-right: 5%
+    margin-top: 0%;
+    padding-right: 0%;
+    padding-top: 1%;
 }
 
 .seleccionarCaso select{
@@ -75,6 +76,7 @@
 
 .filtros{
     padding-left: 3%;
+    margin-top: 2%;
 }
 
 .mostrar select{
@@ -97,7 +99,7 @@
 }
 
 .abogado{
-    background: url('/assets/images/abogado_fondo.png');
+    background: url('/assets/images/caso_fondo.png');
     width: 100%;
     min-height: 375px;
     background-size: 100%;
@@ -122,7 +124,9 @@
 .fotoAbogado img{
     border-radius: 50%;
     width: 47%;
-    margin-top: 4%;
+    margin-top: 17%;
+    border: 5px solid#ffffff;
+    background: #ffffff;
 }
 
 .estrella img{
@@ -143,24 +147,35 @@
 .abogadoName{
     margin-top: 2%;
     font-weight: bold;
+    color:#071B38;
+    text-transform: uppercase;
 }
 
 .abogadoCargo{
     color: #0A4C60;
     font-style: italic;
+    width: 75%;
+    margin: auto;
+    line-height: 15px;
+    font-size: 11px;
+    margin-top: 2%;
+    text-transform: capitalize;
 }
 
 .perfilDescripcion{
     color: #DEDEE0;
-    font-size: 12px;
-    margin-top: 2%;
+    font-size: 11px;
+    width: 80%;
+    margin: auto;
+    line-height: 15px;
+    margin-top: 4%;
 }
 
 .verMas{
     color: #295D6E;
     font-size: 12px;
+    margin-top: 6%;
     margin-right: 5%;
-    margin-top: 10%;
 }
 
 .eligeme{
@@ -205,6 +220,19 @@
     border: 1px solid#ffffff;
 }
 
-.abogadoItem{
+.separador{
+    margin-left: 8%;
+    position: absolute;
+    margin-top: 1%;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.caso{
     width: 25%;
+}
+
+.filtros img{
+    width: 6%;
+    margin-left: 12%;
 }

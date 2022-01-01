@@ -17,4 +17,15 @@ export class HomePage {
     private modalService: NgbModal
   ) {}
 
+  /************************************************************************************* */
+  //  Redireccionar
+  /************************************************************************************* */
+
+  location(ruta){
+
+    //  Redireccionar
+    window.location.href = ruta;
+
+  }
+
 }

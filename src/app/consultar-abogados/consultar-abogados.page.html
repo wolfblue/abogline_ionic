@@ -8,8 +8,11 @@
   
       <div class="col-5 tCenter seleccionarCaso">
   
-        <select>
+        <select *ngIf="usuario" id="seleccionarCaso">
           <option>- Seleccionar Caso -</option>
+          <ng-container *ngFor="let item of casos">
+            <option value="{{item.id}}">{{item.id}}</option>
+          </ng-container>
         </select>
   
       </div>
@@ -22,7 +25,8 @@
 
     <div class="row filtros">
 
-      <div class="col-3 filtro">
+      <div *ngIf="!usuario" class="col-4 filtro">
+      <div *ngIf="usuario" class="col-3 filtro"></div>
 
         <select>
           <option>- Estrellas -</option>
@@ -30,7 +34,8 @@
 
       </div>
 
-      <div class="col-3 filtro">
+      <div *ngIf="!usuario" class="col-4 filtro">
+      <div *ngIf="usuario" class="col-3 filtro"></div>
 
         <select>
           <option>- Precio -</option>
@@ -38,7 +43,8 @@
 
       </div>
 
-      <div class="col-3 filtro">
+      <div *ngIf="!usuario" class="col-4 filtro">
+      <div *ngIf="usuario" class="col-3 filtro"></div>
 
         <select>
           <option>- Especialidad -</option>
@@ -48,7 +54,7 @@
 
       <div class="col-3 filtro">
 
-        <select>
+        <select *ngIf="usuario">
           <option>- Tiempo de Experiencia -</option>
         </select>
 
@@ -70,14 +76,15 @@
 
   <div class="row listaAbogados">
 
-    <div class="col-3">
+    <div class="abogadoItem">
 
       <div class="abogado">
 
         <p class="consulta">200.000</p>
 
         <div class="tCenter fotoAbogado">
-          <img src="/assets/images/perfil_example.jpg" />
+          <img *ngIf="usuario" src="/assets/images/perfil_example.jpg" />
+          <img *ngIf="!usuario" src="/assets/images/abogado.png" />
         </div>
 
         <div class="row tCenter estrella">
@@ -90,7 +97,8 @@
 
         </div>
 
-        <div class="tCenter abogadoName">PEDRO</div>
+        <div *ngIf="usuario" class="tCenter abogadoName">PEDRO</div>
+        <br *ngIf="!usuario" />
 
         <div class="tCenter abogadoCargo">Abogado Civilistica</div>
 
@@ -100,109 +108,7 @@
 
       </div>
 
-      <div class="eligeme">ELÍGEME</div>
-
-    </div>
-
-    <div class="col-3">
-
-      <div class="abogado">
-
-        <p class="consulta">200.000</p>
-
-        <div class="tCenter fotoAbogado">
-          <img src="/assets/images/perfil_example.jpg" />
-        </div>
-
-        <div class="row tCenter estrella">
-
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_gris.png" /></div>
-
-        </div>
-
-        <div class="tCenter abogadoName">PEDRO</div>
-
-        <div class="tCenter abogadoCargo">Abogado Civilistica</div>
-
-        <div class="tCenter perfilDescripcion">Perfil incompleto ...</div>
-
-        <div class="tRight verMas">... ver más</div>
-
-      </div>
-
-      <div class="eligeme">ELÍGEME</div>
-
-    </div>
-
-    <div class="col-3">
-
-      <div class="abogado">
-
-        <p class="consulta">200.000</p>
-
-        <div class="tCenter fotoAbogado">
-          <img src="/assets/images/perfil_example.jpg" />
-        </div>
-
-        <div class="row tCenter estrella">
-
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_gris.png" /></div>
-
-        </div>
-
-        <div class="tCenter abogadoName">PEDRO</div>
-
-        <div class="tCenter abogadoCargo">Abogado Civilistica</div>
-
-        <div class="tCenter perfilDescripcion">Perfil incompleto ...</div>
-
-        <div class="tRight verMas">... ver más</div>
-
-      </div>
-
-      <div class="eligeme">ELÍGEME</div>
-
-    </div>
-
-    <div class="col-3">
-
-      <div class="abogado">
-
-        <p class="consulta">200.000</p>
-
-        <div class="tCenter fotoAbogado">
-          <img src="/assets/images/perfil_example.jpg" />
-        </div>
-
-        <div class="row tCenter estrella">
-
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_gris.png" /></div>
-
-        </div>
-
-        <div class="tCenter abogadoName">PEDRO</div>
-
-        <div class="tCenter abogadoCargo">Abogado Civilistica</div>
-
-        <div class="tCenter perfilDescripcion">Perfil incompleto ...</div>
-
-        <div class="tRight verMas">... ver más</div>
-
-      </div>
-
-      <div class="eligeme">ELÍGEME</div>
+      <div class="eligeme" (click)="eligeme()">ELÍGEME</div>
 
     </div>
 
@@ -214,9 +120,6 @@
   
         <div class="row">
   
-          <div class="col-3"><img src="/assets/images/circulo_claro.png" /></div>
-          <div class="col-3"><img src="/assets/images/circulo_claro.png" /></div>
-          <div class="col-3"><img src="/assets/images/circulo_claro.png" /></div>
           <div class="col-3"><img src="/assets/images/circulo_claro.png" /></div>
   
         </div>
@@ -235,3 +138,6 @@
   </div>
 
 </div>
+
+
+<ngx-spinner></ngx-spinner>

@@ -54,6 +54,7 @@ p{
 
 #dropdownMenuLink{
   padding:0%;
+  line-height: 9px;
 }
 
 .center{
@@ -459,4 +460,14 @@ a:hover{
   font-weight: bold;
   font-size: 15px;
   color: #0b1e3b;
+}
+
+.ulMain{
+  padding: 1% 0% 1% 0%;
+}
+
+.ulMain li{
+  height: 12px;
+  font-size: 13px;
+  line-height: 13px;
 }

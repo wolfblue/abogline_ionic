@@ -19,8 +19,8 @@
               <ul class="marginAuto">
                 <li (click)="location('perfil')" *ngIf="autenticado==1" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
                 <li class="heightFull paddingL4">Contáctenos</li>
-                <li class="heightFull paddingL4 paddingR4 borderR1">Nosotros</li>
-                <li class="heightFull paddingR4 borderR1">¿Quiénes Somos?</li>
+                <li class="heightFull paddingL4 paddingR4 borderR1" (click)="location('nosotros')">Nosotros</li>
+                <li class="heightFull paddingR4 borderR1" (click)="location('quienes-somos')">¿Quiénes Somos?</li>
               </ul>
 
             </div>
@@ -55,9 +55,19 @@
 
     <div class="row mainPrincipal" *ngIf="autenticado == 1">
 
-      <ul class="marginAuto">
+      <ul class="marginAuto ulMain">
 
         <li class="heightFull paddingR4 borderR1">Inicio</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
+          <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Administrar Ménu
+          </a>
+        
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="admin-quienes-somos">Quiénes somos</a>
+            <a class="dropdown-item" href="admin-nosotros">Nosotros</a>
+          </div>
+        </li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
           <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Administrar Perfil
@@ -73,13 +83,13 @@
             <a class="dropdown-item" href="admin-titulos-hv">Títulos hoja de vida</a>
           </div>
         </li>
-        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'">Registrar caso</li>
-        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente' || perfil == 'abogado'">Mis casos</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente'" (click)="location('registrar-caso')">Registrar caso</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1 misCasos" *ngIf="perfil == 'cliente' || perfil == 'abogado'" (click)="location('mis-casos')">Mis casos</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
         <li class="heightFull paddingL4 paddingR4 borderR1">Notificaciones</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" >Calendario</li>
         <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'cliente'">Pagos pendientes</li>
-        <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'abogado'">Busca tu caso</li>
+        <li class="heightFull paddingL4 paddingR4 buscaTuCaso" *ngIf="perfil == 'abogado'" (click)="location('buscar-casos')">Busca tu caso</li>
                 
       </ul>
 

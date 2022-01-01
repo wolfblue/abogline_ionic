@@ -1,0 +1,147 @@
+<div class="contenedor">
+
+  <div class="header">
+
+    <div class="abogados tCenter">BUSCAR CASOS</div>
+
+    <div class="row filtros">
+
+      <div class="col-2 filtro menuRapido">
+          MENÚ RÁPIDO <span class="separador">|</span>
+      </div>
+
+      <div class="col-3 filtro">
+
+        <select (change)="trataCaso()" id="trataCaso">
+          <option value="">- Categoría -</option>
+          <option value="amigo">Amigo o conocido</option>
+          <option value="impuestos">Impuestos</option>
+          <option value="jefe">Jefe o empresa</option>
+          <option value="familia">Tu familia</option>
+          <option value="negocio">Tu negocio</option>
+          <option value="delito">Un delito</option>
+          <option value="vulnerabilidad">Vulnerabilidad a tu salud</option>
+          <option value="otro">Otro</option>
+        </select>
+
+      </div>
+
+      <div class="col-4 filtro">
+
+        <select class="subcategoria" id="subcategoria">
+
+          <option value="">- Subcategoría -</option>
+
+          <option value="negocio" *ngIf="cualProblema == 'negocio'">Tu negocio</option>
+          <option value="delito" *ngIf="cualProblema == 'delito'">Un delito</option>
+
+          <option value="contratos" *ngIf="cualProblema == 'amigo'">Contratos</option>
+          <option value="dineros adeudados" *ngIf="cualProblema == 'amigo'">Dineros adeudados</option>
+          <option value="tus bienes" *ngIf="cualProblema == 'amigo'">Tus bienes</option>
+          <option value="otro" *ngIf="cualProblema == 'amigo'">Otro</option>
+          
+          <option value="alimentos a hijos o conyuges" *ngIf="cualProblema == 'familia'">Alimentos a hijos o conyuges</option>
+          <option value="capitulaciones" *ngIf="cualProblema == 'familia'">Capitulaciones</option>
+          <option value="divorcios" *ngIf="cualProblema == 'familia'">Divorcios</option>
+          <option value="emancipacion" *ngIf="cualProblema == 'familia'">Emancipacion</option>
+          <option value="herencias" *ngIf="cualProblema == 'familia'">Herencias</option>
+          <option value="impugnacion de paternidad" *ngIf="cualProblema == 'familia'">Impugnacion de paternidad</option>
+          <option value="matrimonio" *ngIf="cualProblema == 'familia'">Matrimonio</option>
+          <option value="viloencia intrafamiliar" *ngIf="cualProblema == 'familia'">Violencia intrafamiliar</option>
+          <option value="otro" *ngIf="cualProblema == 'familia'">Otro</option>
+
+          <option value="declaracion de renta" *ngIf="cualProblema == 'impuestos'">Declaración de renta</option>
+          <option value="problemas de deudas impuestos" *ngIf="cualProblema == 'impuestos'">Problemas de deudas impuestos</option>
+          <option value="otro" *ngIf="cualProblema == 'impuestos'">Otro</option>
+
+          <option value="despido sin justa causa" *ngIf="cualProblema == 'jefe'">Despido sin justa causa</option>
+          <option value="prestaciones sociales" *ngIf="cualProblema == 'jefe'">Prestaciones sociales (Prima, vacaciones, cesantías etc)</option>
+          <option value="saldos y o pagos adeudados por el empleador" *ngIf="cualProblema == 'jefe'">Saldos y/o pagos adeudados por el empleador</option>
+          <option value="seguridad social" *ngIf="cualProblema == 'jefe'">Seguridad social (Salud, pensión, ARL)</option>
+          <option value="otro" *ngIf="cualProblema == 'jefe'">Otro</option>
+
+          <option value="con tu eps" *ngIf="cualProblema == 'vulnerabilidad'">Con tu eps</option>
+          <option value="deterioro de tu salud" *ngIf="cualProblema == 'vulnerabilidad'">Deterioro de tu salud a causa de la responsabilidad médica</option>
+          <option value="omision medica" *ngIf="cualProblema == 'vulnerabilidad'">Omisión médica</option>
+          <option value="otra" *ngIf="cualProblema == 'vulnerabilidad'">Otra</option>
+
+        </select>
+
+        <img src="/assets/images/icon_flecha_next.png" (click)="buscarCasos()" />
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="tRight mostrar">
+
+    <span>Mostrar</span>
+    
+    <select>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+    </select>
+
+  </div>
+
+  <div class="row listaAbogados">
+
+    <div class="caso" *ngFor="let item of casos;let i = index">
+
+      <div class="abogado">
+
+        <div class="tCenter fotoAbogado">
+          <img src="/assets/images/icon2_{{item.trata_caso}}.png" />
+        </div>
+
+        <div class="tCenter abogadoName">{{item.trata_caso}}</div>
+
+        <div class="tCenter abogadoCargo">{{item.cual_problema}}</div>
+
+        <div class="tCenter perfilDescripcion">{{item.cuentanos}}</div>
+
+        <div class="tRight verMas">... ver más</div>
+
+      </div>
+
+      <div class="eligeme">ELÍGEME</div>
+
+    </div>
+
+    <div class="row footer">
+
+      <div class="col-5 tLeft">Mostrando <b><span>1</span> de {{casos.length}} Entrada(s)</b></div>
+  
+      <div class="col-2 tCenter">
+  
+        <div class="row">
+  
+          <div class="col-3" *ngIf="points > 0 "><img src="/assets/images/circulo_claro.png" /></div>
+          <div class="col-3" *ngIf="points > 1 "><img src="/assets/images/circulo_claro.png" /></div>
+          <div class="col-3" *ngIf="points > 2 "><img src="/assets/images/circulo_claro.png" /></div>
+          <div class="col-3" *ngIf="points > 3 "><img src="/assets/images/circulo_claro.png" /></div>
+  
+        </div>
+  
+      </div>
+  
+      <div class="col-5">
+
+        <button *ngIf="siguiente" class="buttonFooter siguiente">SIGUIENTE</button>
+        <button *ngIf="anterior" class="buttonFooter anterior">ANTERIOR</button>
+
+      </div>
+  
+    </div>
+
+  </div>
+
+</div>

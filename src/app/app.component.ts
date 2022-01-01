@@ -69,6 +69,9 @@ export class AppComponent {
     //  Validar autenticación
     this.validateAuth();
 
+    //  Validar modal registro
+    this.modalRegistro();
+
   }
 
   postModel(Metodo: string, data: FormData) {
@@ -741,6 +744,33 @@ export class AppComponent {
 
     //  Cerrar modal
     _this.modal.close();
+
+  }
+
+  /***************** */
+  //  Modal registro
+  /***************** */
+
+  modalRegistro(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal registro
+
+    if(sessionStorage.getItem("registro")){
+
+      setTimeout(function(){
+
+        _this.registrarseMain();
+
+        $(".botonCliente").click();
+
+        sessionStorage.setItem("registro","");
+
+      },1000);
+
+    }
 
   }
 

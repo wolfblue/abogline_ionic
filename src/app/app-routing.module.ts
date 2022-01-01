@@ -45,6 +45,34 @@ const routes: Routes = [
   {
     path: 'admin-titulos-hv',
     loadChildren: () => import('./admin-titulos-hv/admin-titulos-hv.module').then( m => m.AdminTitulosHvPageModule)
+  },
+  {
+    path: 'buscar-casos',
+    loadChildren: () => import('./buscar-casos/buscar-casos.module').then( m => m.BuscarCasosPageModule)
+  },
+  {
+    path: 'registrar-caso',
+    loadChildren: () => import('./registrar-caso/registrar-caso.module').then( m => m.RegistrarCasoPageModule)
+  },
+  {
+    path: 'quienes-somos',
+    loadChildren: () => import('./quienes-somos/quienes-somos.module').then( m => m.QuienesSomosPageModule)
+  },
+  {
+    path: 'nosotros',
+    loadChildren: () => import('./nosotros/nosotros.module').then( m => m.NosotrosPageModule)
+  },
+  {
+    path: 'admin-quienes-somos',
+    loadChildren: () => import('./admin-quienes-somos/admin-quienes-somos.module').then( m => m.AdminQuienesSomosPageModule)
+  },
+  {
+    path: 'admin-nosotros',
+    loadChildren: () => import('./admin-nosotros/admin-nosotros.module').then( m => m.AdminNosotrosPageModule)
+  },
+  {
+    path: 'mis-casos',
+    loadChildren: () => import('./mis-casos/mis-casos.module').then( m => m.MisCasosPageModule)
   }
 
 

@@ -56,6 +56,12 @@ export class PerfilPage implements OnInit {
   politicaPrivacidad: any = "";
   acerdaDe: any = "";
   titulos: any = [];
+  universidadEgreso: any = "";
+  tituloProfesional: any = "";
+  presentacion: any = "";
+  tarjetaLicencia: any = "";
+  experienciaTiempo: any = "";
+  consulta: any = "";
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -84,6 +90,30 @@ export class PerfilPage implements OnInit {
 
     $(".perfilCargaFoto").click(function() {
       $("input[id='photo']").click();
+    });
+
+    $(".cargaCedula").click(function() {
+      $("input[id='cargaCedula']").click();
+    });
+
+    $(".cargaReciboServicioPublico").click(function() {
+      $("input[id='cargaReciboServicioPublico']").click();
+    });
+
+    $(".cargaTp").click(function() {
+      $("input[id='cargaTp']").click();
+    });
+
+    $(".cargaDiploma").click(function() {
+      $("input[id='cargaDiploma']").click();
+    });
+
+    $(".cargaEspecializacion").click(function() {
+      $("input[id='cargaEspecializacion']").click();
+    });
+
+    $(".cargaMaestria").click(function() {
+      $("input[id='cargaMaestria']").click();
     });
 
     $("#photo").change(function(event){
@@ -208,6 +238,12 @@ export class PerfilPage implements OnInit {
       _this.aprobado = result[0].aprobado;
       _this.buscaCliente = result[0].busca_cliente;
       _this.nacimiento = result[0].nacimiento;
+      _this.universidadEgreso = result[0].universidad_egreso;
+      _this.tituloProfesional = result[0].titulo_profesional;
+      _this.presentacion = result[0].presentacion;
+      _this.tarjetaLicencia = result[0].tarjeta_licencia;
+      _this.experienciaTiempo = result[0].experiencia_tiempo;
+      _this.consulta = result[0].consulta;
 
       //  Actualizar foto
 
@@ -232,6 +268,12 @@ export class PerfilPage implements OnInit {
 
       if(_this.notificacionSMS == "true")
         $("#flexSwitchCheckDefaultNotificacionSMS").prop("checked",true);
+
+      //  Area presentación
+      
+      setTimeout(function(){
+        _this.areaPresentacion();
+      },1000);
 
     });
 
@@ -631,6 +673,41 @@ export class PerfilPage implements OnInit {
       $(".titulo"+id).html("");
 
   }
+
+  /*************************************** */
+  //  Cambio de texto area de presentación
+  /*************************************** */
+  areaPresentacion(){
+
+    //  Variables iniciales
+    
+    var _this = this;
+    var areaPresentacion = $(".areaPresentacion").val();
+    var maxPresentacion = areaPresentacion.length;
+
+    $(".maxPresentacion").html(maxPresentacion+"/160");
+
+  }
+
+  /*************************************** */
+  //  Cambio de campo hoja de vida
+  /*************************************** */
   
+  changeFieldHoja(id){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar registro
+
+    let apiUsuariosUpdateField = new FormData();
+
+    apiUsuariosUpdateField.append("usuario",sessionStorage.getItem('usuario'));
+    apiUsuariosUpdateField.append("field",id);
+    apiUsuariosUpdateField.append("value",$("#"+id).val());
+
+    _this.postModel("apiUsuariosUpdateField",apiUsuariosUpdateField).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+  }
 
 }
