@@ -1,0 +1,152 @@
+<div>
+
+  <div class="calendario">
+    CALENDARIO
+  </div>
+
+  <div class="contenido">
+
+    <div class="row">
+
+      <div class="col-md-4 calendarioMini">
+
+        <div class="calendar">
+          <div class="month">
+            <div class="date">
+              <h1></h1>
+            </div>
+          </div>
+          <div class="weekdays">
+            <div>D</div>
+            <div>L</div>
+            <div>M</div>
+            <div>M</div>
+            <div>J</div>
+            <div>V</div>
+            <div>S</div>
+          </div>
+          <div class="days"></div>
+        </div>
+
+        <div class="eventos">
+
+          <div class="row">
+
+            <div class="col-md-9">PRÓXIMOS EVENTOS</div>
+            <div class="col-md-3 puntos">. . .</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-8 calendarioGrande">
+
+        <form>
+
+          <div class="row">
+
+            <div class="col-md-2">
+              
+              <div
+                  class="btn btn-primary anterior"
+                  mwlCalendarPreviousView
+                  [view]="view"
+                  [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                  Anterior
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+
+              <h3 class="mesActual">{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
+
+            </div>
+
+            <div class="col-md-2">
+
+              <div
+                  class="btn btn-primary siguiente"
+                  mwlCalendarNextView
+                  [view]="view"
+                  [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                  Siguiente
+                </div>
+
+            </div>
+
+          </div>
+
+          <br />
+          <div [ngSwitch]="view">
+            <mwl-calendar-month-view
+              *ngSwitchCase="CalendarView.Month"
+              [viewDate]="viewDate"
+              [events]="events"
+              [refresh]="refresh"
+              [activeDayIsOpen]="activeDayIsOpen"
+              (dayClicked)="dayClicked($event.day)"
+              (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)"
+            >
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view
+              *ngSwitchCase="CalendarView.Week"
+              [viewDate]="viewDate"
+              [events]="events"
+              [refresh]="refresh"
+              (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)"
+            >
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view
+              *ngSwitchCase="CalendarView.Day"
+              [viewDate]="viewDate"
+              [events]="events"
+              [refresh]="refresh"
+              (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)"
+            >
+            </mwl-calendar-day-view>
+          </div>
+          
+          <ng-template #modalContent let-close="close">
+            <div class="modal-header">
+              <h5 class="modal-title">Event action occurred</h5>
+              <button type="button" class="close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                Action:
+                <pre>{{ modalData?.action }}</pre>
+              </div>
+              <div>
+                Event:
+                <pre>{{ modalData?.event | json }}</pre>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" (click)="close()">
+                OK
+              </button>
+            </div>
+          </ng-template>
+          
+
+        </form>
+
+      </div>
+
+    </div>
+  
+  </div>
+
+</div>

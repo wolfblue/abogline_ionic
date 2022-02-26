@@ -9,9 +9,9 @@
       <div class="col-5 tCenter seleccionarCaso">
   
         <select *ngIf="usuario" id="seleccionarCaso">
-          <option>- Seleccionar Caso -</option>
+          <option value="">- Seleccionar Caso -</option>
           <ng-container *ngFor="let item of casos">
-            <option value="{{item.id}}">{{item.id}}</option>
+            <option value="{{item.id}}">{{item.trata_caso}}: {{item.cual_problema}}</option>
           </ng-container>
         </select>
   
@@ -25,8 +25,8 @@
 
     <div class="row filtros">
 
-      <div *ngIf="!usuario" class="col-4 filtro">
-      <div *ngIf="usuario" class="col-3 filtro"></div>
+      <div *ngIf="!usuario" class="col-4 filtro"></div>
+      <div *ngIf="usuario" class="col-3 filtro">
 
         <select>
           <option>- Estrellas -</option>
@@ -34,20 +34,26 @@
 
       </div>
 
-      <div *ngIf="!usuario" class="col-4 filtro">
-      <div *ngIf="usuario" class="col-3 filtro"></div>
+      <div *ngIf="!usuario" class="col-4 filtro"></div>
+      <div *ngIf="usuario" class="col-3 filtro">
 
         <select>
           <option>- Precio -</option>
+          <ng-container *ngFor="let item of filtroPrecio">
+            <option>{{item}}</option>
+          </ng-container>
         </select>
 
       </div>
 
-      <div *ngIf="!usuario" class="col-4 filtro">
-      <div *ngIf="usuario" class="col-3 filtro"></div>
+      <div *ngIf="!usuario" class="col-4 filtro"></div>
+      <div *ngIf="usuario" class="col-3 filtro">
 
         <select>
           <option>- Especialidad -</option>
+          <ng-container *ngFor="let item of filtroEspecialidad">
+            <option>{{item}}</option>
+          </ng-container>
         </select>
 
       </div>
@@ -56,6 +62,9 @@
 
         <select *ngIf="usuario">
           <option>- Tiempo de Experiencia -</option>
+          <ng-container *ngFor="let item of filtroTiempo">
+            <option>{{item}}</option>
+          </ng-container>
         </select>
 
       </div>
@@ -76,14 +85,14 @@
 
   <div class="row listaAbogados">
 
-    <div class="abogadoItem">
+    <div class="abogadoItem" *ngFor="let item of abogados; let i = index">
 
       <div class="abogado">
 
-        <p class="consulta">200.000</p>
+        <p class="consulta">{{item.consulta}}</p>
 
         <div class="tCenter fotoAbogado">
-          <img *ngIf="usuario" src="/assets/images/perfil_example.jpg" />
+          <img *ngIf="usuario" src="/assets/images/{{item.usuario}}.jpg" />
           <img *ngIf="!usuario" src="/assets/images/abogado.png" />
         </div>
 
@@ -97,30 +106,34 @@
 
         </div>
 
-        <div *ngIf="usuario" class="tCenter abogadoName">PEDRO</div>
+        <div *ngIf="usuario" class="tCenter abogadoName">{{item.nombres}} {{item.apellidos}}</div>
         <br *ngIf="!usuario" />
 
-        <div class="tCenter abogadoCargo">Abogado Civilistica</div>
+        <div class="tCenter abogadoCargo">{{item.titulo_profesional}}</div>
 
-        <div class="tCenter perfilDescripcion">Perfil incompleto ...</div>
+        <div class="tCenter perfilDescripcion">{{item.presentacion}}</div>
 
-        <div class="tRight verMas">... ver más</div>
+        <div class="tRight verMas" (click)="verMas(i)">... ver más</div>
 
       </div>
 
-      <div class="eligeme" (click)="eligeme()">ELÍGEME</div>
+      <div class="eligeme" (click)="eligeme(item.usuario)">ELÍGEME</div>
 
     </div>
 
     <div class="row footer">
 
-      <div class="col-5 tLeft">Mostrando <b>4 de 4 Entradas</b></div>
+      <div class="col-5 tLeft">Mostrando <b>1 de 1 Entrada(s)</b></div>
   
       <div class="col-2 tCenter">
   
         <div class="row">
   
           <div class="col-3"><img src="/assets/images/circulo_claro.png" /></div>
+
+          <div class="col-9">
+
+          </div>
   
         </div>
   
@@ -128,8 +141,8 @@
   
       <div class="col-5">
 
-        <button class="buttonFooter siguiente">SIGUIENTE</button>
-        <button class="buttonFooter anterior">ANTERIOR</button>
+        <!--<button class="buttonFooter siguiente">SIGUIENTE</button>
+        <button class="buttonFooter anterior">ANTERIOR</button>-->
 
       </div>
   
@@ -138,6 +151,142 @@
   </div>
 
 </div>
+
+<!--  MODAL VER MÁS -->
+
+<ng-template #modalVerMas let-modal id="modal1">
+
+  <div class="modal-body">
+
+    <div class="modalContent1">
+
+      <div>
+        <img src="/assets/images/icon_cerrar.png" class="iconCerrar" (click)="closeModal()" />
+      </div>
+
+      <div class="row">
+        
+        <div class="col-md-5">
+          <img *ngIf="usuario" src="/assets/images/{{modalUsuario}}.jpg" class="modalImage" />
+          <img *ngIf="!usuario" src="/assets/images/abogado.png" class="modalImage" />
+        </div>
+
+        <div class="col-md-7">
+
+          <div class="row">
+
+            <div class="col-md-6 modalName">{{modalNombre}}</div>
+            <div class="col-md-6 modalConsulta">Consulta: <b>${{modalConsulta}}</b></div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col modalPerfil">{{modalTitulo}}</div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-6">
+
+              <img src="/assets/images/estrella_blanca.png" class="modalEstrella" />
+              <img src="/assets/images/estrella_blanca.png" class="modalEstrella" />
+              <img src="/assets/images/estrella_blanca.png" class="modalEstrella" />
+              <img src="/assets/images/estrella_blanca.png" class="modalEstrella" />
+              <img src="/assets/images/estrella_blanca.png" class="modalEstrella" />
+
+            </div>
+
+            <div class="col-md-6 modalVotos">({{modalVotos}} votos)</div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-4 modalRoles" *ngFor="let item of modalPerfiles">
+              <div>{{item}}</div>
+            </div>
+
+          </div>
+
+          <div class="row modalIcon">
+
+            <div class="col-md-6">
+
+              <div>
+
+                <img src="/assets/images/icono_licencia.png" />
+                {{modalLicencia}}
+
+              </div>
+
+            </div>
+
+            <div class="col-md-6 modalExperiencia">
+
+              <div>
+                <img src="/assets/images/icono_experiencia.png" />
+                Experiencia: {{modalExperiencia}}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row modalIcon2">
+
+            <div class="col">
+
+              <img src="/assets/images/icono_cantidad_Casos.png" />
+              Cantidad de casos atentidos: {{modalCantidad}}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+      
+  </div>
+
+  <div id="presentacion">
+
+    <p class="title">Presentación</p>
+
+    <p>{{modalPresentacion}}</p>
+
+    <hr>
+
+    <div>
+
+      <p class="title">Educación</p>
+
+      <div class="row" *ngFor="let item of modalEducacion">
+
+        <div class="col-md-2">
+          <img src="/assets/images/icono_titulos.png" class="pointEstudio" />
+        </div>
+
+        <div class="col-md-10 estudio">
+          
+          <p class="title">{{item.universidad}}</p>
+          <p>{{item.titulo}}</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="escoger" (click)="eligeme(item.usuario)">ELIGEME</div>
+
+</ng-template>
 
 
 <ngx-spinner></ngx-spinner>

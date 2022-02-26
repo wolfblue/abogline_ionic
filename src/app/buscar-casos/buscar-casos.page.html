@@ -108,17 +108,17 @@
 
         <div class="tCenter perfilDescripcion">{{item.cuentanos}}</div>
 
-        <div class="tRight verMas">... ver más</div>
+        <div class="tRight verMas" (click)="eligeme('/assets/images/icon2_' + item.trata_caso + '.png',item.trata_caso,item.cual_problema,item.cuentanos,item.proceso)">... ver más</div>
 
       </div>
 
-      <div class="eligeme">ELÍGEME</div>
+      <div class="eligeme" (click)="escoger(item.id)" *ngIf="item.estado_original == 1">ELÍGEME</div>
 
     </div>
 
     <div class="row footer">
 
-      <div class="col-5 tLeft">Mostrando <b><span>1</span> de {{casos.length}} Entrada(s)</b></div>
+      <div class="col-5 tLeft">Mostrando <b><span>{{casos.length}}</span> de {{casos.length}} Entrada(s)</b></div>
   
       <div class="col-2 tCenter">
   
@@ -145,3 +145,60 @@
   </div>
 
 </div>
+
+<!--  MODAL ELIGEME -->
+
+<ng-template #modalEligeme let-modal id="modal1">
+
+  <div class="modal-body">
+
+    <div class="modalContent1">
+
+      <div>
+        <img src="/assets/images/icon_cerrar.png" class="iconCerrar" (click)="closeModal()" />
+      </div>
+
+      <div class="row">
+
+        <div class="col-3 iconModalContent">
+          <img [attr.src]="modalImage" class="iconModal" />
+        </div>
+
+        <div class="col-9">
+
+          <div class="modalTitle">{{modalTitle}}</div>
+          <div class="modalSubtitle">{{modalSubtitle}}</div>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+    <div class="modalContent2">
+
+      <p class="modalContent2Title">Resumen del Caso</p>
+
+      <p class="modalText">{{modalDescription}}</p>
+
+      <p class="modalContent2Title">¿Inició un proceso ante un juzgado o entidad para su solución?</p>
+
+      <div class="row">
+
+        <div class="col-1 iconMazo">
+          <img src="/assets/images/icon_mazo.png" />
+        </div>
+
+        <div class="col-11 desicion">{{modalProceso}}</div>
+
+      </div>
+
+    </div>
+
+    <div class="escoger" (click)="escoger(idCaso)">ESCOGER</div>
+      
+  </div>
+
+</ng-template>
+
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,89 @@
+.notificaciones {
+    background: #ffffff;
+    color: #0A1738;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.contenido {
+    background: #D8D8DC;
+}
+
+.reporte {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 2% 4% 2% 4%;
+}
+
+.buscador img {
+    width: 4%;
+}
+
+.buscador input {
+    margin-left: 3%;
+    background: #D8D8DB;
+    font-size: 13px;
+    width: 63%;
+}
+
+.filtro {
+    text-align: right;
+}
+
+.filtro span {
+    font-size: 15px;
+    color: #444547;
+    font-weight: 700;
+    padding: 0% 2% 0% 2%;
+}
+
+.filtro select {
+    border-top: 0px solid;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    width: 10%;
+    height: 26px;
+    color: #112340;
+    text-align: center;
+    font-size: 16px;
+    background: url('/assets/images/flecha_abajo.png');
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: 93%;
+    background-color: #D8D8DC;
+}
+
+.tableNotificaciones {
+    margin-top: 3%;
+}
+
+.tableEncabezado {
+    background: #D8D8DB;
+    border-radius: 8px;
+    padding: 2%;
+    text-align: center;
+    font-size: 16px;
+    color: #444547;
+    font-weight: 600;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.tableRegistro{
+    margin-left: 1%;
+    margin-right: 1%;
+    background: #EDEEEF;
+    border-left: 5px solid#09455A;
+    padding: 2%;
+    font-size: 14px;
+    text-align: center;
+}
+
+.footer{
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 4%;
+}

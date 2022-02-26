@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'admin-tipo-documento',
     loadChildren: () => import('./admin-tipo-documento/admin-tipo-documento.module').then( m => m.AdminTipoDocumentoPageModule)
-  },  {
+  },
+  {
     path: 'admin-municipio',
     loadChildren: () => import('./admin-municipio/admin-municipio.module').then( m => m.AdminMunicipioPageModule)
   },
@@ -73,6 +74,26 @@ const routes: Routes = [
   {
     path: 'mis-casos',
     loadChildren: () => import('./mis-casos/mis-casos.module').then( m => m.MisCasosPageModule)
+  },
+  {
+    path: 'core',
+    loadChildren: () => import('./core/core.module').then( m => m.CorePageModule)
+  },
+  {
+    path: 'admin-usuarios',
+    loadChildren: () => import('./admin-usuarios/admin-usuarios.module').then( m => m.AdminUsuariosPageModule)
+  },
+  {
+    path: 'contactenos',
+    loadChildren: () => import('./contactenos/contactenos.module').then( m => m.ContactenosPageModule)
+  },
+  {
+    path: 'notificaciones',
+    loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
   }
 
 

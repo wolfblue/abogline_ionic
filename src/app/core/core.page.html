@@ -1,0 +1,334 @@
+<div>
+    
+  <div class="row header">
+
+    <div class="col-7 titleHeader">{{trataCaso}}: {{cualProblema}}</div>
+
+    <div class="col-5 textR">
+      <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" />
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <div class="row">
+      
+      <div class="col-2 background background3" *ngIf="paso1_pago_asesoria == 'proceso'">
+        
+        <p class="titleProceso">PAGO ASESORÍA</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso">PAGAR ></button>
+        <p class="date">SEPT 13/2021</p>
+
+      </div>
+
+      <div class="col-2 background coreAsesoria" *ngIf="paso2_asesoria == 'proceso'">
+        <p class="titleProceso">ASESORÍA</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreContinuidad" *ngIf="paso3_decision_continuidad == 'proceso'">
+        <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreCita" *ngIf="paso4_generar_cita == 'proceso'">
+        <p class="titleProceso">GENERAR CITA</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">GENERAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreContratacion" *ngIf="paso5_contratacion == 'proceso'">
+        <p class="titleProceso">CONTRATACIÓN</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreFirma" *ngIf="paso6_firmar_contrato == 'proceso'">
+        <p class="titleProceso">FIRMA CONTRATO</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">FIRMAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreFinalizar" *ngIf="paso7_finalizar_contrato == 'proceso'">
+        <p class="titleProceso">FINALIZAR CONTRATO</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background corePagos" *ngIf="paso8_pagos == 'proceso'">
+        <p class="titleProceso">PAGOS</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">PAGAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreReunionVirtual" *ngIf="paso9_reunion_virtual == 'proceso'">
+        <p class="titleProceso">REUNIÓN VIRTUAL</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreDocumentacion" *ngIf="paso10_documentacion == 'proceso'">
+        <p class="titleProceso">DOCUMENTACIÓN</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreReunionPresencial" *ngIf="paso11_reunion_presencial == 'proceso'">
+        <p class="titleProceso">REUNIÓN PRESENCIAL</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+      <div class="col-2 background coreInformacion" *ngIf="paso12_informacion == 'proceso'">
+        <p class="titleProceso">INFORMACIÓN</p>
+        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
+        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="date">SEPT 13/2021</p>
+      </div>
+
+    </div>
+
+    <div class="row subcontent2">
+
+      <div class="col-3 alertas">
+
+        <div class="row marginL0">
+
+          <div class="col-6 alertasTitle">ALERTAS</div>
+
+          <div class="col-6 points">. . .</div>
+
+        </div>
+
+        <!--<p class="alertasDescription">Lorem impsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut lareet.</p>-->
+
+      </div>
+
+      <div class="col-9">
+
+        <div class="chat">
+
+          <div class="online">ONLINE</div>
+
+          <ng-container *ngFor="let item of chat">
+
+            <div class="row mensaje" *ngIf="item.usuario == abogadoCaso">
+
+              <div class="col-4" ></div>
+  
+              <div class="col-6 globoAbogado">
+                {{item.mensaje}}
+              </div>
+  
+              <div class="col-2">
+                <img class="chatImage" src="/assets/images/{{item.usuario}}.jpg" />
+              </div>
+  
+            </div>
+
+            <div class="row mensaje" *ngIf="item.usuario == usuarioCaso">
+
+              <div class="col-2" *ngIf="item.usuario == usuarioCaso">
+                <img class="chatImage" src="/assets/images/{{item.usuario}}.jpg" />
+              </div>
+  
+              <div class="col-6 globoUsuario" *ngIf="item.usuario == usuarioCaso">
+                {{item.mensaje}}
+              </div>
+  
+              <div class="col-4" *ngIf="item.usuario == usuarioCaso"></div>
+  
+            </div>
+
+          </ng-container>
+
+        </div>
+
+        <div class="chatFooter">
+          <input type="text" placeholder="Escribe tu mensaje" id="chatMensaje" />
+          <img src="/assets/images/icon_flecha_next.png" class="enviar" (click)="enviarChat()"/>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--  MODAL ELIGEME -->
+
+<ng-template #modalGeneral let-modal id="modal1">
+
+  <div class="modal-body">
+
+    <div class="logo">
+      <img src="/assets/images/logo_redondo.png" />
+    </div>
+
+    <div class="center modalContent">
+
+      <div class="modalTipo1">
+
+        <div class='titleModal1 color1'>DESICIÓN DE CONTINUIDAD</div>
+
+        <div class="row modalTipo1Btns">
+
+          <div class="col-6">
+            <img src="/assets/images/btn_si.png" (click)="continuidadSi()" />
+          </div>
+
+          <div class="col-6">
+            <img src="/assets/images/btn_no.png" (click)="closeModal()" />
+          </div>
+
+        </div>
+
+        <div class="row modalTipo1Desicion">
+
+          <div class="col-6 modalTipo1Si">
+            SI
+          </div>
+
+          <div class="col-6 modalTipo1No">
+            NO
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo2">
+
+        <div class='titleModal1 color1'>¿POR QUÉ NO QUIERES CONTINUAR?</div>
+
+        <div class="row desiciones" (click)="modalTipo3()">
+
+          <div class="col-2">
+            <img src="/assets/images/btn_si.png"/>
+          </div>
+
+          <div class="col-2 btnNoDesicion">
+            <img src="/assets/images/btn_no_gris.png"/>
+          </div>
+
+          <div class="col-8 desicionText">
+            El Abogado no me convenció
+          </div>
+
+        </div>
+
+        <div class="row desiciones" (click)="modalTipo3()">
+
+          <div class="col-2">
+            <img src="/assets/images/btn_si_gris.png"/>
+          </div>
+
+          <div class="col-2 btnNoDesicion">
+            <img src="/assets/images/btn_no.png"/>
+          </div>
+
+          <div class="col-8 desicionText">
+            Sólo buscaba asesoría
+          </div>
+
+        </div>
+
+        <div class="row desiciones" (click)="modalTipo3()">
+
+          <div class="col-2">
+            <img src="/assets/images/btn_si_gris.png"/>
+          </div>
+
+          <div class="col-2 btnNoDesicion">
+            <img src="/assets/images/btn_no_gris.png"/>
+          </div>
+
+          <div class="col-8 desicionText">
+            Quiero buscar otro Abogado
+          </div>
+
+        </div>
+
+        <div class="row desiciones" (click)="modalTipo3()">
+
+          <div class="col-2">
+            <img src="/assets/images/btn_si_gris.png"/>
+          </div>
+
+          <div class="col-2 btnNoDesicion">
+            <img src="/assets/images/btn_no_gris.png"/>
+          </div>
+
+          <div class="col-8 desicionText">
+            No quiero continuar mi proceso
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo3">
+
+        <div class='titleModal1 color1'>QUEREMOS SABER QUÉ SUCEDIÓ</div>
+        <div class='titleModal1 color1'>¡déjanos tu comentario!</div>
+
+        <div class="tiposOpinion">
+
+          <div>-El abogado no me convenció-</div>
+          <div>-quiero buscar otro Abogado-</div>
+
+        </div>
+
+        <div class="dejarComentario">Deja tu comentario:</div>
+
+        <textarea class="comentario"></textarea>
+
+      </div>
+
+      <div class="modalTipo4">
+
+        <div class='titleModal1 color1'>ASESORÍA</div>
+        <div class='titleModal2 color1'>Escoge una Fecha</div>
+
+        <p class="dateDesde">
+
+          <img src="/assets/images/calendario_gris.png" />
+          <input type="datetime-local" id="dateDesde" />
+
+        </p>
+
+        <p class="dateHasta">
+
+          <img src="/assets/images/calendario_azul.png" />
+          <input type="datetime-local" id="dateHasta" />
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div>
+    <img src="/assets/images/btn_continuar.png" class="btnContinuar" (click)="closeModal()" />
+    <img src="/assets/images/btn_aceptar.png" class="btnAceptar" (click)="asesoriaAceptar()" />
+  </div>
+  
+</ng-template>

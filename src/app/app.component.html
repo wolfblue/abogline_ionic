@@ -18,7 +18,7 @@
 
               <ul class="marginAuto">
                 <li (click)="location('perfil')" *ngIf="autenticado==1" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
-                <li class="heightFull paddingL4">Contáctenos</li>
+                <li class="heightFull paddingL4" (click)="location('contactenos')">Contáctenos</li>
                 <li class="heightFull paddingL4 paddingR4 borderR1" (click)="location('nosotros')">Nosotros</li>
                 <li class="heightFull paddingR4 borderR1" (click)="location('quienes-somos')">¿Quiénes Somos?</li>
               </ul>
@@ -83,11 +83,12 @@
             <a class="dropdown-item" href="admin-titulos-hv">Títulos hoja de vida</a>
           </div>
         </li>
+        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="perfil == 'administrador'" (click)="location('admin-usuarios')">Administrar usuarios</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente'" (click)="location('registrar-caso')">Registrar caso</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 misCasos" *ngIf="perfil == 'cliente' || perfil == 'abogado'" (click)="location('mis-casos')">Mis casos</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
-        <li class="heightFull paddingL4 paddingR4 borderR1">Notificaciones</li>
-        <li class="heightFull paddingL4 paddingR4 borderR1" >Calendario</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('notificaciones')">Notificaciones</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('calendar')">Calendario</li>
         <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'cliente'">Pagos pendientes</li>
         <li class="heightFull paddingL4 paddingR4 buscaTuCaso" *ngIf="perfil == 'abogado'" (click)="location('buscar-casos')">Busca tu caso</li>
                 

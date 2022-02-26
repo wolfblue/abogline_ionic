@@ -88,6 +88,7 @@ export class MisCasosPage implements OnInit {
     apiConsultarCasos.append("trataCaso",_this.categoria);
     apiConsultarCasos.append("cualProblema",_this.subcategoria);
     apiConsultarCasos.append("id","");
+    apiConsultarCasos.append("perfil",sessionStorage.getItem("perfil"));
 
     _this.postModel("apiConsultarCasos",apiConsultarCasos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -178,6 +179,23 @@ export class MisCasosPage implements OnInit {
 
     //  Redireccionar
     _this.location("registrar-caso");
+
+  }
+
+  /**************************************************** */
+  //  Seguimiento
+  /**************************************************** */
+
+  seguimiento(idCaso){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar caso sesión
+    sessionStorage.setItem("idCaso",idCaso);
+
+    //  Enviar al core
+    _this.location("/core");
 
   }
 

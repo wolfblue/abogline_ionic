@@ -303,27 +303,34 @@
 
         </div>
 
-        <div class="row">
+        <div class="row" *ngFor="let item of titulosUsuario; let i = index">
 
           <div class="col-6 borderRightGray">
 
             <p>
-              <select class="selectUniversidad selectUniversidad1" (change)="selectTitulo('1')">
+              <img src="/assets/images/hv_add.png" class="hvTituloIcon" (click)="addTitulo()" *ngIf="i == titulosUsuario.length - 1">
+              <span *ngIf="i != titulosUsuario.length - 1" class="marginLeft5"></span>
+              <select [id]="'tituloSelect'+i" [ngClass]="'selectUniversidad selectUniversidad'+i" (change)="selectTitulo(i,item.id)"> 
                 <option value="">- Agregar otro Título -</option>
-                <ng-container *ngFor="let item of titulos">
-                  <option value="{{item.titulo}}">{{item.titulo}}</option>
+                <ng-container *ngFor="let item2 of titulos">
+                  <option *ngIf="item2.titulo == item.titulo" value="{{item2.titulo}}" selected>{{item2.titulo}}</option>
+                  <option *ngIf="item2.titulo != item.titulo" value="{{item2.titulo}}">{{item2.titulo}}</option>
                 </ng-container>
               </select>
+              <img src="/assets/images/flecha_abajo.png" class="flechaAbajo" />
+              <img src="/assets/images/hv_delete.png" class="hvTituloIcon" *ngIf="i!=0" (click)="deleteTitulo(item.id)">
             </p>
 
-            <input type="text" class="universidad" />
+            <div>
+              <input type="text" class="universidad textTitulo" [id]="'tituloDescription1'+i" (change)="updateTitulo(1,i,item.id)" value="{{item.descripcion1}}" />
+            </div>
 
           </div>
 
           <div class="col-6">
 
-            <p class="marginLeft8">Título <span class="titulo1"></span></p>
-            <input type="text" class="universidad marginLeft8" />
+            <p class="marginLeft8">Título <span [ngClass]="'titulo'+i"></span></p>
+            <input type="text" class="universidad marginLeft8" [id]="'tituloDescription2'+i" (change)="updateTitulo(2,i,item.id)" value="{{item.descripcion2}}" />
 
           </div>
 
@@ -468,8 +475,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaCedula" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaCedula" style="display: none;" />
+                <img class="cargaDocumentos cargaCedula" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaCedula == ''">
+                <img class="cargaDocumentos cargaCedula" src="/assets/images/carga_documentos.png" *ngIf="cargaCedula != ''">
+
+                <input type="file" id="cargaCedula" style="display: none;" (change)="changeFile($event,'cargaCedula')" />
               
               </div>
               <div class="col-10 marginAuto">Cargar Cédula al 150%</div>
@@ -480,8 +489,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaReciboServicioPublico" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaReciboServicioPublico" style="display: none;" />
+                <img class="cargaDocumentos cargaReciboServicioPublico" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaReciboServicioPublico == ''">
+                <img class="cargaDocumentos cargaReciboServicioPublico" src="/assets/images/carga_documentos.png" *ngIf="cargaReciboServicioPublico != ''">
+
+                <input type="file" id="cargaReciboServicioPublico" style="display: none;" (change)="changeFile($event,'cargaReciboServicioPublico')" />
               
               </div>
               <div class="col-10 marginAuto">Cargar Recibo de Servicio Público</div>
@@ -492,8 +503,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaTp" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaTp" style="display: none;" />
+                <img class="cargaDocumentos cargaTp" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaTp == ''">
+                <img class="cargaDocumentos cargaTp" src="/assets/images/carga_documentos.png" *ngIf="cargaTp != ''">
+
+                <input type="file" id="cargaTp" style="display: none;" (change)="changeFile($event,'cargaTp')" />
               
               </div>
               <div class="col-10 marginAuto">Cargar T.P.</div>
@@ -508,8 +521,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaDiploma" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaDiploma" style="display: none;" />
+                <img class="cargaDocumentos cargaDiploma" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaDiploma == ''">
+                <img class="cargaDocumentos cargaDiploma" src="/assets/images/carga_documentos.png" *ngIf="cargaDiploma != ''">
+
+                <input type="file" id="cargaDiploma" style="display: none;" (change)="changeFile($event,'cargaDiploma')" />
               
               </div>
               <div class="col-10 marginAuto">Cargar Diploma o Acta de Grado</div>
@@ -520,8 +535,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaEspecializacion" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaEspecializacion" style="display: none;" />
+                <img class="cargaDocumentos cargaEspecializacion" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaEspecializacion == ''">
+                <img class="cargaDocumentos cargaEspecializacion" src="/assets/images/carga_documentos.png" *ngIf="cargaEspecializacion != ''">
+
+                <input type="file" id="cargaEspecializacion" style="display: none;" (change)="changeFile($event,'cargaEspecializacion')" />
               
               </div>
               <div class="col-10 marginAuto">Especialización</div>
@@ -532,8 +549,10 @@
 
               <div class="col-2 cargaDocmentosDiv">
                 
-                <img class="cargaDocumentos cargaMaestria" src="/assets/images/carga_documentos_rojo.png">
-                <input type="file" id="cargaMaestria" style="display: none;" />
+                <img class="cargaDocumentos cargaMaestria" src="/assets/images/carga_documentos_rojo.png" *ngIf="cargaMaestria == ''">
+                <img class="cargaDocumentos cargaMaestria" src="/assets/images/carga_documentos.png" *ngIf="cargaMaestria != ''">
+
+                <input type="file" id="cargaMaestria" style="display: none;" (change)="changeFile($event,'cargaMaestria')" />
               
               </div>
               <div class="col-10 marginAuto">Maestría</div>

@@ -114,7 +114,7 @@
         <div class="col">{{item.estado}}</div>
         <div class="col">
 
-          <div class="row iconAcciones">
+          <div class="row iconAcciones" *ngIf="item.estado_original == '1'">
 
             <div class="col">
               <img src="/assets/images/icon_editar.png" />
@@ -126,7 +126,7 @@
 
           </div>
 
-          <div class="row iconAcciones">
+          <div class="row iconAcciones" *ngIf="item.estado_original == '1'">
 
             <div class="col editar" (click)="editarCaso(item.id)">
               Editar
@@ -139,11 +139,11 @@
           </div>
 
           <div>
-            <button class="seguimiento">Seguimiento</button>
+            <button class="seguimiento" *ngIf="item.estado_original == '2'" (click)="seguimiento(item.id)">Seguimiento</button>
           </div>
 
           <div>
-            <button class="consultarAbogados" (click)="location('consultar-abogados')">Consultar Abogados</button>
+            <button class="consultarAbogados" *ngIf="item.estado_original == '1'" (click)="location('consultar-abogados')">Consultar Abogados</button>
           </div>
 
         </div>

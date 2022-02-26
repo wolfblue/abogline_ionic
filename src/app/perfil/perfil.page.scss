@@ -387,4 +387,24 @@ select{
 .selectUniversidad{
     height: 20px;
     margin: 0%;
+    margin-left: 2%;
+    width: 83%;
+    margin-right: 2%;
+    background: #939393;
+}
+
+.hvTituloIcon{
+    width:5%;
+}
+
+.textTitulo{
+    width: 83%;
+    margin-left: 7%;
+}
+
+.flechaAbajo{
+    width: 4%;
+    position: absolute;
+    right: 12%;
+    top: 2%;
 }

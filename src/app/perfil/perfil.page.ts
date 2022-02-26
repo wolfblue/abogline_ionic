@@ -32,11 +32,11 @@ export class PerfilPage implements OnInit {
   notificacionEmail:any = "";
   notificacionSMS:any = "";
   activoDesde:any = "";
-  registro:any = "";
-  completaPerfil:any = "";
-  creaCaso:any = "";
-  buscaCaso:any = "";
-  disfrutaExperiencia:any = "";
+  registro:any = "true";
+  completaPerfil:any = "false";
+  creaCaso:any = "false";
+  buscaCaso:any = "false";
+  disfrutaExperiencia:any = "false";
   passwordOld:any = "";
   ciudades:any = [];
   generos:any = [];
@@ -47,10 +47,10 @@ export class PerfilPage implements OnInit {
   perfil: any = "";
   direccion: any = "";
   municipio: any = "";
-  hojaVida: any = "";
-  validacion: any = "";
-  aprobado: any = "";
-  buscaCliente: any = "";
+  hojaVida: any = "false";
+  validacion: any = "false";
+  aprobado: any = "false";
+  buscaCliente: any = "false";
   municipios:any = [];
   nacimiento: any = "";
   politicaPrivacidad: any = "";
@@ -62,6 +62,13 @@ export class PerfilPage implements OnInit {
   tarjetaLicencia: any = "";
   experienciaTiempo: any = "";
   consulta: any = "";
+  titulosUsuario: any = [];
+  cargaCedula: any = "";
+  cargaReciboServicioPublico: any = "";
+  cargaTp: any = "";
+  cargaDiploma: any = "";
+  cargaEspecializacion: any = "";
+  cargaMaestria: any = "";
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -81,67 +88,70 @@ export class PerfilPage implements OnInit {
       //  Consultar politica y privacidad
       this.politicaPrivacidadGet();
 
-
   }
 
   ngOnInit() {
 
     var _this = this;
 
-    $(".perfilCargaFoto").click(function() {
-      $("input[id='photo']").click();
-    });
+    setTimeout(function(){
 
-    $(".cargaCedula").click(function() {
-      $("input[id='cargaCedula']").click();
-    });
-
-    $(".cargaReciboServicioPublico").click(function() {
-      $("input[id='cargaReciboServicioPublico']").click();
-    });
-
-    $(".cargaTp").click(function() {
-      $("input[id='cargaTp']").click();
-    });
-
-    $(".cargaDiploma").click(function() {
-      $("input[id='cargaDiploma']").click();
-    });
-
-    $(".cargaEspecializacion").click(function() {
-      $("input[id='cargaEspecializacion']").click();
-    });
-
-    $(".cargaMaestria").click(function() {
-      $("input[id='cargaMaestria']").click();
-    });
-
-    $("#photo").change(function(event){
-
-      let reader = new FileReader();
-              
-      if(event.target.files && event.target.files.length) {
-
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onloadend = function () {
-          
-          _this.tmpFile = reader.result;
-          _this.tmpOpenFile = URL.createObjectURL(event.target.files[0]);
-
-          $(".perfilCargaFoto").prop("src",_this.tmpOpenFile);
-
-          var ext = $("#photo").val().split('.').pop().toLowerCase();
-
-          //  Actualizar foto perfil
-          _this.savePhoto(ext);
-
+      $(".perfilCargaFoto").click(function() {
+        $("input[id='photo']").click();
+      });
+  
+      $(".cargaCedula").click(function() {
+        $("input[id='cargaCedula']").click();
+      });
+  
+      $(".cargaReciboServicioPublico").click(function() {
+        $("input[id='cargaReciboServicioPublico']").click();
+      });
+  
+      $(".cargaTp").click(function() {
+        $("input[id='cargaTp']").click();
+      });
+  
+      $(".cargaDiploma").click(function() {
+        $("input[id='cargaDiploma']").click();
+      });
+  
+      $(".cargaEspecializacion").click(function() {
+        $("input[id='cargaEspecializacion']").click();
+      });
+  
+      $(".cargaMaestria").click(function() {
+        $("input[id='cargaMaestria']").click();
+      });
+  
+      $("#photo").change(function(event){
+  
+        let reader = new FileReader();
+                
+        if(event.target.files && event.target.files.length) {
+  
+          const [file] = event.target.files;
+          reader.readAsDataURL(file);
+  
+          reader.onloadend = function () {
+            
+            _this.tmpFile = reader.result;
+            _this.tmpOpenFile = URL.createObjectURL(event.target.files[0]);
+  
+            $(".perfilCargaFoto").prop("src",_this.tmpOpenFile);
+  
+            var ext = $("#photo").val().split('.').pop().toLowerCase();
+  
+            //  Actualizar foto perfil
+            _this.savePhoto(ext);
+  
+          }
+  
         }
+  
+      });
 
-      }
-
-    });
+    },2000);
 
   }
 
@@ -195,6 +205,60 @@ export class PerfilPage implements OnInit {
     let apiAdminTituloGet = new FormData();
     _this.postModel("apiAdminTituloGet",apiAdminTituloGet).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.titulos = result;});
 
+    //  Obtener títulos asignados
+
+    let apiUsuariosGetTitulos = new FormData();
+
+    apiUsuariosGetTitulos.append("usuario",sessionStorage.getItem("usuario"));
+
+    _this.postModel("apiUsuariosGetTitulos",apiUsuariosGetTitulos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.titulosUsuario = result;});
+
+    //  Obtener documentos registrados
+
+    let apiUsuariosGetDocumentos = new FormData();
+
+    apiUsuariosGetDocumentos.append("usuario",sessionStorage.getItem("usuario"));
+
+    _this.postModel("apiUsuariosGetDocumentos",apiUsuariosGetDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+      
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          switch(result[i].tipo){
+
+            case "cargaCedula":
+              _this.cargaCedula = true;
+            break;
+
+            case "cargaReciboServicioPublico":
+              _this.cargaReciboServicioPublico = true;
+            break;
+
+            case "cargaTp":
+              _this.cargaTp = true;
+            break;
+
+            case "cargaDiploma":
+              _this.cargaDiploma = true;
+            break;
+
+            case "cargaEspecializacion":
+              _this.cargaEspecializacion = true;
+            break;
+
+            case "cargaMaestria":
+              _this.cargaMaestria = true;
+            break;
+
+          }
+
+        }
+
+      }
+    
+    });
+
     //  Obtener información del usuario
 
     _this.spinner.show();
@@ -224,19 +288,19 @@ export class PerfilPage implements OnInit {
       _this.notificacionEmail = result[0].notificacion_email;
       _this.notificacionSMS = result[0].notificacion_sms;
       _this.activoDesde = result[0].activo_desde;
-      _this.registro = result[0].registro;
-      _this.completaPerfil = result[0].completa_perfil;
-      _this.creaCaso = result[0].crea_caso;
-      _this.buscaCaso = result[0].busca_caso;
-      _this.disfrutaExperiencia = result[0].disfruta_experiencia;
+      //_this.registro = result[0].registro;
+      //_this.completaPerfil = result[0].completa_perfil;
+      //_this.creaCaso = result[0].crea_caso;
+      //_this.buscaCaso = result[0].busca_caso;
+      //_this.disfrutaExperiencia = result[0].disfruta_experiencia;
       _this.passwordOld = result[0].password;
       _this.perfil = result[0].perfil;
       _this.direccion = result[0].direccion;
       _this.municipio = result[0].municipio;
-      _this.hojaVida = result[0].hoja_vida;
-      _this.validacion = result[0].validacion;
-      _this.aprobado = result[0].aprobado;
-      _this.buscaCliente = result[0].busca_cliente;
+      //_this.hojaVida = result[0].hoja_vida;
+      //_this.validacion = result[0].validacion;
+      //_this.aprobado = result[0].aprobado;
+      //_this.buscaCliente = result[0].busca_cliente;
       _this.nacimiento = result[0].nacimiento;
       _this.universidadEgreso = result[0].universidad_egreso;
       _this.tituloProfesional = result[0].titulo_profesional;
@@ -274,6 +338,12 @@ export class PerfilPage implements OnInit {
       setTimeout(function(){
         _this.areaPresentacion();
       },1000);
+
+      //  Validar estado de actividad completa tu perfil
+      _this.validateEstadoPerfil();
+
+      //  Validar estado de actividad hoja de vida
+      _this.validateHojaVida();
 
     });
 
@@ -657,7 +727,7 @@ export class PerfilPage implements OnInit {
   //  Selección de título
   /************************************************************************************* */
 
-  selectTitulo(id){
+  selectTitulo(id,idTitulo){
 
     //  Variables iniciales
     var _this = this;
@@ -671,6 +741,16 @@ export class PerfilPage implements OnInit {
       $(".titulo"+id).html(tituloData[1]);
     else
       $(".titulo"+id).html("");
+
+    //  Actualizar en db
+
+    let apiUsuariosUpdateFieldTitulo = new FormData();
+
+    apiUsuariosUpdateFieldTitulo.append("id",idTitulo);
+    apiUsuariosUpdateFieldTitulo.append("field","titulo");
+    apiUsuariosUpdateFieldTitulo.append("value",$("#tituloSelect"+id).val());
+
+    _this.postModel("apiUsuariosUpdateFieldTitulo",apiUsuariosUpdateFieldTitulo).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
 
   }
 
@@ -707,6 +787,195 @@ export class PerfilPage implements OnInit {
     apiUsuariosUpdateField.append("value",$("#"+id).val());
 
     _this.postModel("apiUsuariosUpdateField",apiUsuariosUpdateField).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+  }
+
+  /*************************************** */
+  //  Añadir título
+  /*************************************** */
+
+  addTitulo(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Spinner
+    _this.spinner.show();
+
+    //  Insertar nuevo título
+
+    let apiUsuariosInsertTitulo = new FormData();
+
+    apiUsuariosInsertTitulo.append("usuario",sessionStorage.getItem('usuario'));
+
+    _this.postModel("apiUsuariosInsertTitulo",apiUsuariosInsertTitulo).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+    //  Obtener títulos asignados
+
+    let apiUsuariosGetTitulos = new FormData();
+
+    apiUsuariosGetTitulos.append("usuario",sessionStorage.getItem("usuario"));
+
+    _this.postModel("apiUsuariosGetTitulos",apiUsuariosGetTitulos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+      
+      _this.titulosUsuario = result;
+
+      //  Spinner hide
+      _this.spinner.hide();
+    
+    });
+
+  }
+
+  /*************************************** */
+  //  Eliminar título
+  /*************************************** */
+
+  deleteTitulo(id){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Spinner
+    _this.spinner.show();
+
+    //  Eliminar título
+
+    let apiUsuariosDeleteTitulo = new FormData();
+
+    apiUsuariosDeleteTitulo.append("id",id);
+
+    _this.postModel("apiUsuariosDeleteTitulo",apiUsuariosDeleteTitulo).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+    //  Obtener títulos asignados
+
+    let apiUsuariosGetTitulos = new FormData();
+
+    apiUsuariosGetTitulos.append("usuario",sessionStorage.getItem("usuario"));
+
+    _this.postModel("apiUsuariosGetTitulos",apiUsuariosGetTitulos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+      
+      _this.titulosUsuario = result;
+
+      //  Spinner hide
+      _this.spinner.hide();
+    
+    });
+
+  }
+
+  /*************************************** */
+  //  Actualizar título
+  /*************************************** */
+
+  updateTitulo(num,item,id){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar título
+    
+    let apiUsuariosUpdateFieldTitulo = new FormData();
+
+    apiUsuariosUpdateFieldTitulo.append("id",id);
+    apiUsuariosUpdateFieldTitulo.append("field","descripcion"+num);
+    apiUsuariosUpdateFieldTitulo.append("value",$("#tituloDescription"+num+''+item).val());
+
+    _this.postModel("apiUsuariosUpdateFieldTitulo",apiUsuariosUpdateFieldTitulo).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+  }
+
+  /*************************************** */
+  //  Guardar documento del usuario
+  /*************************************** */
+
+  changeFile(event,tipo){
+
+    //  Variables iniciales
+    var _this = this;
+
+    console.log("changeFile");
+    console.log(event);
+
+    //  Leer documentos
+
+    let reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+
+      const [file] = event.target.files;
+
+      reader.readAsDataURL(file);
+
+      reader.onloadend = function () {
+
+        _this.tmpFile = reader.result;
+
+        let apiUsuariosUpdateDocumento = new FormData();
+
+        apiUsuariosUpdateDocumento.append("usuario",sessionStorage.getItem("usuario"));
+        apiUsuariosUpdateDocumento.append("tipo",tipo);
+        apiUsuariosUpdateDocumento.append("base64",_this.tmpFile);
+
+        _this.postModel("apiUsuariosUpdateDocumento",apiUsuariosUpdateDocumento).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+      }
+
+    }
+
+  }
+
+  /*************************************** */
+  //  Validar estado perfil
+  /*************************************** */
+
+  validateEstadoPerfil(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar estado
+
+    if(
+      _this.nombres &&
+      _this.apellidos &&
+      _this.usuario &&
+      _this.email &&
+      _this.identificacion &&
+      _this.telefonoContacto
+    ){
+      _this.completaPerfil = "true";
+    }
+
+  }
+
+  /*************************************** */
+  //  Validar estado hoja de vida
+  /*************************************** */
+
+  validateHojaVida(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar estado
+
+    if(
+      _this.universidadEgreso &&
+      _this.tituloProfesional &&
+      _this.presentacion &&
+      _this.tarjetaLicencia &&
+      _this.experienciaTiempo &&
+      _this.consulta &&
+      _this.cargaCedula &&
+      _this.cargaReciboServicioPublico &&
+      _this.cargaTp &&
+      _this.cargaDiploma &&
+      _this.cargaEspecializacion &&
+      _this.cargaMaestria
+    ){
+      _this.hojaVida = "true";
+    }
 
   }
 

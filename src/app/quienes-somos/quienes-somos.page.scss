@@ -1,7 +1,373 @@
-.title{
-    text-align: center;
+.cursor:hover{
+    cursor:pointer;
+    opacity:0.4;
+}
+.center{
+    text-align:center;
+}
+.color1{
+    background-color: #D8D9DD;
+}
+.row2{
+    background-image: url(/assets/images/banner_ejemplo.png);
+    background-position: center;
+    background-size: 100% 100%;
+    min-height: 350px;
+    background-repeat: no-repeat;
+}
+.row3{
+    background-color: #D8D9DD;
+    padding-bottom: 4%;
+}
+.col31{
+    
+}
+.col32{
+    
+}
+.col33{
+    
+}
+.row4{
+}
+.col41{
+    background-image: url(/assets/images/mockup_app.png);
+    background-position: center;
+    background-size: 100% 100%;
+    padding-bottom: 7%;
+}
+.col42{
+    background-color: #8B8B8C;
+}
+.row5{
+    background-image: url("/assets/images/banner_inferior.png");
+    background-position: center;
+    background-size: 100% 100%;
+}
+.col51{
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+.col52{
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+.col53{
+    
+}
+.logo2{
+    position: relative;
+    left: 60%;
     padding-top: 2%;
+    padding-bottom: 2%;
+}
+.logo2 img{
+    width: 20%;
+}
+.submain{
+    width: 75%;
+    margin: 7% 0% 0% 14%;
+}
+.titleMain{
+    color: #041836;
+    font-weight: bold;
+    padding-top: 2%;
+    font-size: 18px;
+    font-family: Lato;
+}
+.mantenteAlDia{
+    text-align: center;
+    padding-top: 5%;
+    color: #071A39;
+    font-weight: 800;
+    font-size: 18px;
+}
+.logotipoAbogline{
+    width: 42%;
+    margin-top: 22%;
+}
+.descargaNuestraApp{
+    margin-top: 6%;
+    color: #041835;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 17px;
+    font-family: 'Calibri';
+}
+.googlePlay{
+    margin-top: 3%;
+    width: 76%;
+}
+.appStore{
+    margin-top: 9%;
+    width: 76%;
+}
+.copyright{
+    background: #00475C;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 0.5% 0% 0.5% 5%;
+    margin: 0%;
+    font-family: Calibri;
+}
+.title2{
+    color: #041836;
+    font-weight: 800;
+    padding-top: 2%;
+    font-size: 22px;
+}
+.title3{
+    color: #041836;
+    font-weight: 500;
+    padding-top: 2%;
+    font-size: 17px;
+    margin: 0%;
+    line-height: 19px;
+    font-family: 'Calibri';
+}
+.input1{
+    background: #788392;
+    border: 0px solid;
+    border-radius: 5px;
+    width: 100%;
+    padding-left: 5%;
+    font-style: italic;
+    color:#ffffff;
+}
+.input1::placeholder{
+    color:#ffffff;
+}
+.p1{
+    margin-top: 3%;
+    font-size: 10px;
+    font-family: 'Calibri';
+}
+.siguenosIcon{
+    width: 70%;
+}
+.paddingEmpty{
+    padding: 0%;
+}
+.redes{
+    width: 60%;
+    margin: auto;
+}
+.icon247{
+    width: 60%;
+    margin-top: 2%;
+}
+.copyright2{
+    float: right;
+    margin-right: 5%;
+    font-family: 'Calibri';
+}
+.servicioCliente{
+    margin-bottom:0%;
+}
+.facebookWidget{
+    padding-bottom:2%;
+}
+
+.registraTuCaso:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.consultarAbogados:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.agendaCita:hover {
+    transform: scale(1.1);
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.btnEnviar{
+    width:62%;
+}
+
+.paadingR0{
+    padding-right: 0%;
+}
+
+.facebook{
+    padding-right: 0%!important;
+}
+
+.twitter{
+    padding-left: 0%!important;
+}
+
+.twitter iframe{
+    margin-left: -6%!important;
+}
+
+.marginTop7{
+    margin-top: 7%;
+}
+
+/***********************************************************************************/
+
+.nosotros{
+    background-image: url(/assets/images/fondo_nosotros.png);
+    background-position: top;
+    background-size: 100% 100%;
+}
+
+.encabezado{
+    background-image: url(/assets/images/quienes_somos.png);
+    background-size: 52% 100%;
+    background-repeat: no-repeat;
+    padding-top: 2%;
+    padding-left: 54%;
+    padding-right: 5%;
+    height: 551px;
+}
+
+.encabezadoTitle{
+    color: #0C1F3C;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 2%;
+}
+
+.word1{
+    color: #0C1F3C;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.encabezadoTitle{
+    color: #0C1F3C;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.encabezadoDescription{
+    font-size: 13px;
+    text-align: justify;
+    line-height: 23px;
+}
+
+
+
+.separador{
+    margin-top: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.textTipo1{
+    color: #1A344B;
     font-size: 19px;
     font-weight: bold;
-    color:#264558;
+    padding-top: 1%;
+}
+
+.separador hr{
+    margin-top: 3%;
+    color: #0B1E3B;
+}
+
+.separador img{
+    width: 76%;
+}
+
+.testimonio{
+    background-image: url(/assets/images/testimonio_vacio.png);
+    background-position: center;
+    background-size: 94% 100%;
+    background-repeat: no-repeat;
+    height: 241px;
+}
+
+.testimonios{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.testimonio img{
+    border-radius: 50%;
+    width: 100%;
+    padding-top: 4%;
+    padding-left: 2%;
+}
+
+.testimonioTitle{
+    margin-top: 12%;
+    color: #142642;
+    font-weight: bold;
+}
+
+.estrellas{
+    margin-top: 10%;
+    margin-left: 7%;
+}
+
+.estrellas img{
+    width: 11%;
+    padding: 0%;
+    margin: 0%;
+    padding-right: 3%;
+}
+
+.testimonioDescription{
+    margin-left: 19%;
+    margin-right: 10%;
+    color: #0E213D;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.testimonioPersona{
+    text-align: right;
+    color: #0D203D;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 11%;
+    margin-top: 4%;
+}
+
+.nuestrosClientes{
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 2%;
+}
+
+.nuestroEquipoDescription{
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    margin-bottom: 3%;
+    margin-top: 2%;
+}
+
+.nuestroEquipoTable{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 4%;
+}
+
+.nuestroEquipoName{
+    text-align: center;
+    color: #264558;
+    margin-top: 4%;
+    font-weight: bold;
+}
+
+.nuestroEquipoRol{
+    text-align: center;
+    color: #264558;
+    margin-top: 0%;
 }
