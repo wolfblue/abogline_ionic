@@ -39,6 +39,20 @@ export class CorePage implements OnInit {
   paso12_informacion = "";
   usuarioCaso = "";
   abogadoCaso = "";
+  perfil = sessionStorage.getItem("perfil");
+  consulta = "";
+  pagoAsesoria = "";
+  asesoriaDesc = "";
+  desicionContinuidad = "";
+  generarCita = "";
+  contratacion = "";
+  firmarContrato = "";
+  finalizarContrato = "";
+  pagos = "";
+  reunionVirtual = "";
+  documentacion = "";
+  reunionPresencial = "";
+  informacion = "";
 
   constructor(
     private http:HttpClient,
@@ -50,6 +64,9 @@ export class CorePage implements OnInit {
 
     //  Consultar información del caso
     _this.consultarCaso();
+
+    //  Consultar admin
+    _this.consultarAdmin();
 
     //  Consultar chat interval
 
@@ -125,6 +142,9 @@ export class CorePage implements OnInit {
     $(".btnContinuar").hide();
     $(".btnAceptar").show();
     $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo5").hide();
     $(".modalTipo4").show();
 
   }
@@ -139,6 +159,9 @@ export class CorePage implements OnInit {
     var _this = this;
 
     $(".modalTipo1").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
     $(".modalTipo2").show();
 
   }
@@ -322,6 +345,7 @@ export class CorePage implements OnInit {
       if(result.length > 0){
 
         _this.abogadoCaso = result[0].abogado;
+        _this.consulta = result[0].consulta;
 
       }
 
@@ -407,6 +431,154 @@ export class CorePage implements OnInit {
       });
 
     }
+
+  }
+
+  /************************************************************************* */
+  //  Crear actividad
+  /**************************************************************************** */
+
+  crearActividad(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal
+
+    _this.open(_this.modalGeneral);
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").show();
+
+    $(".btnContinuar").hide();
+  }
+
+  /************************************************************************* */
+  //  Crear actividad acción
+  /**************************************************************************** */
+
+  crearActividadAccion(proceso,aprobacion,actividad){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Confirmar aprobación
+
+    $.confirm({
+      title: 'Crear Actividad!',
+      content: 'Esta seguro de crear la actividad ?',
+      buttons: {
+          confirmar: function () {
+
+            //  Activar actividad caso
+
+            let apiCoreCrearActividad = new FormData();
+            
+            apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
+            apiCoreCrearActividad.append("actividad", proceso);
+            apiCoreCrearActividad.append("aprobacion", aprobacion);
+            apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
+            apiCoreCrearActividad.append("actividadDesc", actividad);
+
+            _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              if(aprobacion == "0")
+                $.alert('Se creo la actividad correctamente.');
+              else
+                $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+
+              setTimeout(function(){
+
+                _this.location("/core");
+
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
+    });
+
+  }
+
+  //  CONSULTAR ADMIN
+
+  consultarAdmin(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar admin
+
+    let apiAdminConsulta = new FormData();
+
+    _this.postModel("apiAdminConsulta",apiAdminConsulta).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          switch(result[i].tipo){
+
+            case "pago-asesoria":
+              _this.pagoAsesoria = result[i].contenido;
+            break;
+
+            case "asesoria":
+              _this.asesoriaDesc = result[i].contenido;
+            break;
+
+            case "decision-continuidad":
+              _this.desicionContinuidad = result[i].contenido;
+            break;
+
+            case "generar-cita":
+              _this.generarCita = result[i].contenido;
+            break;
+
+            case "contratacion":
+              _this.contratacion = result[i].contenido;
+            break;
+
+            case "firmar-contrato":
+              _this.firmarContrato = result[i].contenido;
+            break;
+
+            case "finalizar-contrato":
+              _this.finalizarContrato = result[i].contenido;
+            break;
+
+            case "pagos":
+              _this.pagos = result[i].contenido;
+            break;
+
+            case "reunion-virtual":
+              _this.reunionVirtual = result[i].contenido;
+            break;
+
+            case "documentacion":
+              _this.documentacion = result[i].contenido;
+            break;
+
+            case "reunion-presencial":
+              _this.reunionPresencial = result[i].contenido;
+            break;
+
+            case "informacion":
+              _this.informacion = result[i].contenido;
+            break;
+
+          }
+
+        }
+
+      }
+
+    });
 
   }
 

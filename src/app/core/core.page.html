@@ -2,10 +2,13 @@
     
   <div class="row header">
 
-    <div class="col-7 titleHeader">{{trataCaso}}: {{cualProblema}}</div>
+    <div class="col-8 titleHeader" *ngIf="perfil == 'abogado'">{{trataCaso}}: {{cualProblema}}</div>
 
-    <div class="col-5 textR">
-      <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" />
+    <div class="col-12 titleHeader2" *ngIf="perfil == 'cliente'">{{trataCaso}}: {{cualProblema}}</div>
+
+    
+    <div class="col-4 textR" *ngIf="perfil == 'abogado'">
+      <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" (click)="crearActividad();" />
     </div>
 
   </div>
@@ -17,86 +20,86 @@
       <div class="col-2 background background3" *ngIf="paso1_pago_asesoria == 'proceso'">
         
         <p class="titleProceso">PAGO ASESORÍA</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso">PAGAR ></button>
+        <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="location('https://secure.payco.co/checkoutopen/44620')">PAGAR ></button>
         <p class="date">SEPT 13/2021</p>
 
       </div>
 
       <div class="col-2 background coreAsesoria" *ngIf="paso2_asesoria == 'proceso'">
         <p class="titleProceso">ASESORÍA</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
+        <p class="proceso">{{asesoriaDesc}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreContinuidad" *ngIf="paso3_decision_continuidad == 'proceso'">
         <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="proceso">{{desicionContinuidad}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreCita" *ngIf="paso4_generar_cita == 'proceso'">
         <p class="titleProceso">GENERAR CITA</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">GENERAR ></button>
+        <p class="proceso">{{generarCita}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">GENERAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreContratacion" *ngIf="paso5_contratacion == 'proceso'">
         <p class="titleProceso">CONTRATACIÓN</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="proceso">{{contratacion}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreFirma" *ngIf="paso6_firmar_contrato == 'proceso'">
         <p class="titleProceso">FIRMA CONTRATO</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">FIRMAR ></button>
+        <p class="proceso">{{firmarContrato}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FIRMAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreFinalizar" *ngIf="paso7_finalizar_contrato == 'proceso'">
         <p class="titleProceso">FINALIZAR CONTRATO</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
+        <p class="proceso">{{finalizarContrato}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background corePagos" *ngIf="paso8_pagos == 'proceso'">
         <p class="titleProceso">PAGOS</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">PAGAR ></button>
+        <p class="proceso">{{pagos}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PAGAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreReunionVirtual" *ngIf="paso9_reunion_virtual == 'proceso'">
         <p class="titleProceso">REUNIÓN VIRTUAL</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="proceso">{{reunionVirtual}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreDocumentacion" *ngIf="paso10_documentacion == 'proceso'">
         <p class="titleProceso">DOCUMENTACIÓN</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="proceso">{{documentacion}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreReunionPresencial" *ngIf="paso11_reunion_presencial == 'proceso'">
         <p class="titleProceso">REUNIÓN PRESENCIAL</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
+        <p class="proceso">{{reunionPresencial}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
       <div class="col-2 background coreInformacion" *ngIf="paso12_informacion == 'proceso'">
         <p class="titleProceso">INFORMACIÓN</p>
-        <p class="proceso">Lorem impsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismodill.</p>
-        <button class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <p class="proceso">{{informacion}}</p>
+        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
@@ -110,7 +113,7 @@
 
           <div class="col-6 alertasTitle">ALERTAS</div>
 
-          <div class="col-6 points">. . .</div>
+          <div class="col-6 points"></div>
 
         </div>
 
@@ -319,6 +322,48 @@
           <input type="datetime-local" id="dateHasta" />
 
         </p>
+
+      </div>
+
+      <div class="modalTipo5">
+
+        <div class='titleModal1 color1'>ESCOGE LA ACTIVIDAD A CREAR</div>
+
+        <div class="actividades">
+        
+          <div class="row">
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_finalizar.png" (click)="crearActividadAccion('paso7_finalizar_contrato','1','Finalizar contrato')">
+            </div>
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_pagos.png" (click)="crearActividadAccion('paso8_pagos','1', 'Pagos')">
+            </div>
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_reunion_virtual.png" (click)="crearActividadAccion('paso9_reunion_virtual','0', 'Reunion virtual')">
+            </div>
+
+          </div>
+
+          <div class="row marginTop4">
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_documentacion.png" (click)="crearActividadAccion('paso10_documentacion','0', 'Documentacion')">
+            </div>
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_presencial.png" (click)="crearActividadAccion('paso11_reunion_presencial','0','Reunion presencial')">
+            </div>
+
+            <div class="col-md-4">
+              <img src="/assets/images/actividad_informacion.png" (click)="crearActividadAccion('paso12_informacion','0','Informacion')">
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 

@@ -8,7 +8,7 @@
 
     <div class="row">
 
-      <div class="col-md-4 calendarioMini">
+      <div class="col-md-3 calendarioMini">
 
         <div class="calendar">
           <div class="month">
@@ -33,7 +33,7 @@
           <div class="row">
 
             <div class="col-md-9">PRÓXIMOS EVENTOS</div>
-            <div class="col-md-3 puntos">. . .</div>
+            <div class="col-md-3 puntos"></div>
 
           </div>
 
@@ -41,7 +41,7 @@
 
       </div>
 
-      <div class="col-md-8 calendarioGrande">
+      <div class="col-md-9 calendarioGrande">
 
         <form>
 
@@ -50,13 +50,13 @@
             <div class="col-md-2">
               
               <div
-                  class="btn btn-primary anterior"
+                  class="btn anterior"
                   mwlCalendarPreviousView
                   [view]="view"
                   [(viewDate)]="viewDate"
                   (viewDateChange)="closeOpenMonthViewDay()"
                 >
-                  Anterior
+                  <img src="/assets/images/flecha_atras.png" class="iconAnterior">
                 </div>
 
             </div>
@@ -70,13 +70,13 @@
             <div class="col-md-2">
 
               <div
-                  class="btn btn-primary siguiente"
+                  class="btn siguiente"
                   mwlCalendarNextView
                   [view]="view"
                   [(viewDate)]="viewDate"
                   (viewDateChange)="closeOpenMonthViewDay()"
                 >
-                  Siguiente
+                <img src="/assets/images/flecha_adelante.png" class="iconSiguiente">
                 </div>
 
             </div>

@@ -22,6 +22,7 @@ export class BuscarCasosPage implements OnInit {
   modal : NgbModalRef;
 
   casos = [];
+  ciudadProblema = "";
   categoria = "";
   subcategoria = "";
   cualProblema = "";
@@ -85,6 +86,7 @@ export class BuscarCasosPage implements OnInit {
     apiConsultarCasos.append("cualProblema",_this.subcategoria);
     apiConsultarCasos.append("id","");
     apiConsultarCasos.append("perfil",sessionStorage.getItem("perfil"));
+    apiConsultarCasos.append("ciudadProblema",_this.ciudadProblema);
 
     _this.postModel("apiConsultarCasos",apiConsultarCasos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -94,12 +96,15 @@ export class BuscarCasosPage implements OnInit {
 
         $("#trataCaso option").hide();
         $("#subcategoria option").hide();
+        $("#ciudadProblema option").hide();
 
         $("#trataCaso option[value='']").show();
         $("#subcategoria option[value='']").show();
+        $("#ciudadProblema option[value='']").show();
 
         for(var i = 0; i < result.length; i++){
 
+          $("#ciudadProblema option[value=" + result[i].ciudad_problema + "]").show();
           $("#trataCaso option[value=" + result[i].trata_caso + "]").show();
           $("#subcategoria option[value='" + result[i].cual_problema + "']").show();
 
@@ -244,6 +249,25 @@ export class BuscarCasosPage implements OnInit {
       });
 
       }
+
+  }
+
+  /***************************** */
+  //  Cambio de campo ciudad problema
+  /***************************** */
+
+  ciudadProblemaChange(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var ciudadProblema = $("#ciudadProblema").val();
+
+    //  Actualizar variable global
+    _this.ciudadProblema = ciudadProblema;
+
+    //  Consultar casos
+    _this.consultarCasos();
 
   }
 

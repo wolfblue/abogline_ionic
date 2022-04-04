@@ -562,27 +562,37 @@ export class AppComponent {
 
             }else{
 
-              //  Autenticar
+              if(result[0].perfil == "administrador"){
 
-              $(".msgSuccessLogin").html("Autenticado correctamente");
-              $(".msgSuccessLogin").show();
-              $(".iniciarSesionButton").css("margin-top","0%");
+                $(".msgErrorLogin").html("La contraseña no es válida.");
+                $(".msgErrorLogin").show();
+                $(".iniciarSesionButton").css("margin-top","0%");
 
-              setTimeout(function(){
+              }else{
 
-                sessionStorage.setItem("autenticado","1");
-                sessionStorage.setItem("usuario",result[0].usuario);
-                sessionStorage.setItem("perfil",result[0].perfil);
+                //  Autenticar
 
-                _this.autenticado = 1;
-                _this.usuario = result[0].usuario;
-                _this.perfil = result[0].perfil;
-                _this.modal.close();
+                $(".msgSuccessLogin").html("Autenticado correctamente");
+                $(".msgSuccessLogin").show();
+                $(".iniciarSesionButton").css("margin-top","0%");
 
-                //  Consultar información del usuario
-                _this.getUser();
+                setTimeout(function(){
 
-              },3000);
+                  sessionStorage.setItem("autenticado","1");
+                  sessionStorage.setItem("usuario",result[0].usuario);
+                  sessionStorage.setItem("perfil",result[0].perfil);
+
+                  _this.autenticado = 1;
+                  _this.usuario = result[0].usuario;
+                  _this.perfil = result[0].perfil;
+                  _this.modal.close();
+
+                  //  Consultar información del usuario
+                  _this.getUser();
+
+                },3000);
+
+              }
 
             }
 
@@ -771,6 +781,61 @@ export class AppComponent {
       },1000);
 
     }
+
+  }
+
+  //  ABRIR CHAT
+
+  openChat(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validaciones iniciales
+    
+    $(".chatHeader").hide();
+    $(".chatHeader2").show();
+    $(".chatContenido").show();
+    $(".chatTipo1").hide();
+    $(".chatTipo2").hide();
+
+    //  Validar tipo de chat
+
+    if(_this.usuario){
+
+      $(".chatTipo2").show();
+      $(".chatContenido").css("padding-left","5%");
+      $(".chatContenido").css("padding-right","5%");
+      $(".btn-flotante2").css("bottom","43%");
+      $(".chatEnviar2").show();
+
+    }
+
+    if(!_this.usuario){
+
+      $(".chatTipo1").show();
+      $(".chatContenido").css("padding-left","13%");
+      $(".chatContenido").css("padding-right","13%");
+      $(".btn-flotante2").css("bottom","53%");
+      $(".chatEnviar2").hide();
+
+    }
+
+  }
+
+  cerrarChat(){
+    
+    $(".chatHeader").show();
+    $(".chatHeader2").hide();
+    $(".chatContenido").hide();
+
+  }
+
+  minimizarChat(){
+    
+    $(".chatHeader").show();
+    $(".chatHeader2").hide();
+    $(".chatContenido").hide();
 
   }
 

@@ -1,0 +1,93 @@
+<div class="container">
+
+  <h3>Administrar actividades</h3>
+
+  <table id="tableDT" class="table table-striped table-bordered" style="width:100%">
+
+    <thead>
+      <tr>
+        <th class="center">Actividad</th>
+        <th class="center">Descripción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+
+        <td>Pago asesoría</td>
+        <td><textarea (change)="updateActividad('pago-asesoria',pagoAsesoria.value)" #pagoAsesoria>{{pagoAsesoriaDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Asesoría</td>
+        <td><textarea (change)="updateActividad('asesoria',asesoria.value)" #asesoria>{{asesoriaDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Decisión continuidad</td>
+        <td><textarea (change)="updateActividad('decision-continuidad',decisionContinuidad.value)" #decisionContinuidad>{{desicionContinuidadDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Generar cita</td>
+        <td><textarea (change)="updateActividad('generar-cita',generarCita.value)" #generarCita>{{generarCitaDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Contratación</td>
+        <td><textarea (change)="updateActividad('contratacion',contratacion.value)" #contratacion>{{contratacionDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Firmar contrato</td>
+        <td><textarea (change)="updateActividad('firmar-contrato',firmarContrato.value)" #firmarContrato>{{firmarContratoDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Finalizar contrato</td>
+        <td><textarea (change)="updateActividad('finalizar-contrato',finalizarContrato.value)" #finalizarContrato>{{finalizarContratoDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Pagos</td>
+        <td><textarea (change)="updateActividad('pagos',asesoria.value)" #pagos>{{pagosDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Reunión virtual</td>
+        <td><textarea (change)="updateActividad('reunion-virtual',reunionVirtual.value)" #reunionVirtual>{{reunionVirtualDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Documentación</td>
+        <td><textarea (change)="updateActividad('documentacion',documentacion.value)" #documentacion>{{documentacionDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Reunión presencial</td>
+        <td><textarea (change)="updateActividad('reunion-presencial',asesoria.value)" #reunionPresencial>{{reunionPresencialDesc}}</textarea></td>
+
+      </tr>
+
+      <tr>
+        <td>Información</td>
+        <td><textarea (change)="updateActividad('informacion',informacion.value)" #informacion>{{informacionDesc}}</textarea></td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

@@ -69,6 +69,7 @@ export class PerfilPage implements OnInit {
   cargaDiploma: any = "";
   cargaEspecializacion: any = "";
   cargaMaestria: any = "";
+  tipo_tp: any = "";
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -308,6 +309,7 @@ export class PerfilPage implements OnInit {
       _this.tarjetaLicencia = result[0].tarjeta_licencia;
       _this.experienciaTiempo = result[0].experiencia_tiempo;
       _this.consulta = result[0].consulta;
+      _this.tipo_tp = result[0].tipo_tp;
 
       //  Actualizar foto
 
@@ -322,6 +324,7 @@ export class PerfilPage implements OnInit {
         $("#genero").val(_this.genero);
         $("#ciudad").val(_this.ciudad);
         $("#municipio").val(_this.municipio);
+        $("#tipo_tp").val(_this.tipo_tp);
 
       },500);
 

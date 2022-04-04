@@ -132,15 +132,17 @@ pre {
     margin-top: 4%;
     margin-left: 4%;
     height: 413px;
-    background-color: #06314A;
+    background: url('/assets/images/fondo_calendario.png'); 
     box-shadow: 0 0.5rem 3rem rgb(0 0 0 / 40%);
     color: #ffffff;
     border-radius: 15px;
     padding-top: 1%;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 
   .month{
-    background-color: #06314A;
+    background-color: transparent;
     color: #ffffff;
     width: 88%;
     margin: auto;
@@ -205,4 +207,16 @@ pre {
 
   .puntos{
       text-align:right;
+  }
+
+  .anterior, .siguiente{
+    background: #ffffff!important;
+  }
+
+  .iconAnterior{
+    width:25%;
+  }
+
+  .iconSiguiente{
+    width:25%;
   }

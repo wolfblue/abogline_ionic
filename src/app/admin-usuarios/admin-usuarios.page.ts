@@ -205,7 +205,7 @@ export class AdminUsuariosPage implements OnInit {
 
     $.confirm({
       title: 'Rechazar abogado!',
-      content: 'Esta seguro de rechazar al abogado ?',
+      content: 'Indique a continuación el motivo del rechazo: <br><br><textarea id="rechazo" cols="40" rows="10"></textarea>',
       buttons: {
           confirmar: function () {
 
@@ -214,10 +214,51 @@ export class AdminUsuariosPage implements OnInit {
             let apiAdminRechazarAbogado = new FormData();
 
             apiAdminRechazarAbogado.append("usuario",usuario);
+            apiAdminRechazarAbogado.append("motivo",$("#rechazo").val());
 
             _this.postModel("apiAdminRechazarAbogado",apiAdminRechazarAbogado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
 
             $.alert('Se rechazó el abogado correctamente');
+
+            setTimeout(function(){
+
+              _this.location("/admin-usuarios");
+
+            },3000);
+
+          },
+          cancelar: function () {}
+      }
+    });
+
+  }
+
+  /************************************************************************************* */
+  //  Bloquear abogado
+  /************************************************************************************* */
+
+  bloquearUsuario(usuario){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Confirmar bloqueo
+
+    $.confirm({
+      title: 'Bloquear usuario!',
+      content: 'Esta seguro de bloquear al usuario ?',
+      buttons: {
+          confirmar: function () {
+
+            //  Actualizar estado del usuario bloqueado
+
+            let apiAdminBloquearUsuario = new FormData();
+
+            apiAdminBloquearUsuario.append("usuario",usuario);
+
+            _this.postModel("apiAdminBloquearUsuario",apiAdminBloquearUsuario).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+            $.alert('Se bloqueo el usuario correctamente');
 
             setTimeout(function(){
 

@@ -102,7 +102,7 @@
           <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
           <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
           <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
-          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_gris.png" /></div>
+          <div class="col-2 estrellaCol"><img src="/assets/images/estrella_blanca.png" /></div>
 
         </div>
 
@@ -236,7 +236,7 @@
 
           <div class="row modalIcon2">
 
-            <div class="col">
+            <div class="col" *ngIf="modalCantidad > 0">
 
               <img src="/assets/images/icono_cantidad_Casos.png" />
               Cantidad de casos atentidos: {{modalCantidad}}

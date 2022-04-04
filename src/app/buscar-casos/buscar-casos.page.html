@@ -12,6 +12,16 @@
 
       <div class="col-3 filtro">
 
+        <select (change)="ciudadProblemaChange()" id="ciudadProblema">
+          <option value="">- Ciudad del caso -</option>
+          <option value="Bogota">Bogotá D.C</option>
+          <option value="Medellin">Medellin</option>
+        </select>
+
+      </div>
+
+      <div class="col-3 filtro">
+
         <select (change)="trataCaso()" id="trataCaso">
           <option value="">- Categoría -</option>
           <option value="amigo">Amigo o conocido</option>
@@ -26,7 +36,7 @@
 
       </div>
 
-      <div class="col-4 filtro">
+      <div class="col-3 filtro">
 
         <select class="subcategoria" id="subcategoria">
 

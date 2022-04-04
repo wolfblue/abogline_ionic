@@ -52,6 +52,29 @@ p{
   width:100%;
 }
 
+#chatIdentificacion{
+  background: transparent;
+  height: 72%;
+  border-radius: 0px;
+  border: 0px solid;
+  border-bottom: 1px solid;
+  margin-top: 1%;
+  margin-bottom: 8%;
+}
+
+#chatTipoIdentificacion{
+  width: 82%;
+  border: 0px solid;
+  border-bottom: 1px solid;
+  border-radius: 0px;
+  margin-top: 1%;
+  margin-bottom: 8%;
+  background: url('/assets/images/element_28.png');
+  background-repeat: no-repeat;
+  background-size: 12%;
+  background-position: 100%;
+}
+
 #dropdownMenuLink{
   padding:0%;
   line-height: 9px;
@@ -470,4 +493,198 @@ a:hover{
   height: 12px;
   font-size: 13px;
   line-height: 13px;
+}
+
+.btn-flotante {
+  border-radius: 5px;
+  letter-spacing: 2px;
+  position: fixed;
+  bottom: 3px;
+  right: 23px;
+  transition: all 300ms ease 0ms;
+  z-index: 99;
+}
+
+.btn-flotante2{
+  border-radius: 5px;
+  letter-spacing: 2px;
+  position: fixed;
+  bottom: 53%;
+  right: 19px;
+  transition: all 300ms ease 0ms;
+  z-index: 99;
+}
+
+.chatHeader{
+  background: url('/assets/images/franja_entera.png'); 
+  font-size: 7px;
+  text-align: right;
+  background-position: center center;
+  background-size: 100% 100%;
+  min-height: 92px;
+  min-width: 300px;
+  padding-top: 17.5%;
+  color: #ffffff;
+}
+
+.chatHeader2{
+  background: url('/assets/images/franja_entera.png'); 
+  display:none;
+  font-size: 8px;
+  text-align: right;
+  background-position: center center;
+  background-size: 100% 100%;
+  min-height: 176px;
+  min-width: 647px;
+  padding-top: 17.5%;
+  color: #ffffff;
+}
+
+.chatHeader2 img{
+  width: 4%;
+}
+
+.chatCerrar{
+  width: 4%;
+  margin-left: 1%;
+  margin-right: 2%;
+}
+
+.chatContenido{
+  background: #ffffff;
+  position: absolute;
+  top: 82%;
+  right: 0%;
+  width: 96%;
+  z-index: -1;
+  padding-top: 4%;
+  padding-bottom: 2%;
+  padding-left: 13%;
+  padding-right: 13%;
+  display:none;
+}
+
+.chatSaludo{
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding-bottom: 4%;
+}
+
+.chatSaludo span{
+  color: #20406C;
+  font-weight:bold;
+}
+
+.chatContenido input{
+  background-color: #ffffff;
+  border-radius: 0px;
+  width: 100%;
+  border:0px;
+  border-bottom: 1px solid;
+}
+
+.chatContenido textarea{
+  width: 100%;
+  height: 110px;
+  border-radius: 8px;
+  padding: 2%;
+}
+
+.chatTratamiento{
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.chatTratamiento input{
+  width: auto;
+}
+
+.chatTratamiento span{
+  font-size: 10px;
+  margin-left: 3%;
+}
+
+.chatEnviar{
+  width: 100%;
+  text-align: center;
+}
+
+.chatEnviar img{
+  width: 23%;
+}
+
+.chatContenido p{
+  margin-bottom: 0%;
+}
+
+#chatNombres, #chatApellidos, #chatCorreo{
+  margin-bottom: 2%;
+}
+
+.chatLogo{
+  width: 53%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.chatFondo{
+  background: url('/assets/images/globo_mediano_azul.png');
+  background-position: center;
+  background-size: 100% 100%;
+  padding: 2% 2% 2% 6%;
+  font-size: 12px;
+}
+
+.chatTipo2{
+  margin-top: 3%;
+}
+
+.marginTop2{
+  margin-top: 4%;
+}
+
+.chatCheckbox{
+  text-align: right;
+}
+
+.chatCheckbox input{
+  width: auto;
+  margin-right: 2%;
+  margin-top: 5%;
+}
+
+.chatCheckbox span{
+  margin-right: 2%;
+  color: #21426D;
+}
+
+.chatEnviar2{
+  margin-top: 3%;
+  background: #102641;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  position: fixed;
+  width: 45.8%;
+  right: 1.3%;
+  bottom: 2%;
+  display:none;
+}
+
+.chatEnviar2 img{
+  width: 4%;
+}
+
+.chatEnviar2 input{
+  width: 92%;
+  margin-right: 3%;
+  font-size: 12px;
+  padding: 1% 1% 1% 2%;
+  background: #D8D9DD;
 }

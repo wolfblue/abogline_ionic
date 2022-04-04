@@ -207,7 +207,7 @@ export class ConsultarAbogadosPage implements OnInit {
         for(var i = 0; i < result.length; i++){
 
           _this.filtroPrecio.push(result[i].consulta);
-          _this.filtroEspecialidad.push(result[i].titulo_profesional);
+          _this.filtroEspecialidad.push(result[i].ramas);
           _this.filtroTiempo.push(result[i].experiencia_tiempo);
 
         }
@@ -235,13 +235,15 @@ export class ConsultarAbogadosPage implements OnInit {
     _this.modalNombre = _this.abogados[i].nombres + " " + _this.abogados[i].apellidos;
     _this.modalConsulta = _this.abogados[i].consulta;
     _this.modalTitulo = _this.abogados[i].titulo_profesional;
-    _this.modalLicencia = _this.abogados[i].tarjeta_licencia;
+    _this.modalLicencia = _this.abogados[i].tipo_tp;
     _this.modalConsulta = _this.abogados[i].consulta;
     _this.modalExperiencia = _this.abogados[i].experiencia_tiempo;
     _this.modalPresentacion = _this.abogados[i].presentacion;
 
     var ramas = _this.abogados[i].ramas;
     var ramasData = ramas.split(",");
+
+    _this.modalPerfiles = [];
 
     for(var c = 0; c < ramasData.length; c++)
       _this.modalPerfiles.push(ramasData[c]);
@@ -279,6 +281,12 @@ export class ConsultarAbogadosPage implements OnInit {
 
     $(".modal-content").css("background-color","#274659");
     $(".modal-body").css("padding","4%");
+    $(".modal-dialog").css("max-width","600px");
+    $(".modal-content").css("border-radius","14px");
+
+    setTimeout(function(){
+      $(".escoger").show();
+    },1000);
 
   }
 

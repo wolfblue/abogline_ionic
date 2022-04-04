@@ -94,6 +94,18 @@ const routes: Routes = [
   {
     path: 'calendar',
     loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
+    path: 'admin-solicitudes',
+    loadChildren: () => import('./admin-solicitudes/admin-solicitudes.module').then( m => m.AdminSolicitudesPageModule)
+  },
+  {
+    path: 'admin-actividades',
+    loadChildren: () => import('./admin-actividades/admin-actividades.module').then( m => m.AdminActividadesPageModule)
   }
 
 

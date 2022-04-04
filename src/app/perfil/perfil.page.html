@@ -160,7 +160,7 @@
             </select>
           </div>
 
-          <p class="pField1 marginTop3" *ngIf="perfil=='abogado'">Dirección Residencia</p>
+          <p class="pField1 marginTop3" *ngIf="perfil=='abogado'">Dirección de Notificaciones</p>
           <div *ngIf="perfil=='abogado'"><input type="text" id="direccion" value="{{direccion}}"/></div>
 
         </div>
@@ -369,7 +369,9 @@
           <div class="col">
 
             <select class="selectTipo1" id="tipo_tp" (change)="changeFieldHoja('tipo_tp')">
-              <option>Temporal</option>
+              <option value="">- Seleccionar -</option>
+              <option value="Licencia temporal">Licencia temporal</option>
+              <option value="Tarjeta profesional">Tarjeta profesional</option>
             </select>
 
           </div>

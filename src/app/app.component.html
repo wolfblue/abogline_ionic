@@ -60,7 +60,7 @@
         <li class="heightFull paddingR4 borderR1">Inicio</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
           <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Administrar Ménu
+            Ménu
           </a>
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -70,7 +70,7 @@
         </li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
           <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Administrar Perfil
+            Perfil
           </a>
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -83,7 +83,6 @@
             <a class="dropdown-item" href="admin-titulos-hv">Títulos hoja de vida</a>
           </div>
         </li>
-        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="perfil == 'administrador'" (click)="location('admin-usuarios')">Administrar usuarios</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente'" (click)="location('registrar-caso')">Registrar caso</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 misCasos" *ngIf="perfil == 'cliente' || perfil == 'abogado'" (click)="location('mis-casos')">Mis casos</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
@@ -91,6 +90,19 @@
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('calendar')">Calendario</li>
         <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'cliente'">Pagos pendientes</li>
         <li class="heightFull paddingL4 paddingR4 buscaTuCaso" *ngIf="perfil == 'abogado'" (click)="location('buscar-casos')">Busca tu caso</li>
+
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
+          <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Core
+          </a>
+        
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="admin-actividades">Actividades</a>
+            <a class="dropdown-item" href="admin-solicitudes">Solicitudes</a>
+          </div>
+        </li>
+
+        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="perfil == 'administrador'" (click)="location('admin-usuarios')">Usuarios</li>
                 
       </ul>
 
@@ -306,3 +318,115 @@
 </ng-template>
 
 <ngx-spinner></ngx-spinner>
+
+<div class="btn-flotante">
+  <div class="chatHeader" (click)="openChat()"></div>
+</div>
+
+<div class="btn-flotante2">
+
+  <div class="chatHeader2">
+
+    Nuestro horario de atención es 24/7.
+
+    <img src="/assets/images/minimizar.png" (click)="minimizarChat()">
+    <img class="chatCerrar" src="/assets/images/cerrar.png" (click)="cerrarChat()">
+
+  </div>
+
+  <div class="chatContenido">
+    
+    <div class="chatSaludo">HOLA AMIG@ <span>CHATEEMOS</span></div>
+
+    <div class="chatTipo1">
+
+      <div class="row">
+
+        <div class="col-md-6">Tipo de identificación</div>
+        <div class="col-md-6">Identificación</div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+
+          <select id="chatTipoIdentificacion">
+            <option>CC</option>
+            <option>CE</option>
+          </select>
+
+        </div>
+
+        <div class="col-md-6"><input id="chatIdentificacion" type="text"></div>
+
+        <p>Nombres</p>
+        <p><input type="text" id="chatNombres"></p>
+
+        <p>Apellidos</p>
+        <p><input type="text" id="chatApellidos"></p>
+
+        <p>Correo electrónico</p>
+        <p><input type="text" id="chatCorreo"></p>
+
+        <p><textarea id="chatCuentanos" placeholder="Cuéntanos cómo te podemos ayudar"></textarea></p>
+
+        <div class="chatTratamiento">
+          <input type="checkbox">
+          <span>Acepto el tratamiento de datos personales</span>
+        </div>
+
+        <div class="chatEnviar">
+          <img src="/assets/images/boton_enviar.png">
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="chatTipo2">
+
+      <div class="row">
+
+        <div class="col-md-2">
+          <img src="/assets/images/logo_redondo.png" class="chatLogo">
+        </div>
+
+        <div class="col-md-10 chatFondo">
+          Hola <b>{{usuarioHeader}}</b>, soy Botty tu asistente virtual de Abogline.
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-2">
+          <img src="/assets/images/logo_redondo.png" class="chatLogo">
+        </div>
+
+        <div class="col-md-10 chatFondo marginTop2">
+          Selecciona la opción que quieres consultar, para esto debe <b>escribir el número</b> correspondiente:<br>
+          1. Registrarme.<br>
+          2. Apartar una cita con un abogado.<br>
+          3. Consultar casos.
+        </div>
+
+      </div>
+
+      <div class="chatCheckbox">
+        <input type="checkbox" checked>
+        <span>Enviar correo</span>
+        <input type="checkbox" checked>
+        <span>Realizar encuesta</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="chatEnviar2">
+    <input type="text" placeholder="Escribe tu mensaje">
+    <img src="/assets/images/boton_enter.png">
+  </div>
+
+</div>

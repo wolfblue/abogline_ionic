@@ -192,6 +192,7 @@ export class RegistrarCasoPage implements OnInit {
     var cualProblema = $("#tuProblema").val();
     var proceso = $("#proceso").val();
     var cuentanos = $("#cuentanos").val();
+    var ciudadProblema = $("#ciudadProblema").val();
 
     //  Validar campos obligatorios
 
@@ -214,6 +215,7 @@ export class RegistrarCasoPage implements OnInit {
       apiRegistrarCaso.append("cuentanos",cuentanos);
       apiRegistrarCaso.append("usuario",sessionStorage.getItem("usuario"));
       apiRegistrarCaso.append("id",_this.editarCaso);
+      apiRegistrarCaso.append("ciudadProblema",ciudadProblema);
 
       _this.postModel("apiRegistrarCaso",apiRegistrarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
         
@@ -267,6 +269,7 @@ export class RegistrarCasoPage implements OnInit {
       $("#tuProblema").val(result[0].cual_problema);
       $("#proceso").val(result[0].proceso);
       $("#cuentanos").val(result[0].cuentanos);
+      $("#ciudad_problema").val(result[0].ciudad_problema);
 
     });
 

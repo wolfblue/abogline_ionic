@@ -231,8 +231,9 @@
     border-bottom-right-radius: 8px;
     margin: auto;
     position: absolute;
-    bottom: -8.2%;
+    bottom: -7.2%;
     left: 38%;
+    display:none;
 }
 
 .modalContent1{
@@ -341,4 +342,9 @@
 .estudio {
     line-height: 0px;
     margin-bottom: 3%;
+}
+
+#presentacion{
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
 }
