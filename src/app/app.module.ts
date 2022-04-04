@@ -14,25 +14,24 @@ import { NgxTweetModule } from "ngx-tweet";
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    NgxSpinnerModule,
-    BrowserAnimationsModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    NgbModule,
-    NgxTweetModule,
-    NgxTwitterTimelineModule
-  ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-  ],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        BrowserModule,
+        HttpClientModule,
+        NgxSpinnerModule,
+        BrowserAnimationsModule,
+        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+        NgbModule,
+        NgxTweetModule,
+        NgxTwitterTimelineModule
+    ],
+    providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ],
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
