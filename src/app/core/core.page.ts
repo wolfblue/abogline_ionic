@@ -53,6 +53,8 @@ export class CorePage implements OnInit {
   documentacion = "";
   reunionPresencial = "";
   informacion = "";
+  abogadoData = [];
+  ciudades:any = [];
 
   constructor(
     private http:HttpClient,
@@ -61,6 +63,9 @@ export class CorePage implements OnInit {
   ) { 
 
     var _this = this;
+
+    //  Consultar ciudades
+    _this.consultarCiudades();
 
     //  Consultar información del caso
     _this.consultarCaso();
@@ -346,6 +351,7 @@ export class CorePage implements OnInit {
 
         _this.abogadoCaso = result[0].abogado;
         _this.consulta = result[0].consulta;
+        _this.abogadoData = result[0];
 
       }
 
@@ -416,6 +422,8 @@ export class CorePage implements OnInit {
       apiCoreCalendarioSave.append("idCaso", sessionStorage.getItem("idCaso"));
       apiCoreCalendarioSave.append("fechaDesde", dateDesde);
       apiCoreCalendarioSave.append("fechaHasta", dateHasta);
+      apiCoreCalendarioSave.append("usuario", sessionStorage.getItem('usuario'));
+      apiCoreCalendarioSave.append("abogado", _this.abogadoCaso);
 
       _this.postModel("apiCoreCalendarioSave",apiCoreCalendarioSave).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -579,6 +587,63 @@ export class CorePage implements OnInit {
       }
 
     });
+
+  }
+
+  //  CONTRATACIÓN
+
+  actividadContratacion(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal
+    _this.openModal("modalTipo6");
+
+    console.log(_this.abogadoData);
+
+    $("#contratacionNombres").val(_this.abogadoData['nombres']);
+    $("#contratacionApellidos").val(_this.abogadoData['apellidos']);
+    $("#contratacionIdentificacion").val(_this.abogadoData['identificacion']);
+    $("#contratacionTp").val(_this.abogadoData['tipo_tp']);
+    $("#contratacionTarjeta").val(_this.abogadoData['tarjeta_licencia']);
+    $("#contratacionDireccion").val(_this.abogadoData['direccion']);
+
+
+  }
+
+  //  ABRIR MODAL
+
+  openModal(clase){
+
+    //  Variables iniciales
+    var _this = this;
+
+    _this.open(_this.modalGeneral);
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".btnContinuar").hide();
+
+    $("."+clase).show();
+
+  }
+
+  //  CONSULTAR CIUDADES
+
+  consultarCiudades(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Obtener ciudades
+
+    let apiAdminCiudadGet = new FormData();
+    _this.postModel("apiAdminCiudadGet",apiAdminCiudadGet).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.ciudades = result;});
 
   }
 

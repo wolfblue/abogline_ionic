@@ -16,9 +16,14 @@ declare var $;
 })
 export class AdminSolicitudesPage implements OnInit {
 
+  @ViewChild("modalLink", {static: false}) modalLink: TemplateRef<any>;
+  modal : NgbModalRef;
+
   private unsubscribe$ = new Subject<void>();
 
   solicitudes = [];
+  idSolicitud = "0";
+  idCalendario = "0";
 
   constructor(
     private http:HttpClient,
@@ -42,6 +47,13 @@ export class AdminSolicitudesPage implements OnInit {
 
   location(ruta){
     window.location.href = ruta;
+  }
+
+  open(content) {
+    this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
+    this.modal.result.then((e) => {
+        console.log("dialogo cerrado")
+    });        
   }
 
   //  CONSULTAR SOLICITUDES
@@ -146,6 +158,83 @@ export class AdminSolicitudesPage implements OnInit {
           cancelar: function () {}
       }
     });
+
+  }
+
+  //  ASIGNAR LINK
+
+  asignarLink(idSolicitud,idCalendario){
+
+    //  Variables iniciales
+    
+    var _this = this;
+    
+    //  Asignar id solicitud
+    _this.idSolicitud = idSolicitud;
+
+    //  Asignar id calendario
+    _this.idCalendario = idCalendario;
+
+    // Abrir modal
+    _this.open(_this.modalLink);
+
+  }
+
+  //  GENERAR LINK
+
+  generarLink(){
+    window.open('http://meet.google.com/new');
+  }
+
+  //  AsignarLinkReunion
+
+  asignarLinkReunion(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+
+    //  Validar link obligatorio
+
+    if(!$("#link").val()){
+
+      error = 1;
+      msg = "Debe asignar link para la reunión.";
+
+    }
+
+    //  Mostrar errores
+
+    if(error == 1){
+
+      $.alert(msg);
+
+
+    }else{
+
+      //  Asignar link de reunión
+
+      let apiAsignarLinkReunion = new FormData();
+
+      apiAsignarLinkReunion.append("idSolicitud",_this.idSolicitud);
+      apiAsignarLinkReunion.append("idCalendario",_this.idCalendario);
+      apiAsignarLinkReunion.append("link",$("#link").val());
+
+      _this.postModel("apiAsignarLinkReunion",apiAsignarLinkReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        $.alert('Se asignó el link de la reunión correctamente.');
+
+        setTimeout(function(){
+
+          _this.location("/admin-solicitudes");
+
+        },3000);
+
+      });
+
+    }
 
   }
 

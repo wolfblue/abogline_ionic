@@ -355,7 +355,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 2%;
     border-radius: 8px;
     height: 71px;
-    border: 1px solid#1F2E45;
+    border: 1px solid #1F2E45;
 }
 
 .online{
@@ -385,7 +385,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .chatImage{
     width: 74px;
     border-radius: 50%;
-    border: 4px solid#09233F;
+    border: 4px solid #09233F;
 }
 
 .enviar{
@@ -454,4 +454,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .marginTop4{
     margin-top: 4%;
+}
+
+.contratacion p{
+    font-size: 12px;
+    margin-top: 1%;
+}
+
+.contratacion{
+    padding-top: 2%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 4%;
+}
+
+.contratacion div{
+    text-align: left;
+}
+
+.contratacionDisabled{
+    background:#6B7280;
+}
+
+.contratacion select{
+    width: 100%;
+    height: 26px;
+}
+
+.contratacion input{
+    width: 100%;
+}
+
+.contratacion button{
+    background: #08455A;
+    color: #ffffff;
+    padding: 2% 3% 2% 3%;
+    border-radius: 8px;
+    float: right;
+    margin-top: 3%;
 }

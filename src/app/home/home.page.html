@@ -1,4 +1,4 @@
-<div class="row row2">
+<div class="row row2" *ngIf="perfil!='cliente'">
 
     <div class="logo2">
         <!--<img src="/assets/images/logo_2.png" />-->
@@ -6,7 +6,7 @@
 
 </div>
 
-<div>
+<div *ngIf="perfil!='cliente'">
 
     <div class="center color1 titleMain">MENU PRINCIPAL</div>
 
@@ -40,7 +40,7 @@
 
 </div>
 
-<div class="row row4">
+<div class="row row4" *ngIf="perfil!='cliente'">
 
     <div class="col-sm-12 col-md-6 col41">
 
@@ -93,6 +93,148 @@
     </div>
 
 </div>
+
+<!--  HOME CLIENTE  -->
+
+<div *ngIf="perfil=='cliente'">
+
+    <div class="clienteMenuPrincipal">
+
+        <img src="/assets/images/cliente_menu_principal.png">
+
+    </div>
+
+    <div class="clienteSeccion1">
+
+        <div class="clienteNoticias row">
+
+            <div class="col-md-2">
+
+                <img src="/assets/images/cliente_noticias.png">
+
+            </div>
+
+            <div class="col-md-8">
+
+                <p>
+
+                    <span class="clienteNegrilla">@abogline</span>
+                
+                    Los clientes y los abogados experimentaran una nueva forma de vivir el derecho. My pronto ...
+
+                </p>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <a href="#">ver más</a>
+
+            </div>
+
+        </div>
+
+        <div class="clienteSubseccion row">
+
+            <div class="col-md-3 center">
+
+                <img src="/assets/images/cliente_pc.jpeg">
+
+            </div>
+
+            <div class="col-md-3 center">
+
+                <img src="/assets/images/cliente_qr.png" class="clienteImgQr">
+
+            </div>
+
+            <div class="col-md-6 left">
+
+                <iframe src="https://www.youtube.com/embed/xSOf_qU66_I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="clienteMenuPrincipal">
+
+        <img src="/assets/images/acceso_rapido.png">
+
+    </div>
+
+    <div class="accesoRapido">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                Calendario
+            </div>
+
+            <div class="col-md-8">
+                Resumen de eventos
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+    
+        <div class="row row3 clienteProcesos">
+    
+            <div class="col-sm-12 col-md-4 col31">
+    
+                <div class="submain">
+                    <img class="registraTuCaso" src="/assets/images/registra_tu_caso.png" />
+                </div>
+    
+            </div>
+    
+            <div class="col-sm-12 col-md-4 col32">
+    
+                <div class="submain">
+                    <img (click)="location('consultar-abogados')" class="consultarAbogados" src="/assets/images/cliente_consulta_caso.png" />
+                </div>
+    
+            </div>
+    
+            <div class="col-sm-12 col-md-4 col33">
+    
+                <div class="submain">
+                    <img class="agendaCita" src="/assets/images/agenda_tu_cita.png" />
+                </div>
+                
+            </div>
+    
+        </div>
+
+        <div class="row row3 clienteProcesos2">
+    
+            <div class="col-md-6">
+    
+                <div class="submain">
+                    <img class="registraTuCaso" src="/assets/images/consultar_abogados.png" />
+                </div>
+    
+            </div>
+    
+            <div class="col-md-6">
+    
+                <div class="submain">
+                    <img class="agendaCita" src="/assets/images/cliente_notificaciones.png" />
+                </div>
+                
+            </div>
+    
+        </div>
+    
+    </div>
+
+</div>
+
+<!--  FOOTER  -->
 
 <div class="row row5">
 

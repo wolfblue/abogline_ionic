@@ -50,7 +50,7 @@
       <div class="col-2 background coreContratacion" *ngIf="paso5_contratacion == 'proceso'">
         <p class="titleProceso">CONTRATACIÓN</p>
         <p class="proceso">{{contratacion}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+        <button *ngIf="perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
         <p class="date">SEPT 13/2021</p>
       </div>
 
@@ -362,6 +362,75 @@
             </div>
 
           </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo6">
+
+        <div class='titleModal1 color1'>CONTRATACIÓN</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogad@, por favor verifica que los datos que se muestran a continuación, esten correctos:</p>
+
+          <form class="contratacion">
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <span>Nombres</span>
+                <input type="text" disabled class="contratacionDisabled" id="contratacionNombres">
+              </div>
+
+              <div class="col-md-6">
+                <span>Apellidos</span>
+                <input type="text" disabled class="contratacionDisabled" id="contratacionApellidos">
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <span>Número de identificación</span>
+                <input type="text" disabled class="contratacionDisabled" id="contratacionIdentificacion">
+              </div>
+
+              <div class="col-md-6">
+                <span>Lugar de Expedición</span><br/>
+                <select id="contratacionLugar">
+                  <ng-container *ngFor="let item of ciudades">
+                    <option value="{{item.ciudad}}">{{item.ciudad}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <span>Tipo de T.P.</span>
+                <input type="text" disabled class="contratacionDisabled" id="contratacionTp">
+              </div>
+
+              <div class="col-md-6">
+                <span>No. Tarjeta</span>
+                <input type="text" disabled class="contratacionDisabled" id="contratacionTarjeta">
+              </div>
+
+            </div>
+
+            <div><span>Dirección de Notificaciones</span></div>
+            <div>
+              <input type="text" id="contratacionDireccion">
+            </div>
+
+            <button>ACEPTAR</button>
+
+          </form>
 
         </div>
 

@@ -12,10 +12,16 @@ export class HomePage {
   @ViewChild("modalRegistoMain", {static: false}) modalRegistoMain: TemplateRef<any>;
 
   closeResult = '';
+  perfil = "";
 
   constructor(
     private modalService: NgbModal
-  ) {}
+  ) {
+
+    //  Variables de sesión
+    this.variablesSesion();
+
+  }
 
   /************************************************************************************* */
   //  Redireccionar
@@ -25,6 +31,20 @@ export class HomePage {
 
     //  Redireccionar
     window.location.href = ruta;
+
+  }
+
+  //  VARIABLES DE SESIÓN
+
+  variablesSesion(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Obtener variables de sesión
+
+    if(sessionStorage.getItem("perfil"))
+      _this.perfil = sessionStorage.getItem("perfil");
 
   }
 

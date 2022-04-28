@@ -88,6 +88,8 @@ export class CalendarPage implements OnInit {
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = false;
 
+  renderCalendar: any;
+
   constructor(
 
     private modal: NgbModal,
@@ -178,10 +180,15 @@ export class CalendarPage implements OnInit {
           }
         }
 
+        
+
         for (let j = 1; j <= nextDays; j++) {
           days += `<div class="next-date">${j}</div>`;
           monthDays.innerHTML = days;
         }
+        
+        $(".days").html(days);
+
       };
 
       /*document.querySelector(".prev").addEventListener("click", () => {
@@ -318,35 +325,61 @@ export class CalendarPage implements OnInit {
     var _this = this;
     var reunion = "";
 
-    _this.events.push(
-      {
-        start: new Date(),
-        end: new Date(),
-        title: reunion,
-        color: colors.blue,
-        allDay: false,
+    //  Consultar calendario
+
+    let apiConsultarCalendario = new FormData();
+
+    apiConsultarCalendario.append("usuario",sessionStorage.getItem('usuario'));
+
+    _this.postModel("apiConsultarCalendario",apiConsultarCalendario).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          var reunion = result[i].descripcion;
+
+          if(result[i].link)
+            reunion = reunion + ": " + "<a href='"+result[i].link+"' target='_blank'>" + result[i].link + "</a>";
+          else
+          reunion = reunion + ": (Pronto se asignará link de la reunión)";
+
+          _this.events.push(
+            {
+              start: new Date(result[i].fechaDesde),
+              end: new Date(result[i].fechaHasta),
+              title: reunion,
+              color: colors.blue,
+              allDay: false,
+            }
+          );
+
+        }
+
       }
-    );
 
-    $(".anterior").click();
-    $(".mesActual").hide();
+      $(".anterior").click();
+      $(".mesActual").hide();
 
-    setTimeout(() => {
-      $(".hoy").click();
-      $(".mesActual").show();
+      setTimeout(() => {
+        $(".hoy").click();
+        $(".mesActual").show();
+        $(".siguiente").click();
 
-      $(".cal-month-view .cal-header .cal-cell").css("background","#445F73");
-      $(".cal-month-view .cal-header .cal-cell").css("color","#ffffff");
-      $(".cal-month-view .cal-header .cal-cell").css("font-size","12px");
-      $(".cal-month-view .cal-header .cal-cell").css("text-transform","uppercase");
-      $(".cal-month-view .cal-day-cell.cal-today").css("background","#ffffff");
-      $(".anterior").css("background","#445F73");
-      $(".siguiente").css("background","#445F73");
-      $(".siguiente").css("float","right");
+        $(".cal-month-view .cal-header .cal-cell").css("background","#445F73");
+        $(".cal-month-view .cal-header .cal-cell").css("color","#ffffff");
+        $(".cal-month-view .cal-header .cal-cell").css("font-size","12px");
+        $(".cal-month-view .cal-header .cal-cell").css("text-transform","uppercase");
+        $(".cal-month-view .cal-day-cell.cal-today").css("background","#ffffff");
+        $(".anterior").css("background","#445F73");
+        $(".siguiente").css("background","#445F73");
+        $(".siguiente").css("float","right");
 
-      $(".calendarioGrande").show();
+        $(".calendarioGrande").show();
 
-    },1000)
+      },1000);
+
+    });
 
   }
 

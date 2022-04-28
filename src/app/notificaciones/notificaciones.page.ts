@@ -23,20 +23,7 @@ export class NotificacionesPage implements OnInit {
 
     this.consultarNotificaciones();
 
-    const Meeting = require('google-meet-api').meet;
 
-    Meeting({
-    clientId : 'XXXXdds420ghq7195tfsbi04i7rduaans.apps.googleusercontent.com',
-    clientSecret : 'XXXXxxeh2mrCZ',
-    refreshToken : 'XXXXXXXXXCNfW2MMGvJUSk4V7LplXAXXXX',
-    date : "2020-12-01",
-    time : "10:59",
-    summary : 'summary',
-    location : 'location',
-    description : 'description'
-    }).then(function(result){
-    console.log(result);//result it the final link
-    })
 
   }
 
@@ -46,6 +33,10 @@ export class NotificacionesPage implements OnInit {
   postModel(Metodo: string, data: FormData) {
     let url = `${environment.apiUrl}` + Metodo;
     return this.http.post(url, data);
+  }
+
+  location(ruta){
+    window.location.href = ruta;
   }
 
   //  CONSULTAR NOTIFICACIONES
@@ -72,9 +63,7 @@ export class NotificacionesPage implements OnInit {
 
   //  CONFIRMAR REUNION
 
-  confirmarReunion(idNotificacion){
-
-    
+  confirmarReunion(idCalendario,idNotificacion){
 
     //  Variables iniciales
 
@@ -82,14 +71,74 @@ export class NotificacionesPage implements OnInit {
 
     //  Confirmar reunion
 
-    let apiAprobarNotificacionReunion = new FormData();
+    $.confirm({
+      title: 'Confirmar asesoría',
+      content: 'Esta seguro de confirmar la reunión ?',
+      buttons: {
 
-    apiAprobarNotificacionReunion.append("idNotificacion",idNotificacion);
+          confirmar: function () {
 
-    _this.postModel("apiAprobarNotificacionReunion",apiAprobarNotificacionReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+            let apiAprobarNotificacionReunion = new FormData();
 
-      _this.notificaciones = result;
+            apiAprobarNotificacionReunion.append("idNotificacion",idNotificacion);
+            apiAprobarNotificacionReunion.append("idCalendario",idCalendario);
+        
+            _this.postModel("apiAprobarNotificacionReunion",apiAprobarNotificacionReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
+              $.alert('Se confirmó la reunión correctamente');
+
+              setTimeout(function(){
+  
+                _this.location("/notificaciones");
+  
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
+    });
+
+  }
+
+  //  RECHAZAR REUNION
+
+  rechazarReunion(idCalendario,idNotificacion){
+
+    //  Variables iniciales
+
+    var _this = this;
+
+    //  Rechazar reunion
+
+    $.confirm({
+      title: 'Rechazar asesoría',
+      content: 'Esta seguro de rechazar la reunión ?',
+      buttons: {
+
+          confirmar: function () {
+
+            let apiRechazarNotificacionReunion = new FormData();
+
+            apiRechazarNotificacionReunion.append("idNotificacion",idNotificacion);
+            apiRechazarNotificacionReunion.append("idCalendario",idCalendario);
+        
+            _this.postModel("apiRechazarNotificacionReunion",apiRechazarNotificacionReunion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              $.alert('Se rechazó la reunión correctamente');
+
+              setTimeout(function(){
+  
+                _this.location("/notificaciones");
+  
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
     });
 
   }
