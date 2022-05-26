@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
+import {HttpClient} from "@angular/common/http";
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var $;
 
@@ -9,20 +14,31 @@ declare var $;
 })
 export class ContactenosPage implements OnInit {
 
-  constructor() { }
+  private unsubscribe$ = new Subject<void>();
+
+  constructor(
+    private http:HttpClient,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
   }
 
-  /****************************************** */
+  postModel(Metodo: string, data: FormData) {
+    let url = `${environment.apiUrl}` + Metodo;
+    return this.http.post(url, data);
+  }
 
-  //  Redireccionar
+  //  REDIRECCIONAR
 
   location(ruta){
-
-    //  Redireccionar
     window.location.href = ruta;
+  }
 
+  //  REDIRECCIONAR NUEVA VENTANA
+
+  locationWindows(ruta){
+    window.open(ruta);
   }
 
   /****************************************** */
@@ -92,14 +108,29 @@ export class ContactenosPage implements OnInit {
 
     if(error == 0){
 
-      $(".msg").html("Se envio el formulario correctamente.");
-      $(".msg").css("color","green");
+      _this.spinner.show();
 
-      setTimeout(function(){
+      let apiContactenosEnviarFormulario = new FormData();
 
-        _this.location("home");
+      apiContactenosEnviarFormulario.append("nombres",nombres);
+      apiContactenosEnviarFormulario.append("apellidos",apellidos);
+      apiContactenosEnviarFormulario.append("telefono",telefonoContacto);
+      apiContactenosEnviarFormulario.append("email",correo);
+      apiContactenosEnviarFormulario.append("asunto",asunto);
 
-      },3000);
+      _this.postModel("apiContactenosEnviarFormulario",apiContactenosEnviarFormulario).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        _this.spinner.hide();
+
+        $.alert('Se ha enviado la solicitud a Abogline correctamente, pronto te daremos una respuesta.');
+  
+        setTimeout(function(){
+  
+          _this.location("home");
+  
+        },3000);
+
+      });
 
     }
 
