@@ -548,6 +548,7 @@ export class AppComponent {
 
           apiUsuariosGetUserPassword.append("usuario",$("#loginUsuario").val());
           apiUsuariosGetUserPassword.append("password",$("#loginPassword").val());
+          apiUsuariosGetUserPassword.append("recordar",'true');
 
           _this.postModel("apiUsuariosGetUserPassword",apiUsuariosGetUserPassword).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -649,7 +650,7 @@ export class AppComponent {
 
     } 
 
-    //  Validar que el usuario se encuentre registrado
+    //  Enviar correo electronico si no hay errores
 
     if(error == 0){
 
@@ -670,12 +671,23 @@ export class AppComponent {
 
           if(error == 0){
 
-            $(".msgSuccessLogin").html("Se envio correo electrónico para recordar contraseña");
-            $(".msgSuccessLogin").show();
+            _this.spinner.show();
 
-            setTimeout(function(){
-              _this.modal.close();
-            },3000);
+            let apiLoginRecordarPassword = new FormData();
+
+            apiLoginRecordarPassword.append("usuario",$("#loginUsuario").val());
+
+            _this.postModel("apiLoginRecordarPassword",apiLoginRecordarPassword).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              _this.spinner.hide();
+
+              $.alert('Se ha enviado un correo electrónico con los datos de acceso.');
+
+              setTimeout(function(){
+                _this.modal.close();
+              },3000);
+
+            });
 
           }
 
@@ -700,6 +712,7 @@ export class AppComponent {
 
     sessionStorage.setItem("autenticado","0");
     sessionStorage.setItem("usuario","");
+    sessionStorage.setItem("perfil","");
 
     _this.autenticado = 0;
     _this.usuario = "";
