@@ -29,6 +29,8 @@ export class HomePage {
 
   location(ruta){
 
+    console.log(ruta);
+
     //  Redireccionar
     window.location.href = ruta;
 

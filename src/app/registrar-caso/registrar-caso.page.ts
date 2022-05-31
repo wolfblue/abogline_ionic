@@ -25,6 +25,9 @@ export class RegistrarCasoPage implements OnInit {
     private http:HttpClient
   ) { 
 
+    //  Actualizar página en la sesión
+    sessionStorage.setItem("page","registrar-caso");
+
     //  Editar caso
     if(this.editarCaso)
       this.getEditarCaso();
@@ -202,37 +205,47 @@ export class RegistrarCasoPage implements OnInit {
     if(!cuentanos)
       error = 1;
 
-    //  Registrar
+    //  Validar autenticación
 
-    if(error == 0){
+    if(sessionStorage.getItem("usuario")){
 
-      let apiRegistrarCaso = new FormData();
+      //  Registrar
 
-      apiRegistrarCaso.append("problemas",problemas);
-      apiRegistrarCaso.append("trataCaso",trataCaso);
-      apiRegistrarCaso.append("cualProblema",cualProblema);
-      apiRegistrarCaso.append("proceso",proceso);
-      apiRegistrarCaso.append("cuentanos",cuentanos);
-      apiRegistrarCaso.append("usuario",sessionStorage.getItem("usuario"));
-      apiRegistrarCaso.append("id",_this.editarCaso);
-      apiRegistrarCaso.append("ciudadProblema",ciudadProblema);
+      if(error == 0){
 
-      _this.postModel("apiRegistrarCaso",apiRegistrarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+        let apiRegistrarCaso = new FormData();
+
+        apiRegistrarCaso.append("problemas",problemas);
+        apiRegistrarCaso.append("trataCaso",trataCaso);
+        apiRegistrarCaso.append("cualProblema",cualProblema);
+        apiRegistrarCaso.append("proceso",proceso);
+        apiRegistrarCaso.append("cuentanos",cuentanos);
+        apiRegistrarCaso.append("usuario",sessionStorage.getItem("usuario"));
+        apiRegistrarCaso.append("id",_this.editarCaso);
+        apiRegistrarCaso.append("ciudadProblema",ciudadProblema);
+
+        _this.postModel("apiRegistrarCaso",apiRegistrarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+          
+          $.alert('Se actualizó el caso correctamente');
+
+          setTimeout(function(){
+
+            _this.location("consultar-abogados");
+    
+          },3000);
+
+        });
+
+      }else{
+
+        $.alert('Faltan campos por diligenciar');
         
-        $.alert('Se actualizó el caso correctamente');
-
-        setTimeout(function(){
-
-          _this.location("consultar-abogados");
-  
-        },3000);
-
-      });
+      }
 
     }else{
 
-      $.alert('Faltan campos por diligenciar');
-      
+      $(".iniciarSesion button").click();
+
     }
 
   }

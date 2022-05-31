@@ -93,18 +93,13 @@ export class ConsultarAbogadosPage implements OnInit {
     //  Variables iniciales
     var _this = this;
 
-    //  Validar selección del caso
+    //  Validar autenticación
 
-    if($("#seleccionarCaso").val()){
+    if(sessionStorage.getItem("usuario")){
 
-      //  Sin autenticación
+      //  Validar selección del caso
 
-      if(!_this.usuario){
-
-        sessionStorage.setItem("registro","true");
-        _this.location("home");
-
-      }else{
+      if($("#seleccionarCaso").val()){
 
         //  Enviar notificación al abogado
 
@@ -131,11 +126,15 @@ export class ConsultarAbogadosPage implements OnInit {
 
         });
 
+      }else{
+
+        $.alert('Debe seleccionar un caso a relacionar.');
+
       }
 
     }else{
 
-      $.alert('Debe seleccionar un caso a relacionar.');
+      $(".iniciarSesion button").click();
 
     }
 
