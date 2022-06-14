@@ -244,10 +244,10 @@
 
         <div class="row">
             <div class="col-md-10 paadingR0">
-                <input type="text" placeholder="Email" class="input1" />
+                <input type="text" placeholder="Email" class="input1" id="emailContacto" />
             </div>
             <div class="col-md-2">
-                <img src="/assets/images/btn_enviar.png" class="btnEnviar cursor"/>
+                <img src="/assets/images/btn_enviar.png" class="btnEnviar cursor" (click)="enviarContacto()" />
             </div>
         </div>
 
@@ -270,11 +270,11 @@
 
         <div class="row redes">
 
-            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/facebook.png" /></div>
-            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/twitter.png" /></div>
-            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/instagram.png" /></div>
-            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/linked.png" /></div>
-            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/whastapp.png" /></div>
+            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/facebook.png" (click)="locationWindows('https://www.facebook.com/abogline/')" /></div>
+            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/twitter.png" (click)="locationWindows('https://twitter.com/abogline')" /></div>
+            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/instagram.png" (click)="locationWindows('https://www.instagram.com/abogline/')" /></div>
+            <!--<div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/linked.png" /></div>-->
+            <div class="col center paddingEmpty"><img class="siguenosIcon cursor" src="/assets/images/whastapp.png" (click)="locationWindows('https://wa.me/+573212246228')"/></div>
 
         </div>
 

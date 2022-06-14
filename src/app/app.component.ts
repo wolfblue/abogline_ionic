@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from "ngx-spinner";
 import { $$ } from 'protractor';
+import { count } from 'console';
 
 declare var $;
 
@@ -36,6 +37,9 @@ export class AppComponent {
   usuario:any = "";
   perfil: any = "";
   usuarioHeader: any = "";
+  chat = [];
+  chatFlujo = 0;
+  rutaBackend = `${environment.backend}`;
 
   constructor(
     private http:HttpClient,
@@ -447,6 +451,9 @@ export class AppComponent {
               //  Consultar información del usuario
               _this.getUser();
 
+              //  Actualizar home
+              _this.location('/home');
+
             },3000);
 
           });
@@ -590,6 +597,8 @@ export class AppComponent {
 
                   //  Consultar información del usuario
                   _this.getUser();
+
+                  _this.location('/home');
 
                 },3000);
 
@@ -814,17 +823,17 @@ export class AppComponent {
 
     //  Validar tipo de chat
 
-    if(_this.usuario){
+    if(_this.usuario || sessionStorage.getItem("chatIdentificacion")){
 
       $(".chatTipo2").show();
       $(".chatContenido").css("padding-left","5%");
       $(".chatContenido").css("padding-right","5%");
-      $(".btn-flotante2").css("bottom","43%");
+      $(".btn-flotante2").css("bottom","60%");
       $(".chatEnviar2").show();
 
     }
 
-    if(!_this.usuario){
+    if(!_this.usuario && !sessionStorage.getItem("chatIdentificacion")){
 
       $(".chatTipo1").show();
       $(".chatContenido").css("padding-left","13%");
@@ -834,13 +843,25 @@ export class AppComponent {
 
     }
 
+    //  Bajar scroll
+
+    var scroll=$('.chatTipo2');
+    scroll.animate({scrollTop: scroll.prop("scrollHeight")});
+
   }
 
   cerrarChat(){
+
+    //  Variables iniciales
+    var _this = this;
     
     $(".chatHeader").show();
     $(".chatHeader2").hide();
     $(".chatContenido").hide();
+    $(".chatEnviar2").hide();
+
+    _this.chat = [];
+    _this.chatFlujo = 0;
 
   }
 
@@ -849,7 +870,315 @@ export class AppComponent {
     $(".chatHeader").show();
     $(".chatHeader2").hide();
     $(".chatContenido").hide();
+    $(".chatEnviar2").hide();
 
   }
+
+  //  INICIAR CHAT
+
+  iniciarChat(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+    var chatTipoIdentificacion = $("#chatTipoIdentificacion").val();
+    var chatIdentificacion = $("#chatIdentificacion").val();
+    var chatNombres = $("#chatNombres").val();
+    var chatApellidos = $("#chatApellidos").val();
+    var chatCorreo = $("#chatCorreo").val();
+    var chatCuentanos = $("#chatCuentanos").val();
+    var chatTerminos = $("#chatTerminos").prop("checked");
+
+    //  Validar terminos
+
+    if(chatTerminos == false){
+
+      error = 1;
+      msg = "Debe aceptar los terminos y condiciones para continuar.";
+
+    }
+
+    //  Validar identificación
+
+    if(!chatIdentificacion){
+
+      error = 1;
+      msg = "Debe digitar identificación para continuar.";
+
+    }
+
+    //  Validar nombres
+
+    if(!chatNombres){
+
+      error = 1;
+      msg = "Debe digitar los nombres para continuar.";
+
+    }
+
+    //  Validar apellidos
+
+    if(!chatApellidos){
+
+      error = 1;
+      msg = "Debe digitar los apellidos para continuar.";
+
+    }
+
+    //  Validar correo
+
+    if(chatCorreo.split("@").length == 1){
+
+      error = 1;
+      msg = "Debe digitar un correo electrónico válido para continuar.";
+
+    }
+
+    //  Validar comentario
+
+    if(!chatCuentanos){
+
+      error = 1;
+      msg = "Debe digitar el comentario para continuar.";
+
+    }
+
+    //  Mostrar errores
+
+    if(error)
+      $.alert(msg);
+
+    //  Iniciar chat
+
+    if(!error){
+
+      //  Guardar datos del chat en sesión
+
+      sessionStorage.setItem("chatTipoIdentificacion",chatTipoIdentificacion);
+      sessionStorage.setItem("chatIdentificacion",chatIdentificacion);
+      sessionStorage.setItem("chatNombres",chatNombres);
+      sessionStorage.setItem("chatApellidos",chatApellidos);
+      sessionStorage.setItem("chatCorreo",chatCorreo);
+      sessionStorage.setItem("chatCuentanos",chatCuentanos);
+
+      $(".chatTipo1").hide();
+      $(".chatTipo2").show();
+
+    }
+
+  }
+
+  //  ENVIAR MENSAJE USUARIO
+
+  enviarMensajeUsuario(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var mensajeUsuario = $("#mensajeUsuario").val();
+    var mensajeRobot = "";
+    var error = 0;
+
+    _this.chat.push(
+      {
+        'tipo':'usuario',
+        'msg':mensajeUsuario,
+      }
+    );
+
+    //  Validar mensaje
+
+    if(mensajeUsuario){
+
+      if(_this.perfil == "cliente"){
+
+        switch(_this.chatFlujo){
+
+          //  Flujo 0
+
+          case 0:
+
+            switch(mensajeUsuario){
+    
+              case "1":
+      
+                mensajeRobot = "¿Qué tipo de problema solucionar?";
+
+                _this.chat.push(
+                  {
+                    'tipo':'robot',
+                    'msg':mensajeRobot,
+                  }
+                );
+
+                //  Actualizar flujo chat
+                _this.chatFlujo = 1;
+      
+              break;
+
+              case "2":
+      
+                mensajeRobot = " Selecciona una de las siguientes opciones: <br><br>";
+                mensajeRobot += " 1. ¿Para qué funciona? <br>";
+                mensajeRobot += " 2. Acerca del funcionamiento de consultar caso.";
+
+                _this.chat.push(
+                  {
+                    'tipo':'robot',
+                    'msg':mensajeRobot,
+                  }
+                );
+
+                //  Actualizar flujo chat
+                _this.chatFlujo = 3;
+      
+              break;
+    
+              default:
+    
+                $.alert('Opción no válida');
+                error = 1;
+    
+              break;
+      
+            }
+
+          break;
+
+          //  Flujo 1
+
+          case 1:
+
+            if(_this.perfil == "cliente"){
+
+              mensajeRobot = "Te damos las mejores opciones, es muy fácil que las escojas. Revisa nuestro manual y escoge la mejor opción.”";
+
+              _this.chat.push(
+                {
+                  'tipo':'robot',
+                  'msg':mensajeRobot,
+                }
+              );
+
+              mensajeRobot = " Selecciona una de las siguientes opciones: <br><br>";
+              mensajeRobot += " 1. Volver a las primeras opciones <br>";
+              mensajeRobot += " 2. Finalizar chat";
+
+              _this.chat.push(
+                {
+                  'tipo':'robot',
+                  'msg':mensajeRobot,
+                }
+              );
+
+              //  Actualizar flujo chat
+              _this.chatFlujo = 2;
+    
+            }
+            
+          break;
+
+          //  Flujo 2
+
+          case 2:
+          
+            switch(mensajeUsuario){
+      
+              case "1":
+
+                mensajeRobot = "Selecciona la opción que quieres consultar, para esto debe <b>escribir el número</b> correspondiente:<br><br>";
+                mensajeRobot += "1. Registrar caso <br>";
+                mensajeRobot += "2. Consultar caso <br>";
+                mensajeRobot += "3. Consultar abogado <br>";
+                mensajeRobot += "4. Consultar cliente <br>";
+                mensajeRobot += "5. Agendar <br>";
+                mensajeRobot += "6. Pagos <br>";
+                mensajeRobot += "7. Perfil";
+
+                _this.chat.push(
+                  {
+                    'tipo':'robot',
+                    'msg':mensajeRobot,
+                  }
+                );
+
+                //  Actualizar flujo chat
+                _this.chatFlujo = 0;
+
+              break;
+
+              case "2":
+
+                mensajeRobot = "Gracias por usar Abogline, estaremos pendientes si necesitas alguna ayuda adicional.";
+
+                _this.chat.push(
+                  {
+                    'tipo':'robot',
+                    'msg':mensajeRobot,
+                  }
+                );
+
+                if($("#enviarCorreo").prop("checked") == true){
+
+                  mensajeRobot = "Enviamos un correo electrónico con el historial del chat.";
+
+                  _this.chat.push(
+                    {
+                      'tipo':'robot',
+                      'msg':mensajeRobot,
+                    }
+                  );
+
+                  //  Enviar correo electronico
+
+                  $(".chatLogoContent").html("");
+                  var chatHistorial = $(".historialChat").html();
+
+                  let apiHomeEnviarChat = new FormData();
+
+                  apiHomeEnviarChat.append("usuario",sessionStorage.getItem("usuario"));
+                  apiHomeEnviarChat.append("chat",chatHistorial);
+
+                  _this.postModel("apiHomeEnviarChat",apiHomeEnviarChat).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+                }
+
+                _this.chatFlujo = 0;
+
+                setTimeout(function(){
+                  _this.cerrarChat();
+                },10000);
+
+              break;
+
+            }
+
+          break;
+
+        }
+
+      }
+
+      //  Limpiar campo mensaje
+
+      $("#mensajeUsuario").val("");
+
+      //  Validar si no tiene errores
+
+      if(!error){
+
+        //  Bajar scroll
+
+        var scroll=$('.chatTipo2');
+        scroll.animate({scrollTop: scroll.prop("scrollHeight")});
+
+      }
+
+    }
+
+
+  } 
 
 }

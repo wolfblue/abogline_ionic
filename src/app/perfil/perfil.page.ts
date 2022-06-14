@@ -44,7 +44,7 @@ export class PerfilPage implements OnInit {
   tmpFile: any = "";
   tmpOpenFile: any = "";
   fechaNacimiento: any = "";
-  perfil: any = "";
+  perfil = (sessionStorage.getItem("perfil") ? sessionStorage.getItem("perfil") : "");
   direccion: any = "";
   municipio: any = "";
   hojaVida: any = "false";
@@ -290,7 +290,7 @@ export class PerfilPage implements OnInit {
       _this.notificacionSMS = result[0].notificacion_sms;
       _this.activoDesde = result[0].activo_desde;
       //_this.registro = result[0].registro;
-      //_this.completaPerfil = result[0].completa_perfil;
+      _this.completaPerfil = result[0].completa_perfil;
       //_this.creaCaso = result[0].crea_caso;
       //_this.buscaCaso = result[0].busca_caso;
       //_this.disfrutaExperiencia = result[0].disfruta_experiencia;
@@ -341,9 +341,6 @@ export class PerfilPage implements OnInit {
       setTimeout(function(){
         _this.areaPresentacion();
       },1000);
-
-      //  Validar estado de actividad completa tu perfil
-      _this.validateEstadoPerfil();
 
       //  Validar estado de actividad hoja de vida
       _this.validateHojaVida();
@@ -409,6 +406,7 @@ export class PerfilPage implements OnInit {
     apiUsuariosUpdateUser.append("direccion",direccion);
     apiUsuariosUpdateUser.append("municipio",municipio);
     apiUsuariosUpdateUser.append("nacimiento",nacimiento);
+    apiUsuariosUpdateUser.append("perfil",_this.perfil);
 
     _this.postModel("apiUsuariosUpdateUser",apiUsuariosUpdateUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -419,7 +417,7 @@ export class PerfilPage implements OnInit {
       $(".msgPerfil").css("color","green");
 
       setTimeout(function(){
-        $(".msgPerfil").hide();
+        _this.location("/perfil");
       },3000);
 
     });
@@ -924,30 +922,6 @@ export class PerfilPage implements OnInit {
 
       }
 
-    }
-
-  }
-
-  /*************************************** */
-  //  Validar estado perfil
-  /*************************************** */
-
-  validateEstadoPerfil(){
-
-    //  Variables iniciales
-    var _this = this;
-
-    //  Validar estado
-
-    if(
-      _this.nombres &&
-      _this.apellidos &&
-      _this.usuario &&
-      _this.email &&
-      _this.identificacion &&
-      _this.telefonoContacto
-    ){
-      _this.completaPerfil = "true";
     }
 
   }

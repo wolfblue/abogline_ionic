@@ -319,7 +319,7 @@
 
 <ngx-spinner></ngx-spinner>
 
-<div class="btn-flotante">
+<div class="btn-flotante" *ngIf="usuario">
   <div class="chatHeader" (click)="openChat()"></div>
 </div>
 
@@ -372,12 +372,12 @@
         <p><textarea id="chatCuentanos" placeholder="Cuéntanos cómo te podemos ayudar"></textarea></p>
 
         <div class="chatTratamiento">
-          <input type="checkbox">
+          <input type="checkbox" id="chatTerminos">
           <span>Acepto el tratamiento de datos personales</span>
         </div>
 
         <div class="chatEnviar">
-          <img src="/assets/images/boton_enviar.png">
+          <img src="/assets/images/boton_enviar.png" (click)="iniciarChat()">
         </div>
 
       </div>
@@ -386,37 +386,88 @@
 
     <div class="chatTipo2">
 
-      <div class="row">
+        <div class="historialChat">
 
-        <div class="col-md-2">
-          <img src="/assets/images/logo_redondo.png" class="chatLogo">
+        <div class="row">
+
+          <div class="col-md-2 chatLogoContent">
+            <img src="/assets/images/logo_redondo.png" class="chatLogo">
+          </div>
+
+          <div class="col-md-8 chatFondo">
+            Hola <b>{{usuarioHeader}}</b>, soy Botty tu asistente virtual de Abogline, dinos como podemos ayudarte.
+          </div>
+
         </div>
 
-        <div class="col-md-10 chatFondo">
-          Hola <b>{{usuarioHeader}}</b>, soy Botty tu asistente virtual de Abogline.
+        <div class="row">
+
+          <div class="col-md-2 chatLogoContent">
+            <img src="/assets/images/logo_redondo.png" class="chatLogo">
+          </div>
+
+          <div class="col-md-8 chatFondo marginTop2">
+            Selecciona la opción que quieres consultar, para esto debe <b>escribir el número</b> correspondiente:<br><br>
+            
+            <div *ngIf="perfil=='cliente'">
+
+              1. Registrar caso <br>
+              2. Consultar caso <br>
+              3. Consultar abogado <br>
+              4. Consultar cliente <br>
+              5. Agendar <br>
+              6. Pagos <br>
+              7. Perfil
+
+            </div>
+            
+            <div *ngIf="perfil=='abogado'">
+
+              1. Consultar caso <br>
+              2. Consultar cliente <br>
+              3. Agendar <br>
+              4. Perfil
+
+            </div>
+
+          </div>
+
         </div>
 
-      </div>
+        <div class="row marginTop2" *ngFor="let item of chat">
 
-      <div class="row">
+          <ng-container *ngIf="item.tipo=='usuario'">
 
-        <div class="col-md-2">
-          <img src="/assets/images/logo_redondo.png" class="chatLogo">
-        </div>
+            <div class="col-md-2"></div>
 
-        <div class="col-md-10 chatFondo marginTop2">
-          Selecciona la opción que quieres consultar, para esto debe <b>escribir el número</b> correspondiente:<br>
-          1. Registrarme.<br>
-          2. Apartar una cita con un abogado.<br>
-          3. Consultar casos.
+            <div class="col-md-8 chatFondoUsuario">
+              {{item.msg}}
+            </div>
+    
+            <div class="col-md-2 chatLogoContent">
+              <img [attr.src]="rutaBackend+'photo/'+usuario+'.jpg'" class="chatLogo">
+            </div>
+
+          </ng-container>
+
+          <ng-container *ngIf="item.tipo=='robot'">
+
+            <div class="col-md-2 chatLogoContent">
+              <img src="/assets/images/logo_redondo.png" class="chatLogo">
+            </div>
+    
+            <div class="col-md-8 chatFondo marginTop2" [innerHTML]="item.msg"></div>
+
+          </ng-container>
+
         </div>
 
       </div>
 
       <div class="chatCheckbox">
-        <input type="checkbox" checked>
+        <input type="checkbox" checked id="enviarCorreo">
         <span>Enviar correo</span>
-        <input type="checkbox" checked>
+        <input type="checkbox" checked id="realizarEncuesta">
         <span>Realizar encuesta</span>
       </div>
 
@@ -425,8 +476,8 @@
   </div>
 
   <div class="chatEnviar2">
-    <input type="text" placeholder="Escribe tu mensaje">
-    <img src="/assets/images/boton_enter.png">
+    <input type="text" placeholder="Escribe tu mensaje" id="mensajeUsuario">
+    <img src="/assets/images/boton_enter.png" (click)="enviarMensajeUsuario()">
   </div>
 
 </div>

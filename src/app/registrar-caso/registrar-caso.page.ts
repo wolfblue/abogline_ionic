@@ -20,10 +20,17 @@ export class RegistrarCasoPage implements OnInit {
   cualProblema = "amigo";
   editarCaso = (sessionStorage.getItem("editarCaso") ? sessionStorage.getItem("editarCaso") : "");
   subcategoria = "";
+  usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
+  ciudades:any = [];
+  ciudadUsuario = "";
+  usuarioData = [];
 
   constructor(
     private http:HttpClient
-  ) { 
+  ) {
+
+    //  Validar que tenga perfil completo
+    this.validarPerfil();
 
     //  Actualizar página en la sesión
     sessionStorage.setItem("page","registrar-caso");
@@ -31,6 +38,9 @@ export class RegistrarCasoPage implements OnInit {
     //  Editar caso
     if(this.editarCaso)
       this.getEditarCaso();
+
+    //  Obtener ciudades
+    this.getCiudades();
 
   }
 
@@ -301,6 +311,62 @@ export class RegistrarCasoPage implements OnInit {
 
     //  Actualizar variable global
     _this.subcategoria = subcategoria
+
+  }
+
+  //  VALIDAR PERFIL COMPLETO
+
+  validarPerfil(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar datos del usuario
+
+    let apiRegistrarCasoConsultarUsuario = new FormData();
+
+    apiRegistrarCasoConsultarUsuario.append("usuario",_this.usuario);
+
+    _this.postModel("apiRegistrarCasoConsultarUsuario",apiRegistrarCasoConsultarUsuario).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        //  Guardar datos del usuario
+
+        _this.usuarioData = result[0];
+        _this.ciudadUsuario = result[0].ciudad;
+
+        //  Validar si el usuario completo su perfil
+
+        if(result[0].completa_perfil == 'false'){
+
+          $.alert('Debe diligenciar los datos del perfil antes de registrar un caso');
+
+          setTimeout(function(){
+
+            _this.location("/perfil");
+
+          },5000);
+
+        }
+
+      }
+
+    });
+
+  }
+
+  //  CONSULTAR CIUDADES
+
+  getCiudades(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Obtener ciudades
+
+    let apiAdminCiudadGet = new FormData();
+    _this.postModel("apiAdminCiudadGet",apiAdminCiudadGet).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.ciudades = result;});
 
   }
 

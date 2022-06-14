@@ -140,10 +140,13 @@
         <div class="col-md-3">
 
           <div>Ciudad donde se presenta tu problema:</div>
-  
+
           <select id="ciudadProblema">
-            <option value="Bogota">Bogotá D.C</option>
-            <option value="Medellin">Medellin</option>
+            <option value=""></option>
+            <ng-container *ngFor="let item of ciudades">
+              <option value="{{item.ciudad}}" selected *ngIf="item.ciudad == ciudadUsuario">{{item.ciudad}}</option>
+              <option value="{{item.ciudad}}">{{item.ciudad}}</option>
+            </ng-container>
           </select>
 
         </div>

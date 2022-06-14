@@ -16,6 +16,8 @@ export class NotificacionesPage implements OnInit {
   private unsubscribe$ = new Subject<void>();
 
   notificaciones = [];
+  totalNotificaciones = 0;
+  mostrandoNotificaciones = 0;
 
   constructor(
     private http:HttpClient
@@ -56,6 +58,8 @@ export class NotificacionesPage implements OnInit {
     _this.postModel("apiConsultarNotificaciones",apiConsultarNotificaciones).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
       _this.notificaciones = result;
+      _this.totalNotificaciones = result.length;
+      _this.mostrandoNotificaciones = result.length;
 
     });
 
@@ -140,6 +144,48 @@ export class NotificacionesPage implements OnInit {
           cancelar: function () {}
       }
     });
+
+  }
+
+  //  ELIMINAR NOTIFICACIÓN
+
+  eliminarNotificacion(id){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Confirmar la eliminación de la notificación
+
+    $.confirm({
+      title: 'Eliminar notificación',
+      content: 'Esta seguro de eliminar la notificación ?',
+      buttons: {
+
+          confirmar: function () {
+
+            //  Eliminar notificación
+
+            let apiEliminarNotificacion = new FormData();
+
+            apiEliminarNotificacion.append("id",id);
+        
+            _this.postModel("apiEliminarNotificacion",apiEliminarNotificacion).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              $.alert('Se eliminó la notificación correctamente');
+
+              setTimeout(function(){
+  
+                _this.location("/notificaciones");
+  
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+          
+        }
+      });
 
   }
 
