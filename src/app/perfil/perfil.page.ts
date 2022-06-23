@@ -60,7 +60,10 @@ export class PerfilPage implements OnInit {
   tituloProfesional: any = "";
   presentacion: any = "";
   tarjetaLicencia: any = "";
+  experiencia: any = "";
   experienciaTiempo: any = "";
+  investigacion: any = "";
+  ramas: any = "";
   consulta: any = "";
   titulosUsuario: any = [];
   cargaCedula: any = "";
@@ -298,7 +301,7 @@ export class PerfilPage implements OnInit {
       _this.perfil = result[0].perfil;
       _this.direccion = result[0].direccion;
       _this.municipio = result[0].municipio;
-      //_this.hojaVida = result[0].hoja_vida;
+      _this.hojaVida = result[0].hoja_vida;
       //_this.validacion = result[0].validacion;
       //_this.aprobado = result[0].aprobado;
       //_this.buscaCliente = result[0].busca_cliente;
@@ -307,7 +310,10 @@ export class PerfilPage implements OnInit {
       _this.tituloProfesional = result[0].titulo_profesional;
       _this.presentacion = result[0].presentacion;
       _this.tarjetaLicencia = result[0].tarjeta_licencia;
+      _this.experiencia = result[0].experiencia;
       _this.experienciaTiempo = result[0].experiencia_tiempo;
+      _this.investigacion = result[0].investigacion;
+      _this.ramas = result[0].ramas;
       _this.consulta = result[0].consulta;
       _this.tipo_tp = result[0].tipo_tp;
 
@@ -325,6 +331,9 @@ export class PerfilPage implements OnInit {
         $("#ciudad").val(_this.ciudad);
         $("#municipio").val(_this.municipio);
         $("#tipo_tp").val(_this.tipo_tp);
+        $("#experiencia").val(_this.experiencia);
+        $("#investigacion").val(_this.investigacion);
+        $("#ramas").val(_this.ramas);
 
       },500);
 
@@ -343,7 +352,7 @@ export class PerfilPage implements OnInit {
       },1000);
 
       //  Validar estado de actividad hoja de vida
-      _this.validateHojaVida();
+      //_this.validateHojaVida();
 
     });
 

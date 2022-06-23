@@ -40,6 +40,7 @@ export class AppComponent {
   chat = [];
   chatFlujo = 0;
   rutaBackend = `${environment.backend}`;
+  totalNotificaciones = 0;
 
   constructor(
     private http:HttpClient,
@@ -62,6 +63,9 @@ export class AppComponent {
       this.getUser();
 
     }
+
+    //  Consultar cantidad de notificaciones
+    this.consultarTotalNotificaciones();
 
   }
 
@@ -430,18 +434,18 @@ export class AppComponent {
             //  Spinner
             _this.spinner.hide();
 
-            $(".msgSuccess").html("Se registro el usuario correctamente");
+            $(".msgSuccess").html("Se registro el usuario correctamente, por favor confirmar en el correo electronico");
             $(".msgSuccess").show();
             
             setTimeout(function(){
 
-              sessionStorage.setItem("autenticado","1");
-              sessionStorage.setItem("usuario",$("#registerUsuario").val());
-              sessionStorage.setItem("perfil",_this.perfil);
+              //sessionStorage.setItem("autenticado","1");
+              //sessionStorage.setItem("usuario",$("#registerUsuario").val());
+              //sessionStorage.setItem("perfil",_this.perfil);
 
-              _this.autenticado = 1;
-              _this.usuario = $("#registerUsuario").val();
-              _this.perfil = _this.perfil;
+              //_this.autenticado = 1;
+              //_this.usuario = $("#registerUsuario").val();
+              //_this.perfil = _this.perfil;
               _this.modal.close();
 
               $("#registerUsuario").val("");
@@ -449,7 +453,7 @@ export class AppComponent {
               $("#registerPassword").val("");
 
               //  Consultar información del usuario
-              _this.getUser();
+              //_this.getUser();
 
               //  Actualizar home
               _this.location('/home');
@@ -540,7 +544,7 @@ export class AppComponent {
 
         if(result.length == 0){
 
-          $(".msgErrorLogin").html("El usuario no se encuentra registrado.");
+          $(".msgErrorLogin").html("El usuario no se encuentra registrado o esta pendiente de confirmación.");
           $(".msgErrorLogin").show();
           $(".iniciarSesionButton").css("margin-top","0%");
 
@@ -690,7 +694,7 @@ export class AppComponent {
 
               _this.spinner.hide();
 
-              $.alert('Se ha enviado un correo electrónico con los datos de acceso.');
+              $.alert('Se ha enviado un correo electrónico para restablecer la contraseña.');
 
               setTimeout(function(){
                 _this.modal.close();
@@ -854,14 +858,31 @@ export class AppComponent {
 
     //  Variables iniciales
     var _this = this;
-    
-    $(".chatHeader").show();
-    $(".chatHeader2").hide();
-    $(".chatContenido").hide();
-    $(".chatEnviar2").hide();
 
-    _this.chat = [];
-    _this.chatFlujo = 0;
+    //  Solicitar confirmación
+
+    $.confirm({
+
+      title: 'Finalizar chat!',
+      content: 'Esta seguro de finalizar la conversación ?',
+      buttons: {
+
+        confirmar: function () {
+
+          $(".chatHeader").show();
+          $(".chatHeader2").hide();
+          $(".chatContenido").hide();
+          $(".chatEnviar2").hide();
+
+          _this.chat = [];
+          _this.chatFlujo = 0;
+
+        },
+        cancelar: function () {}
+
+      }
+
+    });
 
   }
 
@@ -1180,5 +1201,26 @@ export class AppComponent {
 
 
   } 
+
+  //  CONSULTAR TOTAL NOTIFICACIONES PENDIENTES POR LEER
+
+  consultarTotalNotificaciones(){
+
+    //  Variables inciales
+    var _this = this;
+
+    //  Consultar notificaciones
+
+    let apiHomeConsultarNotificaciones = new FormData();
+
+    apiHomeConsultarNotificaciones.append("usuario",_this.usuario);
+
+    _this.postModel("apiHomeConsultarNotificaciones",apiHomeConsultarNotificaciones).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.totalNotificaciones = result.length;
+
+    });
+
+  }
 
 }

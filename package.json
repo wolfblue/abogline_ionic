@@ -27,6 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "angular-calendar": "^0.28.28",
     "angular-http": "0.0.0",
+    "angular-md5": "^0.1.10",
     "angularx-flatpickr": "^6.5.2",
     "bootstrap": "^4.5.0",
     "date-fns": "^2.28.0",

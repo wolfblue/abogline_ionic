@@ -21,6 +21,7 @@ export class HomePage {
 
   closeResult = '';
   perfil = "";
+  usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
 
   constructor(
     private modalService: NgbModal,
@@ -29,6 +30,8 @@ export class HomePage {
 
     //  Variables de sesión
     this.variablesSesion();
+
+    
 
   }
 
@@ -101,6 +104,14 @@ export class HomePage {
       });
 
     }
+
+  }
+
+  //  CORREO DIRECTO
+
+  correoDirecto(){
+
+    $("#emailContacto").focus();
 
   }
 

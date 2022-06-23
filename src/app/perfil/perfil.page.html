@@ -396,6 +396,7 @@
           <div class="col">
 
             <select class="selectTipo1" id="experiencia" (change)="changeFieldHoja('experiencia')">
+              <option value="">- Seleccionar -</option>
               <option>SI</option>
               <option>NO</option>
             </select>
@@ -421,6 +422,7 @@
           <div class="col">
 
             <select class="selectTipo1" id="investigacion" (change)="changeFieldHoja('investigacion')">
+              <option value="">- Seleccionar -</option>
               <option>SI</option>
               <option>NO</option>
             </select>
@@ -440,7 +442,20 @@
           <div class="col">
 
             <select class="selectTipo1" id="ramas" (change)="changeFieldHoja('ramas')">
+
+              <option value="">- Seleccionar -</option>
+
+              <option>AMBIENTAL</option>
+              <option>ADMINISTRATIVO</option>
               <option>CIVIL</option>
+              <option>COMERCIAL</option>
+              <option>DERECHOS HUMANOS</option>
+              <option>DIGITAL</option>
+              <option>FAMILIA</option>
+              <option>LABORAL</option>
+              <option>PENAL</option>
+              <option>TRIBUTARIO</option>
+              
             </select>
 
           </div>
@@ -457,7 +472,7 @@
 
           <div class="col">
 
-            <input type="text" id="consulta" (change)="changeFieldHoja('consulta')" value="{{consulta}}" />
+            <input type="number" id="consulta" (change)="changeFieldHoja('consulta')" value="{{consulta}}" />
 
           </div>
 

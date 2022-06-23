@@ -127,3 +127,24 @@ button{
     color:red;
     display:block
 }
+
+.checkModal{
+    width: 26%;
+    position: absolute;
+    left: 37%;
+    top: -34%;
+}
+
+.modalMessage1{
+    text-align: center;
+    color: #0C1F3C;
+    font-weight: bold;
+    margin-top: 14%;
+    font-size: 22px;
+    margin-bottom: 8%;
+}
+
+.modal-body{
+    background-color: #D0CFCF;
+    border-radius: 14px;
+}

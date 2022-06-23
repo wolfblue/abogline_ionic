@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var $;
 
@@ -12,6 +14,8 @@ declare var $;
   styleUrls: ['./registrar-caso.page.scss'],
 })
 export class RegistrarCasoPage implements OnInit {
+
+  @ViewChild("modalSuccess", {static: false}) modalSuccess: TemplateRef<any>;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -24,9 +28,14 @@ export class RegistrarCasoPage implements OnInit {
   ciudades:any = [];
   ciudadUsuario = "";
   usuarioData = [];
+  modal : NgbModalRef;
+  selectProblemas = "";
+  selectCaso = "";
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService
   ) {
 
     //  Validar que tenga perfil completo
@@ -58,6 +67,13 @@ export class RegistrarCasoPage implements OnInit {
     return this.http.post(url, data);
   }
 
+  open(content) {
+    this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
+    this.modal.result.then((e) => {
+        console.log("dialogo cerrado")
+    });        
+  }
+
   /************************************************************************************* */
   //  Redireccionar
   /************************************************************************************* */
@@ -82,6 +98,8 @@ export class RegistrarCasoPage implements OnInit {
 
     $(".estado").click(function(){
 
+        _this.selectProblemas = "estado";
+
         if(_this.estadoImg == 0){
 
           _this.estadoImg = 1;
@@ -103,6 +121,8 @@ export class RegistrarCasoPage implements OnInit {
     //  Un particular
 
     $(".particular").click(function(){
+
+      _this.selectProblemas = "particular";
 
       if(_this.particularImg == 0){
 
@@ -138,48 +158,49 @@ export class RegistrarCasoPage implements OnInit {
     //  Actualizar variable global
     _this.cualProblema = trataCaso
     _this.subcategoria = "";
+    _this.selectCaso = trataCaso;
 
     //  Actualizar icono
 
     switch(trataCaso){
 
-      case "amigo":
+      case "Amigo o conocido":
 
         $(".iconSelect").prop("src","/assets/images/icon_amigo.png");
 
       break;
 
-      case "impuestos":
+      case "Impuestos":
 
         $(".iconSelect").prop("src","/assets/images/icon_impuestos.png");
 
       break;
 
-      case "jefe":
+      case "Jefe o empresa":
 
         $(".iconSelect").prop("src","/assets/images/icon_jefe.png");
 
       break;
 
-      case "familia":
+      case "Tu familia":
 
         $(".iconSelect").prop("src","/assets/images/icon_familia.png");
 
       break;
 
-      case "negocio":
+      case "Tu negocio":
 
         $(".iconSelect").prop("src","/assets/images/icon_negocio.png");
 
       break;
 
-      case "delito":
+      case "Un delito":
 
         $(".iconSelect").prop("src","/assets/images/icon_delito.png");
 
       break;
 
-      case "vulnerabilidad":
+      case "Vulnerabilidad a tu salud":
 
         $(".iconSelect").prop("src","/assets/images/icon_vulnerabilidad.png");
 
@@ -223,6 +244,8 @@ export class RegistrarCasoPage implements OnInit {
 
       if(error == 0){
 
+        _this.spinner.show();
+
         let apiRegistrarCaso = new FormData();
 
         apiRegistrarCaso.append("problemas",problemas);
@@ -235,8 +258,13 @@ export class RegistrarCasoPage implements OnInit {
         apiRegistrarCaso.append("ciudadProblema",ciudadProblema);
 
         _this.postModel("apiRegistrarCaso",apiRegistrarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+          _this.spinner.hide();
           
-          $.alert('Se actualizó el caso correctamente');
+          _this.open(_this.modalSuccess);
+
+          $(".modal-content").css("background-color","transparent");
+          $(".border-radius").css("border","0px");
 
           setTimeout(function(){
 

@@ -1,0 +1,40 @@
+<ion-content>
+  
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+  
+      <div class="fadeIn first">
+        <img src="/assets/images/logo.png" id="icon" alt="User Icon" />
+      </div>
+  
+      <!-- Login Form -->
+      <form>
+
+        <div class="content1 hide">
+        
+          <p>Se ha confirmado su cuenta correctamente, ahora puede continuar con la autenticación.</p>
+
+          <input type="button" class="fadeIn fourth iniciarSesion" value="Continuar" (click)="continuar()">
+
+        </div>
+
+        <div class="content2 hide">
+        
+          <p>No tiene permisos para proceder.</p>
+
+        </div>
+
+        <div class="content3 hide">
+
+          <input type="password" id="password" class="fadeIn third" name="login" placeholder="Nueva contraseña">
+          <input type="password" id="passwordConfirm" class="fadeIn third" name="login" placeholder="Confirmar contraseña">
+          <input type="button" class="fadeIn fourth iniciarSesion" value="Restablecer" (click)="restablecer()">
+
+        </div>
+
+      </form>
+  
+    </div>
+  </div>
+
+</ion-content>

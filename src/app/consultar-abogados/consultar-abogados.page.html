@@ -89,10 +89,10 @@
 
       <div class="abogado">
 
-        <p class="consulta">{{item.consulta}}</p>
+        <p class="consulta">{{item.consulta_format}}</p>
 
         <div class="tCenter fotoAbogado">
-          <img *ngIf="usuario" src="/assets/images/{{item.usuario}}.jpg" />
+          <img *ngIf="usuario" [attr.src]="rutaBackend+'photo/'+item.usuario+'.jpg'" />
           <img *ngIf="!usuario" src="/assets/images/abogado.png" />
         </div>
 
@@ -123,7 +123,7 @@
 
     <div class="row footer">
 
-      <div class="col-5 tLeft">Mostrando <b>1 de 1 Entrada(s)</b></div>
+      <div class="col-5 tLeft">Mostrando <b>{{totalAbogados}} de {{totalAbogados}} Entrada(s)</b></div>
   
       <div class="col-2 tCenter">
   
@@ -167,7 +167,7 @@
       <div class="row">
         
         <div class="col-md-5">
-          <img *ngIf="usuario" src="/assets/images/{{modalUsuario}}.jpg" class="modalImage" />
+          <img *ngIf="usuario" [attr.src]="rutaBackend+'photo/'+modalUsuario+'.jpg'" class="modalImage" />
           <img *ngIf="!usuario" src="/assets/images/abogado.png" class="modalImage" />
         </div>
 

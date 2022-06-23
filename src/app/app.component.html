@@ -86,7 +86,7 @@
         <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente'" (click)="location('registrar-caso')">Registrar caso</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 misCasos" *ngIf="perfil == 'cliente' || perfil == 'abogado'" (click)="location('mis-casos')">Mis casos</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
-        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('notificaciones')">Notificaciones</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('notificaciones')">Notificaciones <span class="iconNotificacion">{{totalNotificaciones}}</span></li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('calendar')">Calendario</li>
         <li class="heightFull paddingL4 paddingR4" *ngIf="perfil == 'cliente'">Pagos pendientes</li>
         <li class="heightFull paddingL4 paddingR4 buscaTuCaso" *ngIf="perfil == 'abogado'" (click)="location('buscar-casos')">Busca tu caso</li>
@@ -467,8 +467,8 @@
       <div class="chatCheckbox">
         <input type="checkbox" checked id="enviarCorreo">
         <span>Enviar correo</span>
-        <input type="checkbox" checked id="realizarEncuesta">
-        <span>Realizar encuesta</span>
+        <!--<input type="checkbox" checked id="realizarEncuesta">
+        <span>Realizar encuesta</span>-->
       </div>
 
     </div>

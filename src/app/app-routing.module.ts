@@ -106,6 +106,10 @@ const routes: Routes = [
   {
     path: 'admin-actividades',
     loadChildren: () => import('./admin-actividades/admin-actividades.module').then( m => m.AdminActividadesPageModule)
+  },
+  {
+    path: 'links',
+    loadChildren: () => import('./links/links.module').then( m => m.LinksPageModule)
   }
 
 

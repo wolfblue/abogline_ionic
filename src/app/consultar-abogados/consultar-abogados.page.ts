@@ -39,6 +39,8 @@ export class ConsultarAbogadosPage implements OnInit {
   filtroPrecio = [];
   filtroEspecialidad = [];
   filtroTiempo = [];
+  rutaBackend = `${environment.backend}`;
+  totalAbogados = 0;
 
   constructor(
     private http:HttpClient,
@@ -194,6 +196,8 @@ export class ConsultarAbogadosPage implements OnInit {
 
     let apiUsuariosGetAbogados = new FormData();
 
+    apiUsuariosGetAbogados.append("usuario",_this.usuario);
+
     _this.postModel("apiUsuariosGetAbogados",apiUsuariosGetAbogados).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
       //  Spinner hide
@@ -203,9 +207,11 @@ export class ConsultarAbogadosPage implements OnInit {
 
       if(result.length > 0){
 
+        _this.totalAbogados = result.length;
+
         for(var i = 0; i < result.length; i++){
 
-          _this.filtroPrecio.push(result[i].consulta);
+          _this.filtroPrecio.push(result[i].consulta_format);
           _this.filtroEspecialidad.push(result[i].ramas);
           _this.filtroTiempo.push(result[i].experiencia_tiempo);
 
@@ -232,10 +238,9 @@ export class ConsultarAbogadosPage implements OnInit {
     
     _this.modalUsuario = _this.abogados[i].usuario;
     _this.modalNombre = _this.abogados[i].nombres + " " + _this.abogados[i].apellidos;
-    _this.modalConsulta = _this.abogados[i].consulta;
+    _this.modalConsulta = _this.abogados[i].consulta_format;
     _this.modalTitulo = _this.abogados[i].titulo_profesional;
     _this.modalLicencia = _this.abogados[i].tipo_tp;
-    _this.modalConsulta = _this.abogados[i].consulta;
     _this.modalExperiencia = _this.abogados[i].experiencia_tiempo;
     _this.modalPresentacion = _this.abogados[i].presentacion;
 

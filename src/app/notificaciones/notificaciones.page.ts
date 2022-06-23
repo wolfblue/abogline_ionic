@@ -18,6 +18,7 @@ export class NotificacionesPage implements OnInit {
   notificaciones = [];
   totalNotificaciones = 0;
   mostrandoNotificaciones = 0;
+  usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
 
   constructor(
     private http:HttpClient
@@ -186,6 +187,36 @@ export class NotificacionesPage implements OnInit {
           
         }
       });
+
+  }
+
+  //  APROBAR NOTIFICACIÓN
+
+  aprobarNotificacion(idNotificacion,tipoNotificacion,idCaso){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Aprobar notificación
+
+    let apiNotificacionesAprobar = new FormData();
+
+    apiNotificacionesAprobar.append("idNotificacion",idNotificacion);
+    apiNotificacionesAprobar.append("tipoNotificacion",tipoNotificacion);
+    apiNotificacionesAprobar.append("idCaso",idCaso);
+    apiNotificacionesAprobar.append("abogado",_this.usuario);
+
+    _this.postModel("apiNotificacionesAprobar",apiNotificacionesAprobar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      $.alert('Se aprobó la notificación correctamente');
+
+      setTimeout(function(){
+
+        _this.location("/notificaciones");
+
+      },3000);
+
+    });
 
   }
 

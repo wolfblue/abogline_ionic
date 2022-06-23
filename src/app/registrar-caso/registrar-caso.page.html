@@ -41,15 +41,27 @@
           <div>¿Sobre qué trata tu caso?</div>
   
           <img class="iconSelect" src="/assets/images/icon_amigo.png" />
+
           <select (change)="trataCaso()" id="trataCaso">
-            <option value="amigo">Amigo o conocido</option>
-            <option value="impuestos">Impuestos</option>
-            <option value="jefe">Jefe o empresa</option>
-            <option value="familia">Tu familia</option>
-            <option value="negocio">Tu negocio</option>
-            <option value="delito">Un delito</option>
-            <option value="vulnerabilidad">Vulnerabilidad a tu salud</option>
-            <option value="otro">Otro</option>
+
+            <option></option>
+
+            <option *ngIf="selectProblemas == 'estado'">Con tu empleo en una entidad pública</option>
+            <option *ngIf="selectProblemas == 'estado'">Quieres licitar con el estado</option>
+            <option *ngIf="selectProblemas == 'estado'">Reparación de daños y perjuicios causados por el estado</option>
+            <option *ngIf="selectProblemas == 'estado'">Vulneración de derechos fundamentales</option>
+            <option *ngIf="selectProblemas == 'estado'">Vulneración de derechos por el estado</option>
+
+            <option *ngIf="selectProblemas == 'particular'">Amigo o conocido</option>
+            <option *ngIf="selectProblemas == 'particular'">Impuestos</option>
+            <option *ngIf="selectProblemas == 'particular'">Jefe o empresa</option>
+            <option *ngIf="selectProblemas == 'particular'">Tu familia</option>
+            <option *ngIf="selectProblemas == 'particular'">Tu negocio</option>
+            <option *ngIf="selectProblemas == 'particular'">Un delito</option>
+            <option *ngIf="selectProblemas == 'particular'">Vulnerabilidad a tu salud</option>
+
+            <option>Otro</option>
+
           </select>
   
         </div>
@@ -59,40 +71,38 @@
           <div>¿Cuál es tu problema?</div>
   
           <img class="iconSelect2" src="/assets/images/icon_familia.png" />
+
           <select id="tuProblema" (change)="cualProblemaChange()">
 
-            <option value="negocio" *ngIf="cualProblema == 'negocio'">Tu negocio</option>
-            <option value="delito" *ngIf="cualProblema == 'delito'">Un delito</option>
+            <option></option>
 
-            <option value="contratos" *ngIf="cualProblema == 'amigo'">Contratos</option>
-            <option value="dineros adeudados" *ngIf="cualProblema == 'amigo'">Dineros adeudados</option>
-            <option value="tus bienes" *ngIf="cualProblema == 'amigo'">Tus bienes</option>
-            <option value="otro" *ngIf="cualProblema == 'amigo'">Otro</option>
-            
-            <option value="alimentos a hijos o conyuges" *ngIf="cualProblema == 'familia'">Alimentos a hijos o conyuges</option>
-            <option value="capitulaciones" *ngIf="cualProblema == 'familia'">Capitulaciones</option>
-            <option value="divorcios" *ngIf="cualProblema == 'familia'">Divorcios</option>
-            <option value="emancipacion" *ngIf="cualProblema == 'familia'">Emancipacion</option>
-            <option value="herencias" *ngIf="cualProblema == 'familia'">Herencias</option>
-            <option value="impugnacion de paternidad" *ngIf="cualProblema == 'familia'">Impugnacion de paternidad</option>
-            <option value="matrimonio" *ngIf="cualProblema == 'familia'">Matrimonio</option>
-            <option value="viloencia intrafamiliar" *ngIf="cualProblema == 'familia'">Violencia intrafamiliar</option>
-            <option value="otro" *ngIf="cualProblema == 'familia'">Otro</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Alimentos a hijos o conyuges</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Capitulaciones</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Divorcios</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Emancipación</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Herencias</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Impugnación de paternidad</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Matrimonio</option>
+            <option *ngIf="selectCaso == 'Tu familia'">Violencia intrafamiliar</option>
 
-            <option value="declaracion de renta" *ngIf="cualProblema == 'impuestos'">Declaración de renta</option>
-            <option value="problemas de deudas impuestos" *ngIf="cualProblema == 'impuestos'">Problemas de deudas impuestos</option>
-            <option value="otro" *ngIf="cualProblema == 'impuestos'">Otro</option>
+            <option *ngIf="selectCaso == 'Jefe o empresa'">Acoso laboral</option>
+            <option *ngIf="selectCaso == 'Jefe o empresa'">Despido sin justa causa</option>
+            <option *ngIf="selectCaso == 'Jefe o empresa'">Prestaciones sociales (Prima, vacaciones, cesantías etc)</option>
+            <option *ngIf="selectCaso == 'Jefe o empresa'">Saldos y/o pagos adeudados por el empleador</option>
+            <option *ngIf="selectCaso == 'Jefe o empresa'">Seguridad social (Salud, pensión, ARL)</option>
 
-            <option value="despido sin justa causa" *ngIf="cualProblema == 'jefe'">Despido sin justa causa</option>
-            <option value="prestaciones sociales" *ngIf="cualProblema == 'jefe'">Prestaciones sociales (Prima, vacaciones, cesantías etc)</option>
-            <option value="saldos y o pagos adeudados por el empleador" *ngIf="cualProblema == 'jefe'">Saldos y/o pagos adeudados por el empleador</option>
-            <option value="seguridad social" *ngIf="cualProblema == 'jefe'">Seguridad social (Salud, pensión, ARL)</option>
-            <option value="otro" *ngIf="cualProblema == 'jefe'">Otro</option>
+            <option *ngIf="selectCaso == 'Amigo o conocido'">Contratos</option>
+            <option *ngIf="selectCaso == 'Amigo o conocido'">Dineros adeudados</option>
+            <option *ngIf="selectCaso == 'Amigo o conocido'">Tus bienes</option>
 
-            <option value="con tu eps" *ngIf="cualProblema == 'vulnerabilidad'">Con tu eps</option>
-            <option value="deterioro de tu salud" *ngIf="cualProblema == 'vulnerabilidad'">Deterioro de tu salud a causa de la responsabilidad médica</option>
-            <option value="omision medica" *ngIf="cualProblema == 'vulnerabilidad'">Omisión médica</option>
-            <option value="otra" *ngIf="cualProblema == 'vulnerabilidad'">Otra</option>
+            <option *ngIf="selectCaso == 'Impuestos'">Declaracion de renta</option>
+            <option *ngIf="selectCaso == 'Impuestos'">Problemas de deudas impuestos</option>
+
+            <option *ngIf="selectCaso == 'Vulnerabilidad a tu salud'">Con tu eps</option>
+            <option *ngIf="selectCaso == 'Vulnerabilidad a tu salud'">Omisión médica</option>
+            <option *ngIf="selectCaso == 'Vulnerabilidad a tu salud'">Deterioro de tu salud a causa de la responsabilidad médica</option>
+
+            <option>Otro</option>
 
           </select>
   
@@ -113,7 +123,7 @@
 
       <div class="row">
 
-        <div class="col-md-3" *ngIf="cualProblema == 'otro'">
+        <div class="col-md-3" *ngIf="cualProblema == 'Otro'">
 
           <div>Cual:</div>
 
@@ -121,9 +131,9 @@
 
         </div>
 
-        <div class="col-md-3" *ngIf="subcategoria == 'otro'"></div>
+        <div class="col-md-3" *ngIf="subcategoria == 'Otro'"></div>
 
-        <div class="col-md-4" *ngIf="subcategoria == 'otro'">
+        <div class="col-md-4" *ngIf="subcategoria == 'Otro'">
 
           <div>Cual:</div>
 
@@ -174,3 +184,21 @@
   </div>
 
 </div>
+
+<!--  MODAL SATISFACTORIO -->
+
+<ng-template #modalSuccess let-modal id="modalSuccess">
+
+  <div class="modal-body">
+
+    <img src="/assets/images/check_modal.png" class="checkModal" />
+
+    <div class="bodyModalSuccess">
+
+      <div class="modalMessage1">¡TU CASO HA SIDO <br> CREADO CON EXITO!</div>
+
+    </div>
+      
+  </div>
+
+</ng-template>
