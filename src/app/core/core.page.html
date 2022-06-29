@@ -16,7 +16,22 @@
   <div class="content">
 
     <div class="row">
+
+      <ng-container *ngFor="let item of actividades">
+
+        <div class="col-2 background background3" *ngIf="item.tipo == '1'">
+        
+          <p class="titleProceso">PAGO ASESORÍA</p>
+          <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
+          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="location('https://secure.payco.co/checkoutopen/44620')">PAGAR ></button>
+          <p class="date">SEPT 13/2021</p>
+  
+        </div>
+
+      </ng-container>
       
+      <!--
+        
       <div class="col-2 background background3" *ngIf="paso1_pago_asesoria == 'proceso'">
         
         <p class="titleProceso">PAGO ASESORÍA</p>
@@ -103,6 +118,8 @@
         <p class="date">SEPT 13/2021</p>
       </div>
 
+      -->
+
     </div>
 
     <div class="row subcontent2">
@@ -138,7 +155,7 @@
               </div>
   
               <div class="col-2">
-                <img class="chatImage" src="/assets/images/{{item.usuario}}.jpg" />
+                <img class="chatImage" [attr.src]="rutaBackend+'photo/'+item.usuario+'.jpg'" />
               </div>
   
             </div>
@@ -146,7 +163,7 @@
             <div class="row mensaje" *ngIf="item.usuario == usuarioCaso">
 
               <div class="col-2" *ngIf="item.usuario == usuarioCaso">
-                <img class="chatImage" src="/assets/images/{{item.usuario}}.jpg" />
+                <img class="chatImage" [attr.src]="rutaBackend+'photo/'+item.usuario+'.jpg'" />
               </div>
   
               <div class="col-6 globoUsuario" *ngIf="item.usuario == usuarioCaso">

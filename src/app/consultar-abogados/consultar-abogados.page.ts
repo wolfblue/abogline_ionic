@@ -103,28 +103,47 @@ export class ConsultarAbogadosPage implements OnInit {
 
       if($("#seleccionarCaso").val()){
 
-        //  Enviar notificación al abogado
+        //  Validar que no halla aplicado ya con el mismo abogado
 
-        //  Spinner show
-        _this.spinner.show();
+        let apiConsultarAbogadosEligemeValidar = new FormData();
 
-        let apiCasosUsuarioAsociarAbogado = new FormData();
+        apiConsultarAbogadosEligemeValidar.append("idCaso",$("#seleccionarCaso").val());
+        apiConsultarAbogadosEligemeValidar.append("abogado",abogado);
 
-        apiCasosUsuarioAsociarAbogado.append("idCaso",$("#seleccionarCaso").val());
-        apiCasosUsuarioAsociarAbogado.append("abogado",abogado);
-        apiCasosUsuarioAsociarAbogado.append("estadoUsuario","aceptado");
-        apiCasosUsuarioAsociarAbogado.append("estadoAbogado","pendiente");
+        _this.postModel("apiConsultarAbogadosEligemeValidar",apiConsultarAbogadosEligemeValidar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-        _this.postModel("apiCasosUsuarioAsociarAbogado",apiCasosUsuarioAsociarAbogado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+          if(result.length > 0){
 
-          //  Spinner hide
-          _this.spinner.hide();
+            $.alert('Ya se ha enviado una solicitud anteriormente al abogado seleccionado y al mismo caso.');
 
-          $.alert('Se ha enviado la solicitud al abogado para continuar con el caso.');
+          }else{
 
-          setTimeout(function(){
-            _this.location("/consultar-abogados");
-          },3000);
+            //  Spinner show
+            _this.spinner.show();
+
+            //  Enviar notificación al abogado
+
+            let apiCasosUsuarioAsociarAbogado = new FormData();
+
+            apiCasosUsuarioAsociarAbogado.append("idCaso",$("#seleccionarCaso").val());
+            apiCasosUsuarioAsociarAbogado.append("abogado",abogado);
+            apiCasosUsuarioAsociarAbogado.append("estadoUsuario","aceptado");
+            apiCasosUsuarioAsociarAbogado.append("estadoAbogado","pendiente");
+
+            _this.postModel("apiCasosUsuarioAsociarAbogado",apiCasosUsuarioAsociarAbogado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              //  Spinner hide
+              _this.spinner.hide();
+
+              $.alert('Se ha enviado la solicitud al abogado para continuar con el caso.');
+
+              setTimeout(function(){
+                _this.location("/consultar-abogados");
+              },3000);
+
+            });
+
+          }
 
         });
 

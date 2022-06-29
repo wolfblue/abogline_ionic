@@ -19,6 +19,8 @@ export class CorePage implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
 
+  usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
+  idCaso = (sessionStorage.getItem("idCaso") ? sessionStorage.getItem("idCaso") : "");
   modal : NgbModalRef;
   htmlModal = "";
   chat = [];
@@ -55,6 +57,9 @@ export class CorePage implements OnInit {
   informacion = "";
   abogadoData = [];
   ciudades:any = [];
+  rutaBackend = `${environment.backend}`;
+  actividades = [];
+
 
   constructor(
     private http:HttpClient,
@@ -72,6 +77,9 @@ export class CorePage implements OnInit {
 
     //  Consultar admin
     _this.consultarAdmin();
+
+    //  Consultar actividades
+    _this.consultarActividades();
 
     //  Consultar chat interval
 
@@ -644,6 +652,28 @@ export class CorePage implements OnInit {
 
     let apiAdminCiudadGet = new FormData();
     _this.postModel("apiAdminCiudadGet",apiAdminCiudadGet).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.ciudades = result;});
+
+  }
+
+  //  CONSULTAR ACTIVIDADES
+
+  consultarActividades(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar actividades del usuario
+
+    let apiCoreConsultarActividades = new FormData();
+          
+    apiCoreConsultarActividades.append("usuario", _this.usuario);
+    apiCoreConsultarActividades.append("idCaso", _this.idCaso);
+
+    _this.postModel("apiCoreConsultarActividades",apiCoreConsultarActividades).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.actividades = result;
+
+    });    
 
   }
 

@@ -79,6 +79,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding:2%;
     height: 290px;
     overflow-y: auto;
+    padding-left: 5%;
 }
 
 .subcontent2{
@@ -386,6 +387,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 74px;
     border-radius: 50%;
     border: 4px solid #09233F;
+    max-height: 74px;
 }
 
 .enviar{

@@ -15,7 +15,8 @@ export class MisCasosPage implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
 
-  usuario = sessionStorage.getItem("usuario");
+  usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
+  perfil = (sessionStorage.getItem("perfil") ? sessionStorage.getItem("perfil") : "");
   cualProblema = "";
   casos = [];
   categoria = "";

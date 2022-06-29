@@ -95,7 +95,8 @@
         <div class="col">Con quién tiene problemas</div>
         <div class="col">Sobre qué trata tu caso</div>
         <div class="col">Cuál es tu problema</div>
-        <div class="col">Tu abogado asociado</div>
+        <div class="col" *ngIf="perfil=='cliente'">Tu abogado asociado</div>
+        <div class="col" *ngIf="perfil=='abogado'">Tu cliente asociado</div>
         <div class="col">Estado</div>
         <div class="col">Acciones</div>
 
@@ -106,15 +107,21 @@
         <div class="col">{{item.id}}.</div>
         <div class="col">{{item.problemas}}</div>
         <div class="col iconBackground">
-          <img src="/assets/images/icon_{{item.trata_caso}}.png" class="iconData"/>
+          <!--<img src="/assets/images/icon_{{item.trata_caso}}.png" class="iconData"/>-->
           {{item.trata_caso}}
         </div>
         <div class="col">{{item.cual_problema}}</div>
-        <div class="col"></div>
-        <div class="col">{{item.estado}}</div>
+        <div class="col" *ngIf="perfil=='cliente'">{{item.abogado}}</div>
+        <div class="col" *ngIf="perfil=='abogado'">{{item.cliente}}</div>
+        <div class="col">
+          
+          <span *ngIf="item.estado=='1'">Registrado</span>
+          <span *ngIf="item.estado=='2'">Seguimiento</span>
+
+        </div>
         <div class="col">
 
-          <div class="row iconAcciones" *ngIf="item.estado_original == '1'">
+          <div class="row iconAcciones" *ngIf="item.estado == '1'">
 
             <div class="col">
               <img src="/assets/images/icon_editar.png" />
@@ -126,7 +133,7 @@
 
           </div>
 
-          <div class="row iconAcciones" *ngIf="item.estado_original == '1'">
+          <div class="row iconAcciones" *ngIf="item.estado == '1'">
 
             <div class="col editar" (click)="editarCaso(item.id)">
               Editar
@@ -139,11 +146,11 @@
           </div>
 
           <div>
-            <button class="seguimiento" *ngIf="item.estado_original == '2'" (click)="seguimiento(item.id)">Seguimiento</button>
+            <button class="seguimiento" *ngIf="item.estado == '2'" (click)="seguimiento(item.id)">Seguimiento</button>
           </div>
 
           <div>
-            <button class="consultarAbogados" *ngIf="item.estado_original == '1'" (click)="location('consultar-abogados')">Consultar Abogados</button>
+            <button class="consultarAbogados" *ngIf="item.estado == '1'" (click)="location('consultar-abogados')">Consultar Abogados</button>
           </div>
 
         </div>
