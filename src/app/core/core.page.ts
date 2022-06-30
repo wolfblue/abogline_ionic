@@ -677,4 +677,41 @@ export class CorePage implements OnInit {
 
   }
 
+  //  PAGO DE ASESORÍA
+
+  pagoAsesoriaAction(pagoValor){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Formatear valor
+    pagoValor = pagoValor.replace(",","");
+
+    //  Generar token E-Pay
+
+    _this.spinner.show();
+
+    let apiCoreGenerarTokenPagos = new FormData();
+
+    _this.postModel("apiCoreGenerarTokenPagos",apiCoreGenerarTokenPagos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      let apiCoreGenerarLinkPagos = new FormData();
+
+      apiCoreGenerarLinkPagos.append("pagoValor",pagoValor);
+      apiCoreGenerarLinkPagos.append("pagoTitulo","Abogline: Pago de consulta con el abogado");
+      apiCoreGenerarLinkPagos.append("pagoDescripcion","Pagar consulta con el abogado para el caso #"+_this.idCaso);
+      apiCoreGenerarLinkPagos.append("token",result.toString());
+
+      _this.postModel("apiCoreGenerarLinkPagos",apiCoreGenerarLinkPagos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        _this.spinner.hide();
+
+        console.log(result);
+
+      });
+
+    });
+
+  }
+
 }

@@ -23,7 +23,7 @@
         
           <p class="titleProceso">PAGO ASESORÍA</p>
           <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
-          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="location('https://secure.payco.co/checkoutopen/44620')">PAGAR ></button>
+          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="pagoAsesoriaAction(consulta)">PAGAR ></button>
           <p class="date">SEPT 13/2021</p>
   
         </div>

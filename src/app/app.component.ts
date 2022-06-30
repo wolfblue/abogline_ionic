@@ -80,6 +80,11 @@ export class AppComponent {
     //  Validar modal registro
     this.modalRegistro();
 
+    setTimeout(function(){
+      $(".ion-page").css("background","#ffffff!important");
+      console.log("Estilos");
+    }),3000;
+
   }
 
   postModel(Metodo: string, data: FormData) {
