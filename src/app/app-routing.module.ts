@@ -110,7 +110,11 @@ const routes: Routes = [
   {
     path: 'links',
     loadChildren: () => import('./links/links.module').then( m => m.LinksPageModule)
+  },  {
+    path: 'respuesta-pagos',
+    loadChildren: () => import('./respuesta-pagos/respuesta-pagos.module').then( m => m.RespuestaPagosPageModule)
   }
+
 
 
 ];

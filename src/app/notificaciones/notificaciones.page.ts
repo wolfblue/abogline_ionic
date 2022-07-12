@@ -3,6 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var $;
 
@@ -21,7 +22,8 @@ export class NotificacionesPage implements OnInit {
   usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private spinner: NgxSpinnerService
   ) { 
 
     this.consultarNotificaciones();
@@ -192,30 +194,47 @@ export class NotificacionesPage implements OnInit {
 
   //  APROBAR NOTIFICACIÓN
 
-  aprobarNotificacion(idNotificacion,tipoNotificacion,idCaso){
+  aprobarNotificacion(idNotificacion,tipoNotificacion,idCaso,idCalendario){
 
     //  Variables iniciales
     var _this = this;
 
-    //  Aprobar notificación
+    //  Confirmar aprobación
 
-    let apiNotificacionesAprobar = new FormData();
+    $.confirm({
+      title: 'Confirmar aprobación',
+      content: 'Esta seguro de confirmar la notificación ?',
+      buttons: {
 
-    apiNotificacionesAprobar.append("idNotificacion",idNotificacion);
-    apiNotificacionesAprobar.append("tipoNotificacion",tipoNotificacion);
-    apiNotificacionesAprobar.append("idCaso",idCaso);
-    apiNotificacionesAprobar.append("abogado",_this.usuario);
+          confirmar: function () {
 
-    _this.postModel("apiNotificacionesAprobar",apiNotificacionesAprobar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+            _this.spinner.show();
 
-      $.alert('Se aprobó la notificación correctamente');
+            let apiNotificacionesAprobar = new FormData();
 
-      setTimeout(function(){
+            apiNotificacionesAprobar.append("idNotificacion",idNotificacion);
+            apiNotificacionesAprobar.append("tipoNotificacion",tipoNotificacion);
+            apiNotificacionesAprobar.append("idCaso",idCaso);
+            apiNotificacionesAprobar.append("abogado",_this.usuario);
+            apiNotificacionesAprobar.append("idCalendario",idCalendario);
 
-        _this.location("/notificaciones");
+            _this.postModel("apiNotificacionesAprobar",apiNotificacionesAprobar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-      },3000);
+              _this.spinner.hide();
 
+              $.alert('Se aprobó la notificación correctamente');
+
+              setTimeout(function(){
+
+                _this.location("/notificaciones");
+
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
     });
 
   }

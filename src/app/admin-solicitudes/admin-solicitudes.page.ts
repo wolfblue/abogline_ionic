@@ -178,6 +178,8 @@ export class AdminSolicitudesPage implements OnInit {
     // Abrir modal
     _this.open(_this.modalLink);
 
+    $("input").css("background","#ffffff");
+
   }
 
   //  GENERAR LINK

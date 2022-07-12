@@ -1,0 +1,43 @@
+#respuestaPagos{
+    background: url('/assets/images/banner-pagos.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+
+#respuestaPagos .contenido{
+    width: 80%;
+    margin: auto;
+}
+
+#respuestaPagos .logo{
+    width: 50%;
+}
+
+#respuestaPagos .ok{
+    width: 6%;
+    margin-right: 5%;
+}
+
+#respuestaPagos h2{
+    color: #0C1F3C;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 35px;
+    margin-top: 14%!important;
+}
+
+#respuestaPagos p{
+    margin-top: 8%;
+    font-size: 14px;
+}
+
+#respuestaPagos .subtitulo{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#respuestaPagos .cerrar{
+    width:13%;
+}

@@ -7,7 +7,7 @@
     <div class="col-12 titleHeader2" *ngIf="perfil == 'cliente'">{{trataCaso}}: {{cualProblema}}</div>
 
     
-    <div class="col-4 textR" *ngIf="perfil == 'abogado'">
+    <div class="col-4 textR" *ngIf="perfil == 'abogado' && estadoCaso == '3'">
       <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" (click)="crearActividad();" />
     </div>
 
@@ -23,37 +23,39 @@
         
           <p class="titleProceso">PAGO ASESORÍA</p>
           <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
-          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="pagoAsesoriaAction(consulta)">PAGAR ></button>
-          <p class="date">SEPT 13/2021</p>
+          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="pagoAsesoriaAction(item.id,consulta)">PAGAR ></button>
+          <p class="date">{{item.date_format}}</p>
   
+        </div>
+
+        <div class="col-2 background coreAsesoria" *ngIf="item.tipo == '2'">
+        
+          <p class="titleProceso">ASESORÍA</p>
+          <p class="proceso">{{asesoriaDesc}}</p>
+          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
+          <p class="date">{{item.date_format}}</p>
+  
+        </div>
+
+        <div class="col-2 background coreContinuidad" *ngIf="item.tipo == '3'">
+
+          <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
+          <p class="proceso">{{desicionContinuidad}}</p>
+          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="continuidad()">SOLICITAR ></button>
+          <p class="date">{{item.date_format}}</p>
+
+        </div>
+
+        <div class="col-2 background coreContratacion" *ngIf="item.tipo == '4'">
+          <p class="titleProceso">CONTRATACIÓN</p>
+          <p class="proceso">{{contratacion}}</p>
+          <button *ngIf="perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
+          <p class="date">{{item.date_format}}</p>
         </div>
 
       </ng-container>
       
       <!--
-        
-      <div class="col-2 background background3" *ngIf="paso1_pago_asesoria == 'proceso'">
-        
-        <p class="titleProceso">PAGO ASESORÍA</p>
-        <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="location('https://secure.payco.co/checkoutopen/44620')">PAGAR ></button>
-        <p class="date">SEPT 13/2021</p>
-
-      </div>
-
-      <div class="col-2 background coreAsesoria" *ngIf="paso2_asesoria == 'proceso'">
-        <p class="titleProceso">ASESORÍA</p>
-        <p class="proceso">{{asesoriaDesc}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreContinuidad" *ngIf="paso3_decision_continuidad == 'proceso'">
-        <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
-        <p class="proceso">{{desicionContinuidad}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
 
       <div class="col-2 background coreCita" *ngIf="paso4_generar_cita == 'proceso'">
         <p class="titleProceso">GENERAR CITA</p>
@@ -214,7 +216,7 @@
           </div>
 
           <div class="col-6">
-            <img src="/assets/images/btn_no.png" (click)="closeModal()" />
+            <img src="/assets/images/btn_no.png" (click)="continuidadNo()" />
           </div>
 
         </div>

@@ -59,6 +59,7 @@ export class CorePage implements OnInit {
   ciudades:any = [];
   rutaBackend = `${environment.backend}`;
   actividades = [];
+  estadoCaso = "0";
 
 
   constructor(
@@ -122,15 +123,24 @@ export class CorePage implements OnInit {
 
   /************************************ */
 
-  //  Solicitar
+  //  DESICIÓN DE CONTINUIDAD
 
-  solicitar(){
+  continuidad(){
 
     //  Variables iniciales
     var _this = this;
 
     // Abrir modal
     _this.open(_this.modalGeneral);
+
+    //  Configuración de modales
+    
+    $(".modalTipo1").show();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
     
     $(".modal-content").css("opacity","0.8");
     $(".btnContinuar").prop("src","/assets/images/btn_continuar.png");
@@ -158,24 +168,8 @@ export class CorePage implements OnInit {
     $(".modalTipo2").hide();
     $(".modalTipo3").hide();
     $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
     $(".modalTipo4").show();
-
-  }
-
-  /************************************** */
-
-  //  Continuidad SI
-
-  continuidadSi(){
-
-    //  Variables iniciales
-    var _this = this;
-
-    $(".modalTipo1").hide();
-    $(".modalTipo3").hide();
-    $(".modalTipo4").hide();
-    $(".modalTipo5").hide();
-    $(".modalTipo2").show();
 
   }
 
@@ -289,6 +283,7 @@ export class CorePage implements OnInit {
         _this.paso11_reunion_presencial = result[0].paso11_reunion_presencial;
         _this.paso12_informacion = result[0].paso12_informacion;
         _this.usuarioCaso = result[0].usuario;
+        _this.estadoCaso = result[0].estado;
 
         _this.casos = result;
 
@@ -439,7 +434,7 @@ export class CorePage implements OnInit {
         _this.spinner.hide();
 
         //  Mostrar mensaje
-        $.alert("Se registro el evento de la asesoría correctamente");
+        $.alert("Se ha enviado la solicitud de asesoría correctamente");
 
         //  Cerrar modal
         _this.modal.close();
@@ -617,6 +612,7 @@ export class CorePage implements OnInit {
     $("#contratacionTarjeta").val(_this.abogadoData['tarjeta_licencia']);
     $("#contratacionDireccion").val(_this.abogadoData['direccion']);
 
+    $("input").css("background","#ffffff");
 
   }
 
@@ -679,10 +675,12 @@ export class CorePage implements OnInit {
 
   //  PAGO DE ASESORÍA
 
-  pagoAsesoriaAction(pagoValor){
+  pagoAsesoriaAction(idActividad,pagoValor){
 
     //  Variables iniciales
+
     var _this = this;
+    var pagoValorOriginal = pagoValor;
 
     //  Formatear valor
     pagoValor = pagoValor.replace(",","");
@@ -706,10 +704,107 @@ export class CorePage implements OnInit {
 
         _this.spinner.hide();
 
-        console.log(result);
+        //  Resultado transacción exitosa
+
+        let apiCoreFinalizarActividad = new FormData();
+
+        apiCoreFinalizarActividad.append("idActividad",idActividad);
+        apiCoreFinalizarActividad.append("idActividadCrear","2");
+        apiCoreFinalizarActividad.append("cliente",_this.usuarioCaso);
+        apiCoreFinalizarActividad.append("abogado",_this.abogadoCaso);
+        apiCoreFinalizarActividad.append("idCaso",_this.idCaso);
+
+        _this.postModel("apiCoreFinalizarActividad",apiCoreFinalizarActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+          sessionStorage.setItem("iconoRespuesta","btn_si");
+          sessionStorage.setItem("respuestaPagos","Pago realizado con exito !");
+          sessionStorage.setItem("valorPago",pagoValorOriginal);
+          sessionStorage.setItem("estadoPago","aprobado");
+
+          window.location.href = "/respuesta-pagos";
+
+        });
 
       });
 
+    });
+
+  }
+
+  //  NO CONTINUAR CON EL CASO
+
+  continuidadNo(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Confirmar no continuar con el caso
+
+    $.confirm({
+      title: 'Finalizar caso!',
+      content: 'Esta seguro de finalizar el caso ?',
+      buttons: {
+          confirmar: function () {
+
+            let apiCoreFinalizarCaso = new FormData();
+
+            apiCoreFinalizarCaso.append("idCaso",_this.idCaso);
+
+            _this.postModel("apiCoreFinalizarCaso",apiCoreFinalizarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              $.alert("El caso ha sido finalizado correctamente, gracias por usar nuestros servicios.");
+
+              setTimeout(function(){
+
+                _this.location("/home");
+
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
+    });
+
+  }
+
+  //  DESICIÓN DE CONTINUIDAD SI
+
+  continuidadSi(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Confirmar desición de continuidad
+
+    $.confirm({
+      title: 'Continuar con el caso!',
+      content: 'Esta seguro de continuar con el caso e iniciar con el proceso de contratación?',
+      buttons: {
+          confirmar: function () {
+
+            let apiCoreContinuarCaso = new FormData();
+
+            apiCoreContinuarCaso.append("idCaso",_this.idCaso);
+            apiCoreContinuarCaso.append("cliente",_this.usuarioCaso);
+            apiCoreContinuarCaso.append("abogado",_this.abogadoCaso);
+
+            _this.postModel("apiCoreContinuarCaso",apiCoreContinuarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+              $.alert("Gracias por escoger Abogline, ahora puede continuar con el caso.");
+
+              setTimeout(function(){
+
+                _this.location("/core");
+
+              },3000);
+
+            });
+
+          },
+          cancelar: function () {}
+      }
     });
 
   }

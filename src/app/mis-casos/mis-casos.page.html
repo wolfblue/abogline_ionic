@@ -146,7 +146,7 @@
           </div>
 
           <div>
-            <button class="seguimiento" *ngIf="item.estado == '2'" (click)="seguimiento(item.id)">Seguimiento</button>
+            <button class="seguimiento" *ngIf="item.estado == '2' || item.estado == '3'" (click)="seguimiento(item.id)">Seguimiento</button>
           </div>
 
           <div>

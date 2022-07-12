@@ -81,9 +81,9 @@ export class AppComponent {
     this.modalRegistro();
 
     setTimeout(function(){
-      $(".ion-page").css("background","#ffffff!important");
-      console.log("Estilos");
-    }),3000;
+      $(".ion-page").css("background","#ffffff");
+      $("select").css("background","#ffffff");
+    },1000);
 
   }
 

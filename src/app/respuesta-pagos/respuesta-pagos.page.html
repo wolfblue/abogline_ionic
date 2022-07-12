@@ -1,0 +1,42 @@
+<div id="respuestaPagos">
+
+  <div class="contenido">
+
+    <div class="row">
+
+      <div class="col-3">
+  
+        <img src="/assets/images/logo_redondo.png" class="logo">
+  
+      </div>
+
+      <div class="col-9">
+  
+        <h2>
+
+          <img src="/assets/images/{{iconoRespuesta}}.png" class="ok">
+          {{respuestaPagos}}
+        
+        </h2>
+
+        <p>
+
+          <span class="subtitulo">Estimado(a) cliente,</span> <br><br>
+
+          La transacción para el caso # {{idCaso}} del servicio E-Pay por un valor de $ {{valor}} fue {{estadoPago}} en el sistema,<br>
+          a continuación puede continuar usando nuestros servicios,<br><br> 
+          Gracias por preferirnos.
+
+          <br><br><br><br>
+
+          <img src="/assets/images/boton_cerrar.png" class="cerrar" (click)="cerrar()">
+
+        </p>
+  
+      </div>
+  
+    </div>
+
+  </div>
+
+</div>
