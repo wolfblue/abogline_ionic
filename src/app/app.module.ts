@@ -12,6 +12,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxTweetModule } from "ngx-tweet";
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,7 +27,8 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
         NgbModule,
         NgxTweetModule,
-        NgxTwitterTimelineModule
+        NgxTwitterTimelineModule,
+        PdfViewerModule
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

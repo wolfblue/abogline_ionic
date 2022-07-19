@@ -333,9 +333,8 @@ export class PerfilPage implements OnInit {
         $("#tipo_tp").val(_this.tipo_tp);
         $("#experiencia").val(_this.experiencia);
         $("#investigacion").val(_this.investigacion);
-        $("#ramas").val(_this.ramas);
 
-      },500);
+      },1000);
 
       //  Actualizar checkbox
 
@@ -353,6 +352,11 @@ export class PerfilPage implements OnInit {
 
       //  Validar estado de actividad hoja de vida
       //_this.validateHojaVida();
+
+      //  Validar aprobación
+
+      if(result[0].estado == "2")
+        _this.aprobado = "true";
 
     });
 
@@ -637,6 +641,7 @@ export class PerfilPage implements OnInit {
         $("#hojaVida").show();
         $(".btnHojaVida").prop("src","/assets/images/hoja_vida_activo.png");
         $(".formRegister2").show();
+        $("#ramas").val(_this.ramas.split(","));
       break;
 
       case "politica":
@@ -786,17 +791,51 @@ export class PerfilPage implements OnInit {
   changeFieldHoja(id){
 
     //  Variables iniciales
+    
     var _this = this;
+    var error = 0;
+    var msg = "";
+    var ramas = "";
+    var ramasData = [];
+    var ramasCount = 0;
+
+    //  Validar ramas
+
+    if(id == "ramas"){
+
+      ramas = $("#ramas").val().toString();
+      ramasData = ramas.split(",");
+      ramasCount = ramasData.length;
+      
+      if(ramasCount > 2){
+        
+        msg = "Debe seleccionar máximo 2 registros";
+        error = 1;
+
+        $("#ramas").val("");
+
+      }
+
+    }
+
+    //  Mostrar errores
+
+    if(error == 1)
+      $.alert(msg);
 
     //  Actualizar registro
 
-    let apiUsuariosUpdateField = new FormData();
+    if(error == 0){
 
-    apiUsuariosUpdateField.append("usuario",sessionStorage.getItem('usuario'));
-    apiUsuariosUpdateField.append("field",id);
-    apiUsuariosUpdateField.append("value",$("#"+id).val());
+      let apiUsuariosUpdateField = new FormData();
 
-    _this.postModel("apiUsuariosUpdateField",apiUsuariosUpdateField).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+      apiUsuariosUpdateField.append("usuario",sessionStorage.getItem('usuario'));
+      apiUsuariosUpdateField.append("field",id);
+      apiUsuariosUpdateField.append("value",$("#"+id).val());
+
+      _this.postModel("apiUsuariosUpdateField",apiUsuariosUpdateField).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+
+    }
 
   }
 
@@ -904,9 +943,6 @@ export class PerfilPage implements OnInit {
     //  Variables iniciales
     var _this = this;
 
-    console.log("changeFile");
-    console.log(event);
-
     //  Leer documentos
 
     let reader = new FileReader();
@@ -927,7 +963,39 @@ export class PerfilPage implements OnInit {
         apiUsuariosUpdateDocumento.append("tipo",tipo);
         apiUsuariosUpdateDocumento.append("base64",_this.tmpFile);
 
-        _this.postModel("apiUsuariosUpdateDocumento",apiUsuariosUpdateDocumento).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+        _this.postModel("apiUsuariosUpdateDocumento",apiUsuariosUpdateDocumento).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+          //  Actualizar icono
+
+          switch(tipo){
+
+            case "cargaCedula":
+              _this.cargaCedula = true;
+            break;
+
+            case "cargaReciboServicioPublico":
+              _this.cargaReciboServicioPublico = true;
+            break;
+
+            case "cargaTp":
+              _this.cargaTp = true;
+            break;
+
+            case "cargaDiploma":
+              _this.cargaDiploma = true;
+            break;
+
+            case "cargaEspecializacion":
+              _this.cargaEspecializacion = true;
+            break;
+
+            case "cargaMaestria":
+              _this.cargaMaestria = true;
+            break;
+
+          }
+
+        });
 
       }
 

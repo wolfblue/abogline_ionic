@@ -44,6 +44,7 @@ export class LinksPage implements OnInit {
 
   continuar(){
 
+    sessionStorage.setItem("autenticacion","true");
     window.location.href = "/home";
 
   }

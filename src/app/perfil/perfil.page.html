@@ -1,13 +1,13 @@
 <div class="row heightFull">
 
-  <div class="col-md-2 background1 center paddingRight0">
+  <div class="col-md-2 background1 center paddingRight0 menuIzquierdo">
 
     <div class="center">
       <img class="perfilCargaFoto" src="/assets/images/perfil_carga_foto.png" />
       <input type="file" id="photo" style="display: none;" />
     </div>
 
-    <p class="usuario">{{nombres}} {{apellidos}}</p>
+    <p class="usuario">{{nombres}} <br> {{apellidos}}</p>
 
     <div>
       <img class="cursor btnPerfil" src="/assets/images/perfil_activo.png" (click)="menu('perfil')" />
@@ -441,7 +441,7 @@
 
           <div class="col">
 
-            <select class="selectTipo1" id="ramas" (change)="changeFieldHoja('ramas')">
+            <select class="selectTipo1" id="ramas" (change)="changeFieldHoja('ramas')" multiple>
 
               <option value="">- Seleccionar -</option>
 
@@ -687,8 +687,8 @@
               <td class="center" *ngIf="buscaCaso=='true' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso4_true.png"></td>
               <td class="center" *ngIf="buscaCaso=='false' && perfil=='cliente'"><img class="pasosImg" src="/assets/images/paso4_red.png"></td>
 
-              <td class="center" *ngIf="validacion=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_true.png"></td>
-              <td class="center" *ngIf="validacion=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_red.png"></td>
+              <td class="center" *ngIf="hojaVida=='true' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_true.png"></td>
+              <td class="center" *ngIf="hojaVida=='false' && perfil=='abogado'"><img class="pasosImg" src="/assets/images/validacion_red.png"></td>
 
               <td class="center lineaTiempo"><img class="pasosImg" src="/assets/images/linea_tiempo.png"></td>
 

@@ -31,6 +31,8 @@ export class RegistrarCasoPage implements OnInit {
   modal : NgbModalRef;
   selectProblemas = "";
   selectCaso = "";
+  trataCasoValue = "";
+  tuProblemaValue = "";
 
   constructor(
     private http:HttpClient,
@@ -116,6 +118,12 @@ export class RegistrarCasoPage implements OnInit {
 
         }
 
+        $("#trataCaso").val(_this.trataCasoValue);
+
+        setTimeout(function(){
+          _this.trataCaso();
+        },1000);
+
     });
 
     //  Un particular
@@ -139,6 +147,12 @@ export class RegistrarCasoPage implements OnInit {
         $(".particular").css("background-image","url(\"/assets/images/particular_gris.png\")");
 
       }
+
+      $("#trataCaso").val(_this.trataCasoValue);
+
+      setTimeout(function(){
+        _this.trataCaso();
+      },1000);
 
     });
 
@@ -207,6 +221,11 @@ export class RegistrarCasoPage implements OnInit {
       break;
 
     }
+
+
+    setTimeout(function(){
+      $("#tuProblema").val(_this.tuProblemaValue);
+    },1000);
 
   }
 
@@ -308,19 +327,22 @@ export class RegistrarCasoPage implements OnInit {
 
     _this.postModel("apiConsultarCasos",apiConsultarCasos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-      if(result[0].problemas == "particular")
-        $(".particular").click();
-      else
-        $(".estado").click();
+      setTimeout(function(){
 
-      $("#trataCaso").val(result[0].trata_caso);
+        if(result[0].problemas == "particular")
+          $(".particular").click();
+        else
+          $(".estado").click();
 
-      _this.trataCaso();
+        _this.trataCasoValue = result[0].trata_caso;
+        _this.tuProblemaValue = result[0].cual_problema;
 
-      $("#tuProblema").val(result[0].cual_problema);
-      $("#proceso").val(result[0].proceso);
-      $("#cuentanos").val(result[0].cuentanos);
-      $("#ciudad_problema").val(result[0].ciudad_problema);
+        $("#tuProblema").val(result[0].cual_problema);
+        $("#proceso").val(result[0].proceso);
+        $("#cuentanos").val(result[0].cuentanos);
+        $("#ciudad_problema").val(result[0].ciudad_problema);
+
+      },2000);
 
     });
 

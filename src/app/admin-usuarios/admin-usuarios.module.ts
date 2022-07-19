@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AdminUsuariosPageRoutingModule } from './admin-usuarios-routing.module';
 
 import { AdminUsuariosPage } from './admin-usuarios.page';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdminUsuariosPageRoutingModule
+    AdminUsuariosPageRoutingModule,
+    PdfViewerModule
   ],
   declarations: [AdminUsuariosPage]
 })

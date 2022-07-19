@@ -36,6 +36,7 @@
     "flatpickr": "^4.6.9",
     "google-meet-api": "^1.0.0",
     "mdbootstrap": "^4.19.2",
+    "ng2-pdf-viewer": "^7.0.2",
     "ng4-twitter-timeline": "^1.0.8",
     "ngb-modal": "^2.0.3",
     "ngtweet": "^1.0.0",

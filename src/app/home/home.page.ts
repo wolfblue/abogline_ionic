@@ -31,7 +31,13 @@ export class HomePage {
     //  Variables de sesión
     this.variablesSesion();
 
-    
+    //  Estilos
+
+    setTimeout(function(){
+      $(".twitter-tweet").css("margin","auto");
+      $("#twitter-widget-0").css("height","400px");
+      $(".css-1dbjc4n").css("border-radius","0px");
+    },3000);
 
   }
 

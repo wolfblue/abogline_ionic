@@ -67,6 +67,19 @@ export class AppComponent {
     //  Consultar cantidad de notificaciones
     this.consultarTotalNotificaciones();
 
+    //  Validar abrir autenticación
+
+    if(sessionStorage.getItem("autenticacion") == "true"){
+
+      setTimeout(function(){
+
+        _this.autenticacion();
+        sessionStorage.setItem("autenticacion","");
+
+      },1000);
+
+    }
+
   }
 
   ngOnInit() {

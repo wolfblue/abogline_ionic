@@ -21,3 +21,28 @@ h3{
 .msg{
     display:none;
 }
+
+.modalUsuario{
+    width:100%;
+}
+
+.fotoPerfil img{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 1%;
+}
+
+.fotoPerfil{
+    margin-bottom: 3%;
+}
+
+.titlePerfil{
+    font-weight: bold;
+    font-size: 15px;
+    font-style: italic;
+}
+
+pdf-viewer {
+    height: 100vh;
+}

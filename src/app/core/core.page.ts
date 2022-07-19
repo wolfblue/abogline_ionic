@@ -60,7 +60,7 @@ export class CorePage implements OnInit {
   rutaBackend = `${environment.backend}`;
   actividades = [];
   estadoCaso = "0";
-
+  validarChat = "0";
 
   constructor(
     private http:HttpClient,
@@ -669,6 +669,25 @@ export class CorePage implements OnInit {
 
       _this.actividades = result;
 
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          switch(result[i].tipo){
+
+            case 1:
+
+              if(result[i].estado == '2')
+                _this.validarChat = '1';
+
+            break;
+
+          }
+
+        }
+
+      }
+
     });    
 
   }
@@ -681,6 +700,7 @@ export class CorePage implements OnInit {
 
     var _this = this;
     var pagoValorOriginal = pagoValor;
+    var linkPagos = "";
 
     //  Formatear valor
     pagoValor = pagoValor.replace(",","");
@@ -691,8 +711,42 @@ export class CorePage implements OnInit {
 
     let apiCoreGenerarTokenPagos = new FormData();
 
+    apiCoreGenerarTokenPagos.append("title","Pago para realizar consulta con el abogado del caso número " + _this.idCaso);
+    apiCoreGenerarTokenPagos.append("description","Caso " + _this.idCaso + ", " + _this.trataCaso + ": " + _this.cualProblema);
+    apiCoreGenerarTokenPagos.append("value",pagoValor);
+    apiCoreGenerarTokenPagos.append("usuario",_this.usuarioCaso);
+
     _this.postModel("apiCoreGenerarTokenPagos",apiCoreGenerarTokenPagos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
+      _this.spinner.hide();
+
+      sessionStorage.setItem("iconoRespuesta","btn_si");
+      sessionStorage.setItem("respuestaPagos","Pago realizado con exito !");
+      sessionStorage.setItem("valorPago",pagoValorOriginal);
+      sessionStorage.setItem("estadoPago","aprobado");
+
+      let apiCoreFinalizarActividad = new FormData();
+
+      apiCoreFinalizarActividad.append("idActividad",idActividad);
+      apiCoreFinalizarActividad.append("idActividadCrear","2");
+      apiCoreFinalizarActividad.append("cliente",_this.usuarioCaso);
+      apiCoreFinalizarActividad.append("abogado",_this.abogadoCaso);
+      apiCoreFinalizarActividad.append("idCaso",_this.idCaso);
+
+      linkPagos = result.toString();
+
+      _this.postModel("apiCoreFinalizarActividad",apiCoreFinalizarActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        sessionStorage.setItem("iconoRespuesta","btn_si");
+        sessionStorage.setItem("respuestaPagos","Pago realizado con exito !");
+        sessionStorage.setItem("valorPago",pagoValorOriginal);
+        sessionStorage.setItem("estadoPago","aprobado");
+
+        window.location.href = linkPagos;
+
+      });
+
+      /*
       let apiCoreGenerarLinkPagos = new FormData();
 
       apiCoreGenerarLinkPagos.append("pagoValor",pagoValor);
@@ -721,11 +775,13 @@ export class CorePage implements OnInit {
           sessionStorage.setItem("valorPago",pagoValorOriginal);
           sessionStorage.setItem("estadoPago","aprobado");
 
-          window.location.href = "/respuesta-pagos";
+          //window.location.href = "/respuesta-pagos";
 
         });
 
       });
+
+      */
 
     });
 

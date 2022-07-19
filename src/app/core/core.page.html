@@ -23,7 +23,7 @@
         
           <p class="titleProceso">PAGO ASESORÍA</p>
           <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
-          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="pagoAsesoriaAction(item.id,consulta)">PAGAR ></button>
+          <button *ngIf="perfil == 'cliente' && item.estado != '2'" class="btnProceso" (click)="pagoAsesoriaAction(item.id,consulta)">PAGAR ></button>
           <p class="date">{{item.date_format}}</p>
   
         </div>
@@ -124,7 +124,7 @@
 
     </div>
 
-    <div class="row subcontent2">
+    <div class="row subcontent2" *ngIf="validarChat == '1'">
 
       <div class="col-3 alertas">
 

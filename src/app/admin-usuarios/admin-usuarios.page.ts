@@ -17,13 +17,24 @@ declare var $;
 export class AdminUsuariosPage implements OnInit {
 
   @ViewChild("modalDocumentos", {static: false}) modalDocumentos: TemplateRef<any>;
+  @ViewChild("modalUsuario", {static: false}) modalUsuario: TemplateRef<any>;
 
   private unsubscribe$ = new Subject<void>();
 
   usuarios: any = [];
   documentos: any = [];
-
+  usuarioData: any = [];
+  rutaBackend = `${environment.backend}`;
   modal : NgbModalRef;
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  usuarioDocumentos = [];
+  cedula = "";
+  diploma = "";
+  reciboServicioPublico = "";
+  especializacion = "";
+  tp = "";
+  maestria = "";
+  pdfView = "";
 
   constructor(
     private http:HttpClient,
@@ -93,7 +104,7 @@ export class AdminUsuariosPage implements OnInit {
   /**************************************************************************** */
 
   open(content) {
-    this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
+    this.modal = this.modalService.open(content, { size: 'lg', centered: true, backdropClass: 'light-blue-backdrop' })    
     this.modal.result.then((e) => {
         console.log("dialogo cerrado")
     });        
@@ -111,9 +122,6 @@ export class AdminUsuariosPage implements OnInit {
     //  Spinner
     _this.spinner.show();
 
-    // Abrir modal
-    _this.open(_this.modalDocumentos);
-
     //  Consultar documentos
 
     let apiAdminGetDocumentosUser = new FormData();
@@ -122,8 +130,40 @@ export class AdminUsuariosPage implements OnInit {
 
     _this.postModel("apiAdminGetDocumentosUser",apiAdminGetDocumentosUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-      //  Guardar documentos
-      _this.documentos = result;
+      //  Guardar documentos del usuario
+      _this.usuarioDocumentos = result;
+
+      for(var i = 0; i < result.length; i++){
+
+        switch(result[i].tipo){
+
+          case "cargaCedula":
+            _this.cedula = result[i].file;
+          break;
+
+          case "cargaDiploma":
+            _this.diploma = result[i].file;
+          break;
+
+          case "cargaReciboServicioPublico":
+            _this.reciboServicioPublico = result[i].file;
+          break;
+
+          case "cargaEspecializacion":
+            _this.especializacion = result[i].file;
+          break;
+
+          case "cargaTp":
+            _this.tp = result[i].file;
+          break;
+
+          case "cargaMaestria":
+            _this.maestria = result[i].file;
+          break;
+
+        }
+
+      }
 
       //  Spinner
       _this.spinner.hide();
@@ -270,6 +310,63 @@ export class AdminUsuariosPage implements OnInit {
           cancelar: function () {}
       }
     });
+
+  }
+
+  //  Ver perfil completo del usuario
+
+  viewProfile(i){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar usuario seleccionado
+    _this.usuarioData = _this.usuarios[i];
+
+    //  Consultar información
+    _this.open(_this.modalUsuario);
+
+    //  Consultar documentos
+    _this.getDocumentosUser(_this.usuarios[i].usuario);
+
+  }
+
+  //  Visualizar pdf
+
+  getPdf(doc){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar vista pdf
+
+    switch(doc){
+
+      case "cedula":
+        _this.pdfView = _this.cedula;
+      break;
+
+      case "diploma":
+        _this.pdfView = _this.diploma;
+      break;
+
+      case "reciboServicioPublico":
+        _this.pdfView = _this.reciboServicioPublico;
+      break;
+
+      case "especializacion":
+        _this.pdfView = _this.especializacion;
+      break;
+
+      case "tp":
+        _this.pdfView = _this.tp;
+      break;
+
+      case "maestria":
+        _this.pdfView = _this.maestria;
+      break;
+
+    }
 
   }
 
