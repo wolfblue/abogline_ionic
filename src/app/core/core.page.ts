@@ -80,6 +80,8 @@ export class CorePage implements OnInit {
   solicitudDocumentosTotal = 0;
   solicitudDocumentosData = [];
   solicitudDocumentosEstado = 0;
+  motivoFinalizaContrato = "";
+  motivoPago = "";
 
   constructor(
     private http:HttpClient,
@@ -177,6 +179,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
     
     $(".modal-content").css("opacity","0.8");
     $(".btnContinuar").prop("src","/assets/images/btn_continuar.png");
@@ -216,6 +220,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
     $(".modalTipo4").show();
 
     //  Validar botones
@@ -515,7 +521,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
-
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
     $(".btnContinuar").hide();
 
     //  Validar botones
@@ -530,45 +537,187 @@ export class CorePage implements OnInit {
   crearActividadAccion(proceso,aprobacion,actividad){
 
     //  Variables iniciales
+
     var _this = this;
 
-    //  Confirmar aprobación
+    //  Validar actividad a crear
 
-    $.confirm({
-      title: 'Crear Actividad ' + actividad + '!',
-      content: 'Esta seguro de crear la actividad ' + actividad +'?',
-      buttons: {
-          confirmar: function () {
+    switch(proceso){
 
-            //  Activar actividad caso
+      case "paso7_finalizar_contrato":
 
-            let apiCoreCrearActividad = new FormData();
-            
-            apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
-            apiCoreCrearActividad.append("actividad", proceso);
-            apiCoreCrearActividad.append("aprobacion", aprobacion);
-            apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
-            apiCoreCrearActividad.append("actividadDesc", actividad);
+        //  Modal finalizar contrato
 
-            _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+        _this.open(_this.modalGeneral);
 
-              if(aprobacion == "0")
-                $.alert('Se creo la actividad correctamente.');
-              else
-                $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+        $(".modalTipo1").hide();
+        $(".modalTipo2").hide();
+        $(".modalTipo3").hide();
+        $(".modalTipo4").hide();
+        $(".modalTipo5").hide();
+        $(".modalTipo6").hide();
+        $(".modalTipo7").hide();
+        $(".modalTipo8").hide();
+        $(".modalTipo9").hide();
+        $(".modalTipo10").hide();
+        $(".modalTipo11").hide();
+        $(".modalTipo12").show();
+        $(".modalTipo13").hide();
 
-              setTimeout(function(){
+      break;
 
-                _this.location("/core");
+      case "paso8_pagos":
 
-              },3000);
+        //  Modal finalizar contrato
 
-            });
+        _this.open(_this.modalGeneral);
 
-          },
-          cancelar: function () {}
-      }
-    });
+        $(".modalTipo1").hide();
+        $(".modalTipo2").hide();
+        $(".modalTipo3").hide();
+        $(".modalTipo4").hide();
+        $(".modalTipo5").hide();
+        $(".modalTipo6").hide();
+        $(".modalTipo7").hide();
+        $(".modalTipo8").hide();
+        $(".modalTipo9").hide();
+        $(".modalTipo10").hide();
+        $(".modalTipo11").hide();
+        $(".modalTipo12").hide();
+        $(".modalTipo13").show();
+
+      break;
+
+      case "paso7_finalizar_contrato_2":
+
+        //  Finalizar contrato
+
+        $.confirm({
+          title: 'Crear Actividad ' + actividad + '!',
+          content: 'Esta seguro de crear la actividad ' + actividad +'?',
+          buttons: {
+              confirmar: function () {
+
+                //  Activar actividad caso
+
+                let apiCoreCrearActividad = new FormData();
+                
+                apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
+                apiCoreCrearActividad.append("actividad", proceso);
+                apiCoreCrearActividad.append("aprobacion", aprobacion);
+                apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
+                apiCoreCrearActividad.append("actividadDesc", actividad);
+                apiCoreCrearActividad.append("motivo", _this.motivoFinalizaContrato);
+
+                _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+                  if(aprobacion == "0")
+                    $.alert('Se creo la actividad correctamente.');
+                  else
+                    $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+
+                  setTimeout(function(){
+
+                    _this.location("/core");
+
+                  },3000);
+
+                });
+
+              },
+              cancelar: function () {}
+          }
+        });
+
+      break;
+
+      case "paso8_pagos_2":
+
+        //  Finalizar contrato
+
+        $.confirm({
+          title: 'Crear Actividad ' + actividad + '!',
+          content: 'Esta seguro de crear la actividad ' + actividad +'?',
+          buttons: {
+              confirmar: function () {
+
+                //  Activar actividad caso
+
+                let apiCoreCrearActividad = new FormData();
+                
+                apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
+                apiCoreCrearActividad.append("actividad", proceso);
+                apiCoreCrearActividad.append("aprobacion", aprobacion);
+                apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
+                apiCoreCrearActividad.append("actividadDesc", actividad);
+                apiCoreCrearActividad.append("motivo", _this.motivoPago);
+
+                _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+                  if(aprobacion == "0")
+                    $.alert('Se creo la actividad correctamente.');
+                  else
+                    $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+
+                  setTimeout(function(){
+
+                    _this.location("/core");
+
+                  },3000);
+
+                });
+
+              },
+              cancelar: function () {}
+          }
+        });
+
+      break;
+
+      default:
+
+        //  Confirmar aprobación
+
+        $.confirm({
+          title: 'Crear Actividad ' + actividad + '!',
+          content: 'Esta seguro de crear la actividad ' + actividad +'?',
+          buttons: {
+              confirmar: function () {
+
+                //  Activar actividad caso
+
+                let apiCoreCrearActividad = new FormData();
+                
+                apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
+                apiCoreCrearActividad.append("actividad", proceso);
+                apiCoreCrearActividad.append("aprobacion", aprobacion);
+                apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
+                apiCoreCrearActividad.append("actividadDesc", actividad);
+                apiCoreCrearActividad.append("motivo", "");
+
+                _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+                  if(aprobacion == "0")
+                    $.alert('Se creo la actividad correctamente.');
+                  else
+                    $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+
+                  setTimeout(function(){
+
+                    _this.location("/core");
+
+                  },3000);
+
+                });
+
+              },
+              cancelar: function () {}
+          }
+        });
+
+      break;
+
+    }
 
   }
 
@@ -723,6 +872,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
     $(".btnContinuar").hide();
 
     $("."+clase).show();
@@ -870,6 +1021,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
 
     //  Validar botones
 
@@ -1055,6 +1208,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
 
     //  Clausulas adicionales
 
@@ -1352,6 +1507,8 @@ export class CorePage implements OnInit {
         $(".modalTipo9").hide();
         $(".modalTipo10").hide();
         $(".modalTipo11").hide();
+        $(".modalTipo12").hide();
+        $(".modalTipo13").hide();
 
       });
 
@@ -1470,7 +1627,7 @@ export class CorePage implements OnInit {
       if(_this.actividades.length > 6)
         $(".carousel-container div").first().css("transform","translateX(-1100px)");
 
-    },2000);
+    },4000);
 
   }
 
@@ -1497,6 +1654,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").show();
     $(".modalTipo10").hide();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
 
   }
 
@@ -1523,6 +1682,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").show();
     $(".modalTipo11").hide();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
 
     //  Asignar eventos para los anexos a cargar
 
@@ -1766,6 +1927,8 @@ export class CorePage implements OnInit {
     $(".modalTipo9").hide();
     $(".modalTipo10").hide();
     $(".modalTipo11").show();
+    $(".modalTipo12").hide();
+    $(".modalTipo13").hide();
 
   }
 
@@ -1779,6 +1942,30 @@ export class CorePage implements OnInit {
     a.href = documento;
     a.download = "documento." + extension;
     a.click();
+
+  }
+
+  //  CHANGE MOTIVO FINALIZA CONTRATO
+
+  changeFinalizaContrato(valor){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar valor motivo
+    _this.motivoFinalizaContrato = valor;
+
+  }
+
+  //  CHANGE MOTIVO PAGO
+
+  changeMotivoPago(valor){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar valor motivo
+    _this.motivoPago = valor;
 
   }
 

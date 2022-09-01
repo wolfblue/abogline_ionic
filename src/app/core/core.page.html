@@ -105,17 +105,6 @@
         </ng-container>
 
       </carousel>
-      
-      <!--
-
-      <div class="col-2 background corePagos" *ngIf="paso8_pagos == 'proceso'">
-        <p class="titleProceso">PAGOS</p>
-        <p class="proceso">{{pagos}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PAGAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>      
-
-      -->
 
     </div>
 
@@ -669,6 +658,62 @@
               </p>
 
             </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo12">
+
+        <div class='titleModal1 color1'>FINALIZAR CONTRATO</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogado, a continuación a continuación indique por favor el motivo de finalización del contrato.</p>
+
+          <div class="center">
+            
+            <p>
+              <b>Motivo por el que se finaliza el contrato:</b>
+            </p>
+
+            <p>
+              <textarea id="mfc" class="mfc" (change)="changeFinalizaContrato(mfc.value)" #mfc></textarea>
+            </p>
+
+            <p>
+              <button (click)="crearActividadAccion('paso7_finalizar_contrato_2','1','Finalizar contrato')">Crear actividad</button>
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo13">
+
+        <div class='titleModal1 color1'>PAGOS</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogado, a continuación a continuación indique por favor el motivo por el cual esta solicitando un pago.</p>
+
+          <div class="center">
+            
+            <p>
+              <b>Motivo por el que se solicita un pago:</b>
+            </p>
+
+            <p>
+              <textarea id="motivoPago" class="motivoPago" (change)="changeMotivoPago(motivoPago.value)" #motivoPago></textarea>
+            </p>
+
+            <p>
+              <button (click)="crearActividadAccion('paso8_pagos_2','1','Pagos')">Crear actividad</button>
+            </p>
 
           </div>
 
