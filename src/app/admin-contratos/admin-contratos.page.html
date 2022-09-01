@@ -1,0 +1,182 @@
+<div class="container">
+
+  <h3>Administrar contratos</h3>
+
+  <table id="tableDT" class="table table-striped table-bordered" style="width:100%">
+
+    <thead>
+      <tr>
+        <th class="center">Caso</th>
+        <th class="center">Contrato</th>
+        <th class="center">Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let item of contratos;let i = index">
+
+        <td class="center">#{{item.id_caso}}</td>
+
+        <td class="center">
+          <svg (click)="verContrato(i)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+            <path d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z"/>
+          </svg>
+        </td>
+
+        <td class="center">
+
+          <button class="btn btn-success" *ngIf="item.estado == '2'" (click)="aprobarContratoAbogado(item.id_caso)">Aprobar al abogado</button>&nbsp;&nbsp;
+          <button class="btn btn-danger" *ngIf="item.estado == '2'" (click)="rechazarContratoAbogado('1',item.id_caso)">Rechazar al abogado</button>
+
+          <button class="btn btn-success" *ngIf="item.estado == '4'" (click)="aprobarContratoCliente(item.id_caso)">Aprobar al cliente</button>&nbsp;&nbsp;
+          <button class="btn btn-danger" *ngIf="item.estado == '4'" (click)="rechazarContratoCliente('1',item.id_caso)">Rechazar al cliente</button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<ng-template #modalRechazar let-modal class="modalRechazar">
+
+  <div class="modal-body">
+
+    <h3 class="center">Rechazar contrato</h3>
+      
+    <form>
+
+      <div class="form-group">
+
+          <label>Observación</label><br>
+
+          <textarea class="observacionRechazar" id="observacionRechazo"></textarea>
+
+          <button class="btn btn-success enviarObservacion" (click)="rechazarContratoAbogado('2',idCaso)">Enviar observación</button>&nbsp;&nbsp;
+
+      </div>
+
+    </form>
+
+  </div>
+
+</ng-template>
+
+<ng-template #modalRechazarCliente let-modal class="modalRechazarCliente">
+
+  <div class="modal-body">
+
+    <h3 class="center">Rechazar contrato</h3>
+      
+    <form>
+
+      <div class="form-group">
+
+          <label>Observación</label><br>
+
+          <textarea class="observacionRechazar" id="observacionRechazoCliente"></textarea>
+
+          <button class="btn btn-success enviarObservacion" (click)="rechazarContratoCliente('2',idCaso)">Enviar observación</button>&nbsp;&nbsp;
+
+      </div>
+
+    </form>
+
+  </div>
+
+</ng-template>
+
+<ng-template #modalContrato let-modal class="modalContrato">
+
+  <div class="center modalContent">
+
+    <div class='titleModal1 color1'>OBJETO DEL CONTRATO</div>
+
+    <div class="contratacion">
+
+      <form class="contratacion">
+
+        <p class="contratacionTitle">Partes del contrato</p>
+
+        <p>
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </p>
+
+        <p>
+
+          <b>CLIENTE:</b><br><br>
+
+          <input type="text" id="contratoNombreCliente" /><br>
+          <input type="text" id="contratoIdentificacionCliente" /><br>
+          <input type="text" id="contratoLugarCliente" /><br>
+          <input type="text" id="contratoDireccionCliente" /><br><br>
+
+          <b>ABOGADO:</b><br><br>
+
+          <input type="text" id="contratoNombreAbogado" /><br>
+          <input type="text" id="contratoIdentificacionAbogado" /><br>
+          <input type="text" id="contratoLugarAbogado" /><br>
+          <input type="text" id="contratoDireccionAbogado" /><br>
+          <input type="text" id="contratoLicenciaAbogado" /><br>
+
+        </p>
+
+        <p class="contratacionTitle">Objeto del contrato</p>
+
+        <textarea id="objetoContrato" class="objetoContrato"></textarea>
+
+        <p class="contratacionTitle">Precio</p>
+
+        <p>
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </p>
+
+        $
+
+        <input type="number" id="contratoPrecio" />
+
+        &nbsp;COP
+
+        <p class="contratacionTitle">Formas de pago</p>
+
+        <select id="contratoMetodoPago" (change)="metodoPago()">
+          <option value=""></option>
+          <option>Cuota litis</option>
+          <option>Honorarios</option>
+          <option>Mixto</option>
+        </select>
+
+        <br><br>
+
+        <select id="contratoMetodoPago2">
+          <option>A plazos fijos mensuales</option>
+          <option>A plazos días fijos</option>
+          <option>Un solo pago fijo</option>
+        </select>
+
+        <br><br>
+
+        <div class="contratoPorcentaje">
+          Porcentaje <input id="contratoPorcentaje" type="number" min="0" max="30" /> %
+        </div>
+
+        <br><br>
+
+        <p class="contratacionTitle">Cláusula adicional</p>
+
+        <div id="editor"></div>
+
+        <button class="guardarBorrador" (click)="guardarBorrador()">ACTUALIZAR</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</ng-template>

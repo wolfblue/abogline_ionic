@@ -79,7 +79,7 @@ export class NotificacionesPage implements OnInit {
     //  Confirmar reunion
 
     $.confirm({
-      title: 'Confirmar asesoría',
+      title: 'Confirmar reunión',
       content: 'Esta seguro de confirmar la reunión ?',
       buttons: {
 
@@ -236,6 +236,15 @@ export class NotificacionesPage implements OnInit {
           cancelar: function () {}
       }
     });
+
+  }
+
+  //  IR AL CASO
+
+  irCaso(idCaso){
+
+    sessionStorage.setItem("idCaso",idCaso);
+    window.location.href = "/core";
 
   }
 

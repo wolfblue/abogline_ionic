@@ -113,6 +113,10 @@ const routes: Routes = [
   },  {
     path: 'respuesta-pagos',
     loadChildren: () => import('./respuesta-pagos/respuesta-pagos.module').then( m => m.RespuestaPagosPageModule)
+  },
+  {
+    path: 'admin-contratos',
+    loadChildren: () => import('./admin-contratos/admin-contratos.module').then( m => m.AdminContratosPageModule)
   }
 
 

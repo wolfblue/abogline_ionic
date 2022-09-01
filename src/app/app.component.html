@@ -57,7 +57,9 @@
 
       <ul class="marginAuto ulMain">
 
-        <li class="heightFull paddingR4 borderR1">Inicio</li>
+        <li class="heightFull paddingR4 borderR1">
+          <span (click)="location('/')">Inicio</span>
+        </li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
           <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Ménu
@@ -98,6 +100,7 @@
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="admin-actividades">Actividades</a>
+            <a class="dropdown-item" href="admin-contratos">Contratos</a>
             <a class="dropdown-item" href="admin-solicitudes">Solicitudes</a>
           </div>
         </li>

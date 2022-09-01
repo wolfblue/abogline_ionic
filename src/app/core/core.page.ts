@@ -5,8 +5,10 @@ import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Alert } from 'selenium-webdriver';
 
 declare var $;
+declare var ClassicEditor;
 
 @Component({
   selector: 'app-core',
@@ -61,6 +63,23 @@ export class CorePage implements OnInit {
   actividades = [];
   estadoCaso = "0";
   validarChat = "0";
+  desicionSelect1 = "1";
+  desicionSelect2 = "1";
+  desicionSelect3 = "1";
+  desicionSelect4 = "1";
+  contratoCaso = [];
+  contratoMetodopago = "";
+  contratoRealizado = 1;
+  titleReunion = "";
+  pdfView = "";
+  clienteData = [];
+  clausulasAdicionales : any = "";
+  clausulaAdicional = "";
+  mostrarActividades = false;
+  cantidadDocumentosSolicitar = 0;
+  solicitudDocumentosTotal = 0;
+  solicitudDocumentosData = [];
+  solicitudDocumentosEstado = 0;
 
   constructor(
     private http:HttpClient,
@@ -69,6 +88,9 @@ export class CorePage implements OnInit {
   ) { 
 
     var _this = this;
+
+    //  Consultar actividades
+    _this.consultarActividades();
 
     //  Consultar ciudades
     _this.consultarCiudades();
@@ -79,9 +101,6 @@ export class CorePage implements OnInit {
     //  Consultar admin
     _this.consultarAdmin();
 
-    //  Consultar actividades
-    _this.consultarActividades();
-
     //  Consultar chat interval
 
     setInterval(function(){
@@ -91,9 +110,25 @@ export class CorePage implements OnInit {
     //  Consultar abogado del caso
     _this.consultarAbogado();
 
+    //  Consultar contrato del caso
+    _this.consultarContratoCaso();
+
+    //  Consultar cliente del caso
+    _this.consultarCliente();
+
+    //  Ir al final del carrousel de actividades
+    this.irFinalActividades();
+
+    //  Consultar documentos solicitados
+    this.solicitudDocumentos();
+
   }
 
   ngOnInit() {
+
+    //  Variables iniciales
+    var _this = this;
+
   }
 
   postModel(Metodo: string, data: FormData) {
@@ -101,9 +136,7 @@ export class CorePage implements OnInit {
     return this.http.post(url, data);
   }
 
-  /************************************************************************************* */
-  //  Redireccionar
-  /************************************************************************************* */
+  //  REDIRECCIONAR
 
   location(ruta){
 
@@ -112,7 +145,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /************************************ */
+  //  ABRIR MODAL
 
   open(content) {
     this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
@@ -120,8 +153,6 @@ export class CorePage implements OnInit {
         console.log("dialogo cerrado")
     });        
   }
-
-  /************************************ */
 
   //  DESICIÓN DE CONTINUIDAD
 
@@ -141,21 +172,32 @@ export class CorePage implements OnInit {
     $(".modalTipo4").hide();
     $(".modalTipo5").hide();
     $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
     
     $(".modal-content").css("opacity","0.8");
     $(".btnContinuar").prop("src","/assets/images/btn_continuar.png");
     $(".btnContinuar").css("bottom","-14.1%");
 
+    //  Validar botones
+
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").hide();
+
   }
 
-  /************************************ */
+  //  SOLICITAR REUNIÓN
 
-  //  Solicitar
-
-  asesoria(){
+  reunion(title){
 
     //  Variables iniciales
     var _this = this;
+
+    //  Capturar titulo modal
+    _this.titleReunion = title;
 
     // Abrir modal
     _this.open(_this.modalGeneral);
@@ -169,13 +211,21 @@ export class CorePage implements OnInit {
     $(".modalTipo3").hide();
     $(".modalTipo5").hide();
     $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
     $(".modalTipo4").show();
+
+    //  Validar botones
+
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").hide();
 
   }
 
-  /*************************************** */
-
-  //  Cerrar modal
+  //  CERRAR MODAL
 
   closeModal(){
 
@@ -187,9 +237,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /**************************************** */
-
-  //  Modal tipo 3
+  //  MODAL TIPO 3
 
   modalTipo3(){
 
@@ -201,11 +249,14 @@ export class CorePage implements OnInit {
     $(".btnContinuar").prop("src","/assets/images/btn_enviar_text.png");
     $(".btnContinuar").css("bottom","-14.4%");
 
+    //  Validar botones
+
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").show();
+
   }
 
-  /******************************************* */
-
-  //  Enviar chat
+  //  ENVIAR CHAT
 
   enviarChat(){
 
@@ -240,9 +291,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /********************************************** */
-  //  Consultar caso
-  /********************************************** */
+  //  CONSULTAR CASO
 
   consultarCaso(){
 
@@ -251,6 +300,10 @@ export class CorePage implements OnInit {
 
     //  Spinner show
     _this.spinner.show();
+
+    //  Actualizar ruta contrato
+
+    _this.pdfView = _this.rutaBackend + "contratos/" + sessionStorage.getItem("idCaso") + ".pdf";
 
     //  Consultar información del caso
 
@@ -293,9 +346,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /**************************************************************************/
-  //  Consultar chat
-  /**************************************************************************/
+  //  CONSULTAR CHAT
 
   consultarChat(){
 
@@ -327,9 +378,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /********************************************************************** */
-  //  Consultar abogado
-  /********************************************************************** */
+  //  CONSULTAR ABOGADO
 
   consultarAbogado(){
 
@@ -362,9 +411,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /********************************************************************* */
-  //  Aceptar asesoría
-  /********************************************************************* */
+  //  ACEPTAR ASESORÍA
   
   asesoriaAceptar(){
 
@@ -427,6 +474,7 @@ export class CorePage implements OnInit {
       apiCoreCalendarioSave.append("fechaHasta", dateHasta);
       apiCoreCalendarioSave.append("usuario", sessionStorage.getItem('usuario'));
       apiCoreCalendarioSave.append("abogado", _this.abogadoCaso);
+      apiCoreCalendarioSave.append("titleReunion", _this.titleReunion);
 
       _this.postModel("apiCoreCalendarioSave",apiCoreCalendarioSave).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -434,7 +482,7 @@ export class CorePage implements OnInit {
         _this.spinner.hide();
 
         //  Mostrar mensaje
-        $.alert("Se ha enviado la solicitud de asesoría correctamente");
+        $.alert("Se ha enviado la solicitud de " + _this.titleReunion + " correctamente");
 
         //  Cerrar modal
         _this.modal.close();
@@ -445,9 +493,7 @@ export class CorePage implements OnInit {
 
   }
 
-  /************************************************************************* */
-  //  Crear actividad
-  /**************************************************************************** */
+  //  CREAR ACTIVIDAD
 
   crearActividad(){
 
@@ -463,13 +509,23 @@ export class CorePage implements OnInit {
     $(".modalTipo3").hide();
     $(".modalTipo4").hide();
     $(".modalTipo5").show();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
 
     $(".btnContinuar").hide();
+
+    //  Validar botones
+
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").hide();
+
   }
 
-  /************************************************************************* */
-  //  Crear actividad acción
-  /**************************************************************************** */
+  //  CREAR ACTIVIDAD ACCIÓN
 
   crearActividadAccion(proceso,aprobacion,actividad){
 
@@ -479,8 +535,8 @@ export class CorePage implements OnInit {
     //  Confirmar aprobación
 
     $.confirm({
-      title: 'Crear Actividad!',
-      content: 'Esta seguro de crear la actividad ?',
+      title: 'Crear Actividad ' + actividad + '!',
+      content: 'Esta seguro de crear la actividad ' + actividad +'?',
       buttons: {
           confirmar: function () {
 
@@ -603,14 +659,45 @@ export class CorePage implements OnInit {
     //  Abrir modal
     _this.openModal("modalTipo6");
 
-    console.log(_this.abogadoData);
+    //  Validar botones
 
-    $("#contratacionNombres").val(_this.abogadoData['nombres']);
-    $("#contratacionApellidos").val(_this.abogadoData['apellidos']);
-    $("#contratacionIdentificacion").val(_this.abogadoData['identificacion']);
-    $("#contratacionTp").val(_this.abogadoData['tipo_tp']);
-    $("#contratacionTarjeta").val(_this.abogadoData['tarjeta_licencia']);
-    $("#contratacionDireccion").val(_this.abogadoData['direccion']);
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").hide();
+
+    switch(_this.perfil){
+
+      case "cliente":
+
+        $("#contratacionNombres").val(_this.clienteData['nombres']);
+        $("#contratacionApellidos").val(_this.clienteData['apellidos']);
+        $("#contratacionIdentificacion").val(_this.clienteData['identificacion']);
+        $("#contratacionDireccion").val("");
+
+        setTimeout(function(){
+
+          $("#contratacionLugar").val(_this.abogadoData['ciudad']);
+
+        },1000); 
+
+      break;
+
+      case "abogado":
+
+        setTimeout(function(){
+
+          $("#contratacionNombres").val(_this.abogadoData['nombres']);
+          $("#contratacionApellidos").val(_this.abogadoData['apellidos']);
+          $("#contratacionIdentificacion").val(_this.abogadoData['identificacion']);
+          $("#contratacionTp").val(_this.abogadoData['tipo_tp']);
+          $("#contratacionTarjeta").val(_this.abogadoData['tarjeta_licencia']);
+          $("#contratacionDireccion").val(_this.abogadoData['direccion']);
+          $("#contratacionLugar").val(_this.abogadoData['ciudad']);
+
+        },1000); 
+
+      break;
+
+    }
 
     $("input").css("background","#ffffff");
 
@@ -631,9 +718,19 @@ export class CorePage implements OnInit {
     $(".modalTipo4").hide();
     $(".modalTipo5").hide();
     $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
     $(".btnContinuar").hide();
 
     $("."+clase).show();
+
+    //  Validar botones
+
+    $(".btnContinuarDesicion").hide();
+    $(".btnContinuarDesicion2").hide();
 
   }
 
@@ -671,6 +768,8 @@ export class CorePage implements OnInit {
 
       if(result.length > 0){
 
+        _this.mostrarActividades = true;
+
         for(var i = 0; i < result.length; i++){
 
           switch(result[i].tipo){
@@ -694,7 +793,7 @@ export class CorePage implements OnInit {
 
   //  PAGO DE ASESORÍA
 
-  pagoAsesoriaAction(idActividad,pagoValor){
+  pagoAsesoriaAction(idActividad,pagoValor,tipo){
 
     //  Variables iniciales
 
@@ -732,6 +831,7 @@ export class CorePage implements OnInit {
       apiCoreFinalizarActividad.append("cliente",_this.usuarioCaso);
       apiCoreFinalizarActividad.append("abogado",_this.abogadoCaso);
       apiCoreFinalizarActividad.append("idCaso",_this.idCaso);
+      apiCoreFinalizarActividad.append("tipo",tipo);
 
       linkPagos = result.toString();
 
@@ -746,50 +846,41 @@ export class CorePage implements OnInit {
 
       });
 
-      /*
-      let apiCoreGenerarLinkPagos = new FormData();
-
-      apiCoreGenerarLinkPagos.append("pagoValor",pagoValor);
-      apiCoreGenerarLinkPagos.append("pagoTitulo","Abogline: Pago de consulta con el abogado");
-      apiCoreGenerarLinkPagos.append("pagoDescripcion","Pagar consulta con el abogado para el caso #"+_this.idCaso);
-      apiCoreGenerarLinkPagos.append("token",result.toString());
-
-      _this.postModel("apiCoreGenerarLinkPagos",apiCoreGenerarLinkPagos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
-
-        _this.spinner.hide();
-
-        //  Resultado transacción exitosa
-
-        let apiCoreFinalizarActividad = new FormData();
-
-        apiCoreFinalizarActividad.append("idActividad",idActividad);
-        apiCoreFinalizarActividad.append("idActividadCrear","2");
-        apiCoreFinalizarActividad.append("cliente",_this.usuarioCaso);
-        apiCoreFinalizarActividad.append("abogado",_this.abogadoCaso);
-        apiCoreFinalizarActividad.append("idCaso",_this.idCaso);
-
-        _this.postModel("apiCoreFinalizarActividad",apiCoreFinalizarActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
-
-          sessionStorage.setItem("iconoRespuesta","btn_si");
-          sessionStorage.setItem("respuestaPagos","Pago realizado con exito !");
-          sessionStorage.setItem("valorPago",pagoValorOriginal);
-          sessionStorage.setItem("estadoPago","aprobado");
-
-          //window.location.href = "/respuesta-pagos";
-
-        });
-
-      });
-
-      */
-
     });
 
   }
 
-  //  NO CONTINUAR CON EL CASO
+  //  NO CONTINUAR CON EL CASO PANTALLA 1
 
-  continuidadNo(){
+  continuidadNo1(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar modales
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").show();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
+
+    //  Validar botones
+
+    $(".btnContinuarDesicion").show();
+    $(".btnContinuarDesicion2").hide();
+
+  }
+
+  //  NO CONTINUAR CON EL CASO PANTALLA 3
+
+  continuidadNo3(){
 
     //  Variables iniciales
     var _this = this;
@@ -836,7 +927,7 @@ export class CorePage implements OnInit {
 
     $.confirm({
       title: 'Continuar con el caso!',
-      content: 'Esta seguro de continuar con el caso e iniciar con el proceso de contratación?',
+      content: 'Esta seguro de continuar con el caso e iniciar con el proceso de generar cita para la contratación?',
       buttons: {
           confirmar: function () {
 
@@ -862,6 +953,832 @@ export class CorePage implements OnInit {
           cancelar: function () {}
       }
     });
+
+  }
+
+  //  POR QUE NO CONTINUAR
+
+  porQueNoContinuar(opcion,valor){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar opción
+
+    switch(opcion){
+
+      case "1":
+
+        _this.desicionSelect1 = valor;
+
+      break;
+
+      case "2":
+
+        _this.desicionSelect2 = valor;
+      
+      break;
+
+      case "3":
+
+        _this.desicionSelect3 = valor;
+
+      break;
+
+      case "4":
+
+        _this.desicionSelect4 = valor;
+
+      break;
+
+    }
+
+  }
+
+  //  DESICIÓN DE CONTINUIDAD ENVIAR
+
+  desicionContinuidadAccion(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var comentario = $(".comentario").val();
+
+    //  Enviar comentario y cerrar caso
+
+    _this.spinner.show();
+
+    let apiCoreCerrarCaso = new FormData();
+
+    apiCoreCerrarCaso.append("idCaso",_this.idCaso);
+    apiCoreCerrarCaso.append("observacion1",_this.desicionSelect1);
+    apiCoreCerrarCaso.append("observacion2",_this.desicionSelect2);
+    apiCoreCerrarCaso.append("observacion3",_this.desicionSelect3);
+    apiCoreCerrarCaso.append("observacion4",_this.desicionSelect4);
+    apiCoreCerrarCaso.append("comentario",comentario);
+    apiCoreCerrarCaso.append("cliente",_this.usuarioCaso)
+    apiCoreCerrarCaso.append("abogado",_this.abogadoCaso);
+
+    _this.postModel("apiCoreCerrarCaso",apiCoreCerrarCaso).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.spinner.hide();
+
+      $.alert("El caso ha sido cerrado correctamente, gracias por compartir tu exepriencia y usar nuestros servicios de Abogline");
+
+      setTimeout(function(){
+
+        _this.location("/core");
+
+      },3000);
+
+    });
+
+  }
+
+  //  VER CONTRATO
+
+  diligenciarContrato(corregir){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar modales
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").show();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
+
+    //  Clausulas adicionales
+
+    if(_this.perfil == "abogado"){
+
+      if(corregir == "0"){
+
+        ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+
+          editor.setData(_this.clausulaAdicional);
+
+          _this.clausulasAdicionales = editor.getData();
+
+          editor.model.document.on('change:data', () => {
+            _this.clausulasAdicionales = editor.getData();
+          });
+
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+      }
+
+    }
+
+    if(_this.perfil == "cliente")
+      $("#clausulaAdicional").html(_this.clausulaAdicional);
+
+    //  Validar campos por perfil
+
+    switch(_this.perfil){
+
+      case "cliente":
+
+        $("#objetoContrato").prop("disabled",true);
+        $("#contratoPrecio").prop("disabled",true);
+        $("#contratoMetodoPago").prop("disabled",true);
+        $("#contratoMetodoPago2").prop("disabled",true);
+        $("#contratoPorcentaje").prop("disabled",true);
+
+        setTimeout(function(){
+
+          $("#contratoNombreCliente").val($("#contratacionNombres").val() + " " + $("#contratacionApellidos").val());
+          $("#contratoIdentificacionCliente").val($("#contratacionIdentificacion").val());
+          $("#contratoLugarCliente").val($("#contratacionLugar").val());
+          $("#contratoDireccionCliente").val($("#contratacionDireccion").val());
+        
+        },1000);
+
+      break;
+
+      case "abogado":
+
+        setTimeout(function(){
+
+          $("#contratoNombreAbogado").val($("#contratacionNombres").val() + " " + $("#contratacionApellidos").val());
+          $("#contratoIdentificacionAbogado").val($("#contratacionIdentificacion").val());
+          $("#contratoLugarAbogado").val($("#contratacionLugar").val());
+          $("#contratoDireccionAbogado").val($("#contratacionDireccion").val());
+          $("#contratoLicenciaAbogado").val($("#contratacionTarjeta").val());
+        
+        },1000);
+
+      break;
+
+    }
+
+    //  Cargar listas
+
+    if(_this.contratoMetodopago){
+
+      $("#contratoMetodoPago").val(_this.contratoMetodopago);
+
+      _this.metodoPago();
+
+    }
+
+  }
+
+  //  METODO DE PAGO
+
+  metodoPago(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Validar metodo de pago
+
+    switch($("#contratoMetodoPago").val()){
+
+      case "Cuota litis":
+        $("#contratoMetodoPago2").hide();
+        $(".contratoPorcentaje").hide();
+      break;
+
+      case "Honorarios":
+        $("#contratoMetodoPago2").show();
+        $(".contratoPorcentaje").hide();
+      break;
+
+      case "Mixto":
+        $("#contratoMetodoPago2").show();
+        $(".contratoPorcentaje").show();
+      break;
+
+      default:
+        $("#contratoMetodoPago2").hide();
+        $(".contratoPorcentaje").hide();
+      break;
+
+    }
+
+  }
+
+  //  GUARDAR BORRADOR
+
+  guardarBorrador(borrador){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Capturar información
+
+    var contratoNombreCliente = $("#contratoNombreCliente").val();
+    var contratoIdentificacionCliente = $("#contratoIdentificacionCliente").val();
+    var contratoLugarCliente = $("#contratoLugarCliente").val();
+    var contratoDireccionCliente = $("#contratoDireccionCliente").val();
+    var contratoNombreAbogado = $("#contratoNombreAbogado").val();
+    var contratoIdentificacionAbogado = $("#contratoIdentificacionAbogado").val();
+    var contratoLugarAbogado = $("#contratoLugarAbogado").val();
+    var contratoDireccionAbogado = $("#contratoDireccionAbogado").val();
+    var objetoContrato = $("#objetoContrato").val();
+    var contratoPrecio = $("#contratoPrecio").val();
+    var contratoMetodoPago = $("#contratoMetodoPago").val();
+    var contratoMetodoPago2 = $("#contratoMetodoPago2").val();
+    var contratoPorcentaje = $("#contratoPorcentaje").val();
+    var contratoLicenciaAbogado = $("#contratoLicenciaAbogado").val();
+    var clausulaAdicional = "";
+
+    if(_this.perfil == "abogado")
+      clausulaAdicional = _this.clausulasAdicionales;
+    else
+      clausulaAdicional = _this.clausulaAdicional;
+
+    //  Guardar información del contrato
+
+    _this.spinner.show();
+
+    let apiCoreSaveContrato = new FormData();
+
+    apiCoreSaveContrato.append("idCaso",_this.idCaso);
+    apiCoreSaveContrato.append("contratoNombreCliente",contratoNombreCliente);
+    apiCoreSaveContrato.append("contratoIdentificacionCliente",contratoIdentificacionCliente);
+    apiCoreSaveContrato.append("contratoLugarCliente",contratoLugarCliente);
+    apiCoreSaveContrato.append("contratoDireccionCliente",contratoDireccionCliente);
+    apiCoreSaveContrato.append("contratoNombreAbogado",contratoNombreAbogado);
+    apiCoreSaveContrato.append("contratoIdentificacionAbogado",contratoIdentificacionAbogado);
+    apiCoreSaveContrato.append("contratoLugarAbogado",contratoLugarAbogado);
+    apiCoreSaveContrato.append("contratoDireccionAbogado",contratoDireccionAbogado);
+    apiCoreSaveContrato.append("objetoContrato",objetoContrato);
+    apiCoreSaveContrato.append("contratoPrecio",contratoPrecio);
+    apiCoreSaveContrato.append("contratoMetodoPago",contratoMetodoPago);
+    apiCoreSaveContrato.append("contratoMetodoPago2",contratoMetodoPago2);
+    apiCoreSaveContrato.append("contratoPorcentaje",contratoPorcentaje);
+    apiCoreSaveContrato.append("clausulaAdicional",clausulaAdicional);
+    apiCoreSaveContrato.append("contratoLicenciaAbogado",contratoLicenciaAbogado);
+    apiCoreSaveContrato.append("perfil",_this.perfil);
+    apiCoreSaveContrato.append("borrador",borrador);
+
+    _this.postModel("apiCoreSaveContrato",apiCoreSaveContrato).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.spinner.hide();
+
+      $.alert('Se ha guardado un borrador del contrato correctamente.');
+
+      setTimeout(function(){
+
+        _this.location("/core");
+
+      },3000);
+
+    });
+
+  }
+
+  //  CONSULTAR CONTRATO DEL CASO
+
+  consultarContratoCaso(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar contrato
+
+    let apiCoreGetContrato = new FormData();
+
+    apiCoreGetContrato.append("idCaso",_this.idCaso);
+
+    _this.postModel("apiCoreGetContrato",apiCoreGetContrato).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        _this.contratoCaso = result[0];
+        _this.contratoMetodopago = result[0].contrato_metodo_pago;
+        _this.contratoRealizado = result[0].estado;
+        _this.clausulaAdicional = result[0].clausula_adicional;
+
+      }
+
+    });
+
+  }
+
+  //  VISUALIZAR CONTRATO
+
+  visualizarContrato(){
+
+    //  Varibles iniciales
+    var _this = this;
+
+    //  Capturar información
+
+    var contratoNombreCliente = $("#contratoNombreCliente").val();
+    var contratoIdentificacionCliente = $("#contratoIdentificacionCliente").val();
+    var contratoLugarCliente = $("#contratoLugarCliente").val();
+    var contratoDireccionCliente = $("#contratoDireccionCliente").val();
+    var contratoNombreAbogado = $("#contratoNombreAbogado").val();
+    var contratoIdentificacionAbogado = $("#contratoIdentificacionAbogado").val();
+    var contratoLugarAbogado = $("#contratoLugarAbogado").val();
+    var contratoDireccionAbogado = $("#contratoDireccionAbogado").val();
+    var objetoContrato = $("#objetoContrato").val();
+    var contratoPrecio = $("#contratoPrecio").val();
+    var contratoMetodoPago = $("#contratoMetodoPago").val();
+    var contratoMetodoPago2 = $("#contratoMetodoPago2").val();
+    var contratoPorcentaje = $("#contratoPorcentaje").val();
+    var contratoLicenciaAbogado = $("#contratoLicenciaAbogado").val();
+
+    var clausulaAdicional = "";
+
+    if(_this.perfil == "abogado")
+      clausulaAdicional = _this.clausulasAdicionales;
+    else
+      clausulaAdicional = _this.clausulaAdicional;
+
+    //  Guardar información del contrato
+
+    _this.spinner.show();
+
+    let apiCoreSaveContrato = new FormData();
+
+    apiCoreSaveContrato.append("idCaso",_this.idCaso);
+    apiCoreSaveContrato.append("contratoNombreCliente",contratoNombreCliente);
+    apiCoreSaveContrato.append("contratoIdentificacionCliente",contratoIdentificacionCliente);
+    apiCoreSaveContrato.append("contratoLugarCliente",contratoLugarCliente);
+    apiCoreSaveContrato.append("contratoDireccionCliente",contratoDireccionCliente);
+    apiCoreSaveContrato.append("contratoNombreAbogado",contratoNombreAbogado);
+    apiCoreSaveContrato.append("contratoIdentificacionAbogado",contratoIdentificacionAbogado);
+    apiCoreSaveContrato.append("contratoLugarAbogado",contratoLugarAbogado);
+    apiCoreSaveContrato.append("contratoDireccionAbogado",contratoDireccionAbogado);
+    apiCoreSaveContrato.append("objetoContrato",objetoContrato);
+    apiCoreSaveContrato.append("contratoPrecio",contratoPrecio);
+    apiCoreSaveContrato.append("contratoMetodoPago",contratoMetodoPago);
+    apiCoreSaveContrato.append("contratoMetodoPago2",contratoMetodoPago2);
+    apiCoreSaveContrato.append("contratoPorcentaje",contratoPorcentaje);
+    apiCoreSaveContrato.append("clausulaAdicional",clausulaAdicional);
+    apiCoreSaveContrato.append("contratoLicenciaAbogado",contratoLicenciaAbogado);
+    apiCoreSaveContrato.append("perfil",_this.perfil);
+    apiCoreSaveContrato.append("borrador","1");
+
+    _this.postModel("apiCoreSaveContrato",apiCoreSaveContrato).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      //  Generar contrato
+
+      let apiCoreGenerarContrato = new FormData();
+
+      apiCoreGenerarContrato.append("idCaso",_this.idCaso);
+
+      _this.postModel("apiCoreGenerarContrato",apiCoreGenerarContrato).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        _this.spinner.hide();
+
+        //  Validar modales
+
+        $(".modalTipo1").hide();
+        $(".modalTipo2").hide();
+        $(".modalTipo3").hide();
+        $(".modalTipo4").hide();
+        $(".modalTipo5").hide();
+        $(".modalTipo6").hide();
+        $(".modalTipo7").hide();
+        $(".modalTipo8").show();
+        $(".modalTipo9").hide();
+        $(".modalTipo10").hide();
+        $(".modalTipo11").hide();
+
+      });
+
+    });
+
+  }
+
+  //  ENVIAR CONTRATO
+
+  enviarContrato(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Capturar información
+
+    var contratoNombreCliente = $("#contratoNombreCliente").val();
+    var contratoIdentificacionCliente = $("#contratoIdentificacionCliente").val();
+    var contratoLugarCliente = $("#contratoLugarCliente").val();
+    var contratoDireccionCliente = $("#contratoDireccionCliente").val();
+    var contratoNombreAbogado = $("#contratoNombreAbogado").val();
+    var contratoIdentificacionAbogado = $("#contratoIdentificacionAbogado").val();
+    var contratoLugarAbogado = $("#contratoLugarAbogado").val();
+    var contratoDireccionAbogado = $("#contratoDireccionAbogado").val();
+    var objetoContrato = $("#objetoContrato").val();
+    var contratoPrecio = $("#contratoPrecio").val();
+    var contratoMetodoPago = $("#contratoMetodoPago").val();
+    var contratoMetodoPago2 = $("#contratoMetodoPago2").val();
+    var contratoPorcentaje = $("#contratoPorcentaje").val();
+    var contratoLicenciaAbogado = $("#contratoLicenciaAbogado").val();
+
+    var clausulaAdicional = "";
+
+    if(_this.perfil == "abogado")
+      clausulaAdicional = _this.clausulasAdicionales;
+    else
+      clausulaAdicional = _this.clausulaAdicional;
+
+    //  Guardar información del contrato
+
+    _this.spinner.show();
+
+    let apiCoreSaveContrato = new FormData();
+
+    apiCoreSaveContrato.append("idCaso",_this.idCaso);
+    apiCoreSaveContrato.append("contratoNombreCliente",contratoNombreCliente);
+    apiCoreSaveContrato.append("contratoIdentificacionCliente",contratoIdentificacionCliente);
+    apiCoreSaveContrato.append("contratoLugarCliente",contratoLugarCliente);
+    apiCoreSaveContrato.append("contratoDireccionCliente",contratoDireccionCliente);
+    apiCoreSaveContrato.append("contratoNombreAbogado",contratoNombreAbogado);
+    apiCoreSaveContrato.append("contratoIdentificacionAbogado",contratoIdentificacionAbogado);
+    apiCoreSaveContrato.append("contratoLugarAbogado",contratoLugarAbogado);
+    apiCoreSaveContrato.append("contratoDireccionAbogado",contratoDireccionAbogado);
+    apiCoreSaveContrato.append("objetoContrato",objetoContrato);
+    apiCoreSaveContrato.append("contratoPrecio",contratoPrecio);
+    apiCoreSaveContrato.append("contratoMetodoPago",contratoMetodoPago);
+    apiCoreSaveContrato.append("contratoMetodoPago2",contratoMetodoPago2);
+    apiCoreSaveContrato.append("contratoPorcentaje",contratoPorcentaje);
+    apiCoreSaveContrato.append("clausulaAdicional",clausulaAdicional);
+    apiCoreSaveContrato.append("contratoLicenciaAbogado",contratoLicenciaAbogado);
+    apiCoreSaveContrato.append("perfil",_this.perfil);
+    apiCoreSaveContrato.append("borrador","0");
+
+    _this.postModel("apiCoreSaveContrato",apiCoreSaveContrato).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.spinner.hide();
+
+      $.alert('Se ha enviado el contrato a revisión al administrador.');
+
+      setTimeout(function(){
+
+        _this.location("/core");
+
+      },3000);
+
+    });
+
+  }
+
+  //  CONSULTAR CLIENTE
+
+  consultarCliente(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar cliente
+
+    let apiCoreConsultarCliente = new FormData();
+
+    apiCoreConsultarCliente.append("idCaso",_this.idCaso);
+
+    _this.postModel("apiCoreConsultarCliente",apiCoreConsultarCliente).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        _this.clienteData = result[0];
+
+      }
+
+    });
+
+  }
+
+  //  IR AL FINAL DE LAS ACTIVIDADES
+
+  irFinalActividades(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Ir al final
+    
+    setTimeout(function(){
+
+      if(_this.actividades.length > 6)
+        $(".carousel-container div").first().css("transform","translateX(-1100px)");
+
+    },2000);
+
+  }
+
+  //  DOCUMENTACIÓN ABOGADO
+
+  documentacionAbogado(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal
+    _this.open(_this.modalGeneral);
+
+    //  Validar contenido a mostrar
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").show();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").hide();
+
+  }
+
+  //  DOCUMENTACIÓN CLIENTE
+
+  documentacionCliente(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal
+    _this.open(_this.modalGeneral);
+
+    //  Validar contenido a mostrar
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").show();
+    $(".modalTipo11").hide();
+
+    //  Asignar eventos para los anexos a cargar
+
+    setTimeout(function(){
+
+      for(var i = 0; i < _this.solicitudDocumentosTotal; i++){
+
+        $("#documento"+i.toString()).change(function(event){
+
+          var idDocumentoData = $(this).prop("class").split("documento");
+          var idDocumento = idDocumentoData[1];
+    
+          let reader = new FileReader();
+                  
+          if(event.target.files && event.target.files.length) {
+    
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+    
+            reader.onloadend = function () {
+  
+              //  Actualizar base64 del documento solicitado
+
+              let apiCoreUpdateDocumentoSolicitado = new FormData();
+
+              apiCoreUpdateDocumentoSolicitado.append("idDocumento",idDocumento);
+              apiCoreUpdateDocumentoSolicitado.append("base64",reader.result.toString());
+
+              _this.postModel("apiCoreUpdateDocumentoSolicitado",apiCoreUpdateDocumentoSolicitado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
+    
+            }
+    
+          }
+    
+        });
+  
+      }
+
+    },1000);
+
+  }
+
+  //  SOLICITAR DOCUMENTOS
+
+  solicitarDocumentos(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var error = 0;
+    var msg = "";
+    var documentos = "";
+
+    //  Validar descripción de los documentos
+
+    for(var i = 0; i < _this.cantidadDocumentosSolicitar; i++){
+
+      //  Validar si se diligencio documento
+
+      if(!$("#documento"+i).val()){
+        
+        error = 1;
+        msg = "Debe digitar la descripción del documento " + (i+1);
+
+      }
+
+      //  Almacenar documento
+
+      if(!documentos)
+        documentos = $("#documento"+i).val();
+      else
+        documentos += "|" + $("#documento"+i).val();
+
+    }
+
+    //  Validar motivo de los documentos
+
+    if(!$("#motivoDocumentos").val()){
+        
+      error = 1;
+      msg = "Debe digitar el motivo por el cual esta solicitando los documentos";
+
+    }
+
+    //  Mostrar errores
+
+    if(error == 1)
+      $.alert(msg);
+
+    //  Registrar solicitud
+
+    if(error == 0){
+
+      let apiCoreSolicitarDocumentos = new FormData();
+
+      apiCoreSolicitarDocumentos.append("idCaso",_this.idCaso);
+      apiCoreSolicitarDocumentos.append("cliente",_this.usuarioCaso);
+      apiCoreSolicitarDocumentos.append("abogado",_this.abogadoCaso);
+      apiCoreSolicitarDocumentos.append("estado","1");
+      apiCoreSolicitarDocumentos.append("documentos",documentos);
+      apiCoreSolicitarDocumentos.append("motivo",$("#motivoDocumentos").val());
+
+      _this.postModel("apiCoreSolicitarDocumentos",apiCoreSolicitarDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+        $.alert("Se registro la solicitud correctamente, pendiente aprobación por parte de Abogline");
+
+        setTimeout(function(){
+          _this.location("/core");
+        },3000);
+
+      });
+
+    }
+
+  }
+
+  //  CANTIDAD DE DOCUMENTOS
+
+  cantidadDocumentos(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar cantidad de documentos a solicitar
+    _this.cantidadDocumentosSolicitar = parseInt($("#cantidadDocumentos").val());
+
+  }
+
+  //  SOLICITUD DOCUMENTOS
+
+  solicitudDocumentos(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar documentos solicitados
+
+    let apiCoreGetSolicitudDocumentos = new FormData();
+
+    apiCoreGetSolicitudDocumentos.append("idCaso",_this.idCaso);
+
+    _this.postModel("apiCoreGetSolicitudDocumentos",apiCoreGetSolicitudDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.solicitudDocumentosTotal = result.length;
+
+      if(result.length > 0){
+        
+        _this.solicitudDocumentosData = result;
+
+        //  Validar estado de la solicitud de documentos
+
+        for(var i = 0; i < result.length; i++){
+
+          if(result[i].estado == "1")
+            _this.solicitudDocumentosEstado = 1;
+          
+          if(result[i].estado == "2")
+            _this.solicitudDocumentosEstado = 2;
+          
+          if(result[i].estado == "3")
+            _this.solicitudDocumentosEstado = 3;
+
+        }
+
+      }
+
+    });
+
+  }
+
+  //  CARGAR DOCUMENTOS
+
+  cargarDocumentos(){
+
+    //  Variables iniciales
+    
+    var _this = this;
+    var error = 0;
+    var msg = "";
+
+    //  Validar carga de documentos
+
+    for(var i = 0; i < this.solicitudDocumentosTotal; i++){
+
+      if(!$("#documento"+i).val()){
+
+        error = 1;
+        msg = "Debe cargar el documento para continuar";
+
+      }
+
+    }
+
+    //  Mostrar errores
+
+    if(error == 1)
+      $.alert(msg);
+
+    //  Confirmar carga de documentos
+
+    if(error == 0){
+
+      let apiCoreConfirmarCargaDocumentos = new FormData();
+
+      apiCoreConfirmarCargaDocumentos.append("idCaso",_this.idCaso);
+  
+      _this.postModel("apiCoreConfirmarCargaDocumentos",apiCoreConfirmarCargaDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+  
+        $.alert("Se enviaron los documentos al abogado correctamente");
+  
+        setTimeout(function(){
+          _this.location("/core");
+        },3000);
+  
+      });
+
+    }
+
+  }
+
+  //  VISUALIZAR DOCUMENTOS
+
+  visualizarDocumentos(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Abrir modal
+    _this.open(_this.modalGeneral);
+
+    //  Validar contenido a mostrar
+
+    $(".modalTipo1").hide();
+    $(".modalTipo2").hide();
+    $(".modalTipo3").hide();
+    $(".modalTipo4").hide();
+    $(".modalTipo5").hide();
+    $(".modalTipo6").hide();
+    $(".modalTipo7").hide();
+    $(".modalTipo8").hide();
+    $(".modalTipo9").hide();
+    $(".modalTipo10").hide();
+    $(".modalTipo11").show();
+
+  }
+
+  //  ABRIR DOCUMENTO
+
+  abrirDocumento(documento){
+
+    var a = document.createElement("a");
+    var extension = documento.split(';')[0].split('/')[1];
+
+    a.href = documento;
+    a.download = "documento." + extension;
+    a.click();
 
   }
 

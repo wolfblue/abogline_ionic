@@ -1,3 +1,69 @@
+h3{
+    margin-top:3%;
+}
+
+#tableDT{
+    margin-top:8%;
+}
+
+.addBtn{
+    float:right;
+}
+
+.center{
+    text-align:center;
+}
+
+.btnDelete{
+    margin-left:2%;
+}
+
+.msg{
+    display:none;
+}
+
+.modalUsuario{
+    width:100%;
+}
+
+.fotoPerfil img{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 1%;
+}
+
+.fotoPerfil{
+    margin-bottom: 3%;
+}
+
+.titlePerfil{
+    font-weight: bold;
+    font-size: 15px;
+    font-style: italic;
+}
+
+pdf-viewer {
+    height: 100vh;
+}
+
+.observacionRechazar{
+    width:100%;
+}
+
+label{
+    font-weight: bold;
+}
+
+.enviarObservacion{
+    float: right;
+    margin-top: 3%;
+}
+
+textarea{
+    height: 100px;
+}
+
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
@@ -23,6 +89,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color:#0C1F3C;
     font-style: italic;
 }
+
+/*************************************************/
 
 .btnCrearActividad{
     width: 30%;
@@ -177,8 +245,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     line-height: 12px;
     text-align: center;
     min-height: 39px;
-    padding-left: 7%;
-    padding-right: 7%;
 }
 
 .btnProceso{
@@ -189,11 +255,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 2% 4% 2% 4%;
     border-radius: 4px;
     border: 1px solid #ffffff;
-    margin-right: 10%;
 }
 
 .date{
-    margin-top: 42%;
+    margin-top: 50%;
     color: #ffffff;
     margin-left: 25%;
     font-weight: bold;
@@ -532,6 +597,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .guardarBorrador{
     background: #0B1A3B!important;
     margin-right: 3%!important;
+    margin-bottom: 3%!important;
 }
 
 #contratoMetodoPago2{
@@ -553,69 +619,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .fRed{
     color:red;
     font-size:15px!important;
-}
-
-.hide{
-    display:none;
-}
-
-.carousel-cell{
-    height: 360!important;
-}
-
-.carousel{
-    height: 370px!important;
-}
-
-.background{
-    height: 360px!important;
-}
-
-.modalTipo9{
-    display:none;
-}
-
-.cantidadDocumentos{
-    background: #447584;
-    border: 0px solid;
-    height: 38px;
-    border-radius: 7px;
-    color: #ffffff;
-    font-size: 15px;
-    padding-left: 4%;
-}
-
-.cantidadDocumentos::placeholder{
-    color:#ffffff;
-    font-size: 15px;
-    padding-left: 4%;
-}
-
-.cantidadDocumentosImg{
-    width: 7.7%;
-    position: absolute;
-    right: 6%;
-}
-
-.motivoDocumentos{
-    width: 100%;
-    height: 95px;
-    border-radius: 8px;
-    padding: 2%;
-}
-
-.modalTipo10{
-    display:none;
-}
-
-.cargarDocumentos{
-    margin-top:12%!important;
-}
-
-.modalTipo11{
-    display:none;
-}
-
-.verDocumento{
-    width:100%;
 }

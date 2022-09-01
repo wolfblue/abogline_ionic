@@ -35,17 +35,21 @@
 
         <div class="row tableEncabezado">
 
-          <div class="col-md-4">Tipo</div>
-          <div class="col-md-4">Notificación</div>
-          <div class="col-md-4">Acción</div>
+          <div class="col-md-3">Tipo</div>
+          <div class="col-md-3">Notificación</div>
+          <div class="col-md-3">Caso</div>
+          <div class="col-md-3">Acción</div>
 
         </div>
 
         <div class="row tableRegistro" *ngFor="let item of notificaciones">
 
-          <div class="col-md-4">{{item.notificacion}}</div>
-          <div class="col-md-4">{{item.notificacion_descripcion}}</div>
-          <div class="col-md-4">
+          <div class="col-md-3">{{item.notificacion}}</div>
+          <div class="col-md-3">{{item.notificacion_descripcion}}</div>
+          <div class="col-md-3">
+            <span class="link" *ngIf="item.id_caso != 0" (click)="irCaso(item.id_caso)">{{item.id_caso}}</span>
+          </div>
+          <div class="col-md-3">
             
             <div class="row">
   

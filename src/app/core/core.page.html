@@ -7,7 +7,7 @@
     <div class="col-12 titleHeader2" *ngIf="perfil == 'cliente'">{{trataCaso}}: {{cualProblema}}</div>
 
     
-    <div class="col-4 textR" *ngIf="perfil == 'abogado' && estadoCaso == '3'">
+    <div class="col-4 textR" *ngIf="perfil == 'abogado' && estadoCaso == '4'">
       <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" (click)="crearActividad();" />
     </div>
 
@@ -15,114 +15,111 @@
 
   <div class="content">
 
-    <div class="row">
+    <div class="row carouselPadre">
 
-      <ng-container *ngFor="let item of actividades">
+      <!--  CARROUSEL -->
 
-        <div class="col-2 background background3" *ngIf="item.tipo == '1'">
+      <carousel [cellsToShow]="6" [cellsToScroll]="1" *ngIf="mostrarActividades==true">
+
+        <ng-container *ngFor="let item of actividades">
+
+          <div class="carousel-cell background background3" *ngIf="item.tipo == '1'">
         
-          <p class="titleProceso">PAGO ASESORÍA</p>
-          <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
-          <button *ngIf="perfil == 'cliente' && item.estado != '2'" class="btnProceso" (click)="pagoAsesoriaAction(item.id,consulta)">PAGAR ></button>
-          <p class="date">{{item.date_format}}</p>
-  
-        </div>
+            <p class="titleProceso">PAGO ASESORÍA</p>
+            <p class="proceso">{{pagoAsesoria}} $ {{consulta}}</p>
+            <button *ngIf="perfil == 'cliente' && item.estado != '2'" class="btnProceso" (click)="pagoAsesoriaAction(item.id,consulta,item.tipo)">PAGAR ></button>
+            <p class="date">{{item.date_format}}</p>
+    
+          </div>
 
-        <div class="col-2 background coreAsesoria" *ngIf="item.tipo == '2'">
+          <div class="carousel-cell background coreAsesoria" *ngIf="item.tipo == '2'">
         
-          <p class="titleProceso">ASESORÍA</p>
-          <p class="proceso">{{asesoriaDesc}}</p>
-          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="asesoria()">SOLICITAR ></button>
-          <p class="date">{{item.date_format}}</p>
+            <p class="titleProceso">ASESORÍA</p>
+            <p class="proceso">{{asesoriaDesc}}</p>
+            <button *ngIf="perfil == 'cliente' && item.estado == '1'" class="btnProceso" (click)="reunion('Asesoria')">SOLICITAR ></button>
+            <p class="date">{{item.date_format}}</p>
+    
+          </div>
+
+          <div class="carousel-cell background coreContinuidad" *ngIf="item.tipo == '3'">
+
+            <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
+            <p class="proceso">{{desicionContinuidad}}</p>
+            <button *ngIf="perfil == 'cliente' && item.estado == '1'" class="btnProceso" (click)="continuidad()">SOLICITAR ></button>
+            <p class="date">{{item.date_format}}</p>
   
-        </div>
+          </div>
 
-        <div class="col-2 background coreContinuidad" *ngIf="item.tipo == '3'">
+          <div class="carousel-cell background coreCita" *ngIf="item.tipo == '4'">
+            <p class="titleProceso">GENERAR CITA</p>
+            <p class="proceso">{{asesoriaDesc}}</p>
+            <button *ngIf="item.estado == '1'" class="btnProceso" (click)="reunion('Asesoría términos de contratación')">SOLICITAR ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
+          
+          <div class="carousel-cell background coreContratacion" *ngIf="item.tipo == '5'">
+            <p class="titleProceso">CONTRATACIÓN</p>
+            <p class="proceso">{{contratacion}}</p>
+            <button *ngIf="item.estado == '1' && contratoRealizado == '1' && perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
+            <button *ngIf="item.estado == '1' && contratoRealizado == '3' && perfil == 'cliente'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
 
-          <p class="titleProceso">DESICIÓN DE CONTINUIDAD</p>
-          <p class="proceso">{{desicionContinuidad}}</p>
-          <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="continuidad()">SOLICITAR ></button>
-          <p class="date">{{item.date_format}}</p>
+          <div class="carousel-cell background coreFinalizar" *ngIf="item.tipo == '6'">
+            <p class="titleProceso">FINALIZAR CONTRATO</p>
+            <p class="proceso">{{finalizarContrato}}</p>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
+  
+          <div class="carousel-cell background coreReunionVirtual" *ngIf="item.tipo == '8'">
+            <p class="titleProceso">REUNIÓN VIRTUAL</p>
+            <p class="proceso">{{asesoriaDesc}}</p>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="reunion('Reunion virtual')">SOLICITAR ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
+  
+          <div class="carousel-cell background coreDocumentacion"  *ngIf="item.tipo == '9'">
+            <p class="titleProceso">DOCUMENTACIÓN</p>
+            <p class="proceso">{{documentacion}}</p>
+            <button *ngIf="perfil == 'abogado' && solicitudDocumentosEstado == 0" class="btnProceso" (click)="documentacionAbogado()">SOLICITAR ></button>
+            <button *ngIf="perfil == 'cliente' && solicitudDocumentosEstado == 2" class="btnProceso" (click)="documentacionCliente()">CARGAR ></button>
+            <button *ngIf="perfil == 'abogado' && solicitudDocumentosEstado == 3" class="btnProceso" (click)="visualizarDocumentos()">VISUALIZAR ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
 
-        </div>
+          <div class="carousel-cell background coreReunionPresencial" *ngIf="item.tipo == '10'">
+            <p class="titleProceso">REUNIÓN PRESENCIAL</p>
+            <p class="proceso">{{reunionPresencial}}</p>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="reunion('Reunion presencial')">SOLICITAR ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
 
-        <div class="col-2 background coreContratacion" *ngIf="item.tipo == '4'">
-          <p class="titleProceso">CONTRATACIÓN</p>
-          <p class="proceso">{{contratacion}}</p>
-          <button *ngIf="perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
-          <p class="date">{{item.date_format}}</p>
-        </div>
+          <div class="carousel-cell background coreInformacion" *ngIf="item.tipo == '11'">
+            <p class="titleProceso">INFORMACIÓN</p>
+            <p class="proceso">{{informacion}}</p>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>
 
-      </ng-container>
+        </ng-container>
+
+      </carousel>
       
       <!--
-
-      <div class="col-2 background coreCita" *ngIf="paso4_generar_cita == 'proceso'">
-        <p class="titleProceso">GENERAR CITA</p>
-        <p class="proceso">{{generarCita}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">GENERAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreContratacion" *ngIf="paso5_contratacion == 'proceso'">
-        <p class="titleProceso">CONTRATACIÓN</p>
-        <p class="proceso">{{contratacion}}</p>
-        <button *ngIf="perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreFirma" *ngIf="paso6_firmar_contrato == 'proceso'">
-        <p class="titleProceso">FIRMA CONTRATO</p>
-        <p class="proceso">{{firmarContrato}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FIRMAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreFinalizar" *ngIf="paso7_finalizar_contrato == 'proceso'">
-        <p class="titleProceso">FINALIZAR CONTRATO</p>
-        <p class="proceso">{{finalizarContrato}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
 
       <div class="col-2 background corePagos" *ngIf="paso8_pagos == 'proceso'">
         <p class="titleProceso">PAGOS</p>
         <p class="proceso">{{pagos}}</p>
         <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PAGAR ></button>
         <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreReunionVirtual" *ngIf="paso9_reunion_virtual == 'proceso'">
-        <p class="titleProceso">REUNIÓN VIRTUAL</p>
-        <p class="proceso">{{reunionVirtual}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreDocumentacion" *ngIf="paso10_documentacion == 'proceso'">
-        <p class="titleProceso">DOCUMENTACIÓN</p>
-        <p class="proceso">{{documentacion}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreReunionPresencial" *ngIf="paso11_reunion_presencial == 'proceso'">
-        <p class="titleProceso">REUNIÓN PRESENCIAL</p>
-        <p class="proceso">{{reunionPresencial}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">SOLICITAR ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
-
-      <div class="col-2 background coreInformacion" *ngIf="paso12_informacion == 'proceso'">
-        <p class="titleProceso">INFORMACIÓN</p>
-        <p class="proceso">{{informacion}}</p>
-        <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
-        <p class="date">SEPT 13/2021</p>
-      </div>
+      </div>      
 
       -->
 
     </div>
+
+    <!--  CHAT  -->
 
     <div class="row subcontent2" *ngIf="validarChat == '1'">
 
@@ -216,7 +213,7 @@
           </div>
 
           <div class="col-6">
-            <img src="/assets/images/btn_no.png" (click)="continuidadNo()" />
+            <img src="/assets/images/btn_no.png" (click)="continuidadNo1()" />
           </div>
 
         </div>
@@ -239,14 +236,18 @@
 
         <div class='titleModal1 color1'>¿POR QUÉ NO QUIERES CONTINUAR?</div>
 
-        <div class="row desiciones" (click)="modalTipo3()">
+        <div class="row desiciones">
 
           <div class="col-2">
-            <img src="/assets/images/btn_si.png"/>
+
+            <img *ngIf="desicionSelect1 == '1'" src="/assets/images/btn_si.png" (click)="porQueNoContinuar('1','1')" />
+            <img *ngIf="desicionSelect1 == '0'" src="/assets/images/btn_si_gris.png" (click)="porQueNoContinuar('1','1')" />
+
           </div>
 
           <div class="col-2 btnNoDesicion">
-            <img src="/assets/images/btn_no_gris.png"/>
+            <img *ngIf="desicionSelect1 == '0'" src="/assets/images/btn_no.png" (click)="porQueNoContinuar('1','0')" />
+            <img *ngIf="desicionSelect1 == '1'" src="/assets/images/btn_no_gris.png" (click)="porQueNoContinuar('1','0')" />
           </div>
 
           <div class="col-8 desicionText">
@@ -255,14 +256,18 @@
 
         </div>
 
-        <div class="row desiciones" (click)="modalTipo3()">
+        <div class="row desiciones">
 
           <div class="col-2">
-            <img src="/assets/images/btn_si_gris.png"/>
+            <img *ngIf="desicionSelect2 == '1'" src="/assets/images/btn_si.png" (click)="porQueNoContinuar('2','1')" />
+            <img *ngIf="desicionSelect2 == '0'" src="/assets/images/btn_si_gris.png" (click)="porQueNoContinuar('2','1')" />
           </div>
 
           <div class="col-2 btnNoDesicion">
-            <img src="/assets/images/btn_no.png"/>
+
+            <img *ngIf="desicionSelect2 == '0'" src="/assets/images/btn_no.png" (click)="porQueNoContinuar('2','0')" />
+            <img *ngIf="desicionSelect2 == '1'" src="/assets/images/btn_no_gris.png" (click)="porQueNoContinuar('2','0')" />
+
           </div>
 
           <div class="col-8 desicionText">
@@ -271,14 +276,19 @@
 
         </div>
 
-        <div class="row desiciones" (click)="modalTipo3()">
+        <div class="row desiciones">
 
           <div class="col-2">
-            <img src="/assets/images/btn_si_gris.png"/>
+
+            <img *ngIf="desicionSelect3 == '1'" src="/assets/images/btn_si.png" (click)="porQueNoContinuar('3','1')" />
+            <img *ngIf="desicionSelect3 == '0'" src="/assets/images/btn_si_gris.png" (click)="porQueNoContinuar('3','1')" />
           </div>
 
           <div class="col-2 btnNoDesicion">
-            <img src="/assets/images/btn_no_gris.png"/>
+
+            <img *ngIf="desicionSelect3 == '0'" src="/assets/images/btn_no.png" (click)="porQueNoContinuar('3','0')" />
+            <img *ngIf="desicionSelect3 == '1'" src="/assets/images/btn_no_gris.png" (click)="porQueNoContinuar('3','0')" />
+
           </div>
 
           <div class="col-8 desicionText">
@@ -287,14 +297,20 @@
 
         </div>
 
-        <div class="row desiciones" (click)="modalTipo3()">
+        <div class="row desiciones">
 
           <div class="col-2">
-            <img src="/assets/images/btn_si_gris.png"/>
+
+            <img *ngIf="desicionSelect4 == '1'" src="/assets/images/btn_si_gris.png" (click)="porQueNoContinuar('4','1')" />
+            <img *ngIf="desicionSelect4 == '0'" src="/assets/images/btn_si_gris.png" (click)="porQueNoContinuar('4','1')" />
+
           </div>
 
           <div class="col-2 btnNoDesicion">
-            <img src="/assets/images/btn_no_gris.png"/>
+
+            <img *ngIf="desicionSelect4 == '0'" src="/assets/images/btn_no.png" (click)="porQueNoContinuar('4','0')" />
+            <img *ngIf="desicionSelect4 == '1'" src="/assets/images/btn_no_gris.png" (click)="porQueNoContinuar('4','0')" />
+
           </div>
 
           <div class="col-8 desicionText">
@@ -325,7 +341,7 @@
 
       <div class="modalTipo4">
 
-        <div class='titleModal1 color1'>ASESORÍA</div>
+        <div class='titleModal1 color1'>{{titleReunion}}</div>
         <div class='titleModal2 color1'>Escoge una Fecha</div>
 
         <p class="dateDesde">
@@ -392,7 +408,7 @@
 
         <div class="contratacion">
 
-          <p>Apreciado abogad@, por favor verifica que los datos que se muestran a continuación, esten correctos:</p>
+          <p>Apreciado {{perfil}}, por favor verifica que los datos que se muestran a continuación, esten correctos:</p>
 
           <form class="contratacion">
 
@@ -428,7 +444,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="perfil == 'abogado'">
 
               <div class="col-md-6">
                 <span>Tipo de T.P.</span>
@@ -447,9 +463,214 @@
               <input type="text" id="contratacionDireccion">
             </div>
 
-            <button>ACEPTAR</button>
+            <button (click)="diligenciarContrato('0')">ACEPTAR</button>
 
           </form>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo7">
+
+        <div class='titleModal1 color1'>OBJETO DEL CONTRATO</div>
+
+        <div class="contratacion">
+
+          <form class="contratacion">
+
+            <p class="contratacionTitle">Partes del contrato</p>
+
+            <p>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            </p>
+
+            <p>
+
+              <b>CLIENTE:</b><br><br>
+
+              <input type="text" placeholder="Cliente digita nombre completo" id="contratoNombreCliente" [attr.value]="contratoCaso.contrato_nombre_cliente" disabled /><br>
+              <input type="text" placeholder="Cliente digita identificación" id="contratoIdentificacionCliente" [attr.value]="contratoCaso.contrato_identificacion_cliente" disabled /><br>
+              <input type="text" placeholder="CLiente digita lugar de expedición del documento" id="contratoLugarCliente" [attr.value]="contratoCaso.contrato_lugar_cliente" disabled /><br>
+              <input type="text" placeholder="Cliente digita dirección" id="contratoDireccionCliente" [attr.value]="contratoCaso.contrato_direccion_cliente"disabled /><br><br>
+
+              <b>ABOGADO:</b><br><br>
+
+              <input type="text" id="contratoNombreAbogado" [attr.value]="contratoCaso.contrato_nombre_abogado" disabled /><br>
+              <input type="text" id="contratoIdentificacionAbogado" [attr.value]="contratoCaso.contrato_identificacion_abogado" disabled /><br>
+              <input type="text" id="contratoLugarAbogado" [attr.value]="contratoCaso.contrato_lugar_abogado" disabled /><br>
+              <input type="text" id="contratoDireccionAbogado" [attr.value]="contratoCaso.contrato_direccion_abogado" disabled /><br>
+              <input type="text" id="contratoLicenciaAbogado" [attr.value]="contratoCaso.contrato_licencia_abogado" disabled /><br>
+
+            </p>
+
+            <p class="contratacionTitle">Objeto del contrato</p>
+
+            <textarea id="objetoContrato" class="objetoContrato">{{contratoCaso.objeto_contrato}}</textarea>
+
+            <p class="contratacionTitle">Precio</p>
+
+            <p>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            </p>
+
+            $
+
+            <input type="number" placeholder="Diligenciar precio" id="contratoPrecio" [attr.value]="contratoCaso.contrato_precio" />
+
+            &nbsp;COP
+
+            <p class="contratacionTitle">Formas de pago</p>
+
+            <select id="contratoMetodoPago" (change)="metodoPago()">
+              <option value=""></option>
+              <option>Cuota litis</option>
+              <option>Honorarios</option>
+              <option>Mixto</option>
+            </select>
+
+            <br><br>
+
+            <select id="contratoMetodoPago2">
+              <option>A plazos fijos mensuales</option>
+              <option>A plazos días fijos</option>
+              <option>Un solo pago fijo</option>
+            </select>
+
+            <br><br>
+
+            <div class="contratoPorcentaje">
+              Porcentaje <input id="contratoPorcentaje" type="number" min="0" max="30" [attr.value]="contratoCaso.contrato_porcentaje" /> %
+            </div>
+
+            <br><br>
+
+            <p class="contratacionTitle">Cláusula adicional</p>
+
+            <div *ngIf="perfil == 'cliente'" id="clausulaAdicional"></div>
+
+            <div id="editor"></div>
+
+            <p><b>Observaciones de Abogline</b></p>
+
+            <p class="fRed">{{contratoCaso.observacion}}</p>
+
+            <button (click)="visualizarContrato()">ACEPTAR</button>
+            <button class="guardarBorrador" (click)="guardarBorrador('1')">GUARDAR BORRADOR</button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo8">
+
+        <div class='titleModal1 color1'>OBJETO DEL CONTRATO</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado {{perfil}}, por favor verifica que el contrato este correcto, de ser el caso puedes corregirlo antes de enviarlo</p>
+
+          <div class="center">
+            
+            <pdf-viewer [src]="pdfView"
+                        [render-text]="true"
+                        [original-size]="false"
+                        style="width: 100%; height: 300px"
+                        [external-link-target]="'blank'"
+                        [autoresize]="true"
+            ></pdf-viewer>
+
+          </div>
+
+          <button (click)="enviarContrato()">ENVIAR</button>
+          <button class="guardarBorrador" (click)="diligenciarContrato('1')">CORREGIR</button>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo9">
+
+        <div class='titleModal1 color1'>SOLICITAR DOCUMENTOS</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogado, por favor indicar los documentos que el cliente debe cargar. </p>
+
+          <div class="center">
+            
+            <p>
+
+              <input type="number" id="cantidadDocumentos" class="cantidadDocumentos" placeholder="- Cuantos documentos -" (change)="cantidadDocumentos()" />
+    
+            </p>
+
+            <p *ngFor="let item of [].constructor(cantidadDocumentosSolicitar); let i = index">
+
+              <input type="text" class="cantidadDocumentos" [attr.id]="'documento'+i" [attr.placeholder]="'Descripción del documento #'+(i+1)"/>
+
+            </p>
+
+            <textarea id="motivoDocumentos" class="motivoDocumentos" placeholder="Motivo por la cual se solicita documentos"></textarea>
+
+          </div>
+
+          <div class="footer">
+            <button (click)="solicitarDocumentos()">SOLICITAR DOCUMENTOS</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo10">
+
+        <div class='titleModal1 color1'>CARGAR DOCUMENTOS</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado usuario, por favor cargar los documentos que el abogado esta solicitando. </p>
+
+          <div class="center">
+            
+            <div *ngFor="let item of solicitudDocumentosData;let i = index;">
+
+              <p><b>{{item.descripcion}}</b></p>
+              <input type="file" [attr.id]="'documento'+i" [attr.class]="'documento'+item.id" />
+
+            </div>
+
+          </div>
+
+          <div class="footer">
+            <button class="cargarDocumentos" (click)="cargarDocumentos()">CARGAR DOCUMENTOS</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo11">
+
+        <div class='titleModal1 color1'>VISUALIZAR DOCUMENTOS</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogado, a continuación se visualizan los documentos solicitados al cliente. </p>
+
+          <div class="center">
+            
+            <div *ngFor="let item of solicitudDocumentosData;let i = index;">
+
+              <p>
+                <button class="verDocumento" (click)="abrirDocumento(item.documento)"><b>{{item.descripcion}}</b></button>
+              </p>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -460,8 +681,11 @@
   </div>
 
   <div>
-    <img src="/assets/images/btn_continuar.png" class="btnContinuar" (click)="closeModal()" />
+
     <img src="/assets/images/btn_aceptar.png" class="btnAceptar" (click)="asesoriaAceptar()" />
+    <img src="/assets/images/btn_continuar.png" class="btnContinuar btnContinuarDesicion" (click)="modalTipo3()" />
+    <img src="/assets/images/btn_continuar.png" class="btnContinuar btnContinuarDesicion2" (click)="desicionContinuidadAccion()" />
+
   </div>
   
 </ng-template>

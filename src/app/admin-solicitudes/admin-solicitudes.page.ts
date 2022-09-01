@@ -17,6 +17,8 @@ declare var $;
 export class AdminSolicitudesPage implements OnInit {
 
   @ViewChild("modalLink", {static: false}) modalLink: TemplateRef<any>;
+  @ViewChild("modalRechazarDocumentos", {static: false}) modalRechazarDocumentos: TemplateRef<any>;
+
   modal : NgbModalRef;
 
   private unsubscribe$ = new Subject<void>();
@@ -24,6 +26,8 @@ export class AdminSolicitudesPage implements OnInit {
   solicitudes = [];
   idSolicitud = "0";
   idCalendario = "0";
+  idCasoRechazo = "0";
+  idSolicitudRechazo = "0";
 
   constructor(
     private http:HttpClient,
@@ -237,6 +241,73 @@ export class AdminSolicitudesPage implements OnInit {
       });
 
     }
+
+  }
+
+  //  APROBAR SOLICITUD DOCUMENTOS
+
+  aprobarSolicitudDocumentos(idSolicitud,idCaso){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Aprobar solicitud
+
+    let apiAdminAprobarSolicitudDocumentos = new FormData();
+
+    apiAdminAprobarSolicitudDocumentos.append("idSolicitud",idSolicitud);
+    apiAdminAprobarSolicitudDocumentos.append("idCaso",idCaso);
+
+    _this.postModel("apiAdminAprobarSolicitudDocumentos",apiAdminAprobarSolicitudDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      $.alert("Se aprobó correctamente la solicitud de documentos para el caso #"+idCaso);
+
+      setTimeout(function(){
+        _this.location("/admin-solicitudes");
+      },3000);
+
+    });
+
+  }
+
+  //  ABRIR MODAL RECAHZAR DOCUMENTOS
+  abrirModalRechazarDocumentos(idCaso,idSolicitud){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar variables de rechazo
+
+    _this.idCasoRechazo = idCaso;
+    _this.idSolicitudRechazo = idSolicitud;
+
+    //  Abrir modal
+    _this.open(_this.modalRechazarDocumentos);
+
+  }
+
+  //  RECHAZAR SOLICITUD DE DOCUMENTOS
+
+  rechazarSolicitudDocumentos(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Rechazar solicitud
+
+    let apiAdminRechazarSolicitudDocumentos = new FormData();
+
+    apiAdminRechazarSolicitudDocumentos.append("idCaso",_this.idCasoRechazo);
+    apiAdminRechazarSolicitudDocumentos.append("motivo",$("#motivoRechazoSolicitudDocumentos").val());
+    apiAdminRechazarSolicitudDocumentos.append("idSolicitud",_this.idSolicitudRechazo);
+
+    _this.postModel("apiAdminRechazarSolicitudDocumentos",apiAdminRechazarSolicitudDocumentos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      $.alert("Se rechazo la solicitud de documentos correctamente");
+
+      _this.location("/admin-solicitudes");
+
+    });
 
   }
 

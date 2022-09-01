@@ -6,11 +6,13 @@
 
     <thead>
       <tr>
+        <th class="center">Id</th>
         <th class="center">Usuario</th>
-        <th class="center">Email</th>
         <th class="center">Perfil</th>
         <th class="center">Tipo de solicitud</th>
         <th class="center">Solicitud</th>
+        <th class="center"># Caso</th>
+        <th class="center">Fecha y hora del evento</th>
         <th class="center">Acciones</th>
       </tr>
     </thead>
@@ -19,12 +21,16 @@
 
       <tr *ngFor="let item of solicitudes">
 
+        <td>{{item.id}}</td>
         <td>{{item.usuario}}</td>
-        <td>{{item.email}}</td>
         <td>{{item.perfil}}</td>
         <td>{{item.tipo_solicitud}}</td>
         <td>{{item.solicitud}}</td>
+        <td>{{item.id_caso}}</td>
+        <td>{{item.fechaDesde}}</td>
         <td>
+
+          <!--  Acciones  -->
           
           <div class="row" *ngIf="item.tipo_solicitud == 'Crear actividad'">
 
@@ -56,6 +62,30 @@
 
           </div>
 
+          <div *ngIf="item.tipo_solicitud == 'Solicitud de documentos'">
+
+            <div class="row">
+
+              <div class="col-md-6">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16" (click)="aprobarSolicitudDocumentos(item.id,item.id_caso)">
+                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                </svg>
+
+              </div>
+
+              <div class="col-md-6">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" (click)="abrirModalRechazarDocumentos(item.id_caso,item.id)">
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </td>
 
       </tr>
@@ -80,6 +110,22 @@
 
     <button class="btn btn-success asignar" (click)="asignarLinkReunion()">Asignar</button>
     <button type="button" class="btn btn-info asignar" (click)="generarLink()">Generar link</button>
+
+  </div>
+
+</ng-template>
+
+<!--  MODAL RECHAZAR SOLICITUD DOCUMENTOS -->
+
+<ng-template #modalRechazarDocumentos let-modal>
+
+  <div class="modal-body">
+      
+    <h4>Rechazar solicitud de documentos</h4>
+
+    <textarea id="motivoRechazoSolicitudDocumentos" class="motivoRechazoSolicitudDocumentos"></textarea>
+
+    <button class="btn btn-success asignar" (click)="rechazarSolicitudDocumentos()">Rechazar</button>
 
   </div>
 
