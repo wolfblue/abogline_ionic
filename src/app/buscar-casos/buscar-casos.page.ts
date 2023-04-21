@@ -36,6 +36,7 @@ export class BuscarCasosPage implements OnInit {
   modalProceso = "";
   idCaso = "";
   usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
+  abogado = [];
 
   constructor(
     private http:HttpClient,
@@ -46,20 +47,23 @@ export class BuscarCasosPage implements OnInit {
     //  Consultar casos
     this.consultarCasos();
 
+    //  Consultar abogado
+    this.consultarAbogado();
+
   }
 
   ngOnInit() {
     $(".buscaTuCaso").css("color","#3B9CB2");
   }
 
+  //  CONSUMIR SERVICIO
+
   postModel(Metodo: string, data: FormData) {
     let url = `${environment.apiUrl}` + Metodo;
     return this.http.post(url, data);
   }
 
-  /************************************************************************************* */
-  //  Redireccionar
-  /************************************************************************************* */
+  //  REDIRECCIONAR
 
   location(ruta){
 
@@ -68,9 +72,7 @@ export class BuscarCasosPage implements OnInit {
 
   }
 
-  /****************** */
-  //  Consultar casos
-  /****************** */
+  //  CONSULTAR CASOS
 
   consultarCasos(){
 
@@ -81,11 +83,11 @@ export class BuscarCasosPage implements OnInit {
 
     let apiConsultarCasos = new FormData();
 
-    apiConsultarCasos.append("usuario", _this.usuario);
+    apiConsultarCasos.append("usuario", "");
     apiConsultarCasos.append("trataCaso",_this.categoria);
     apiConsultarCasos.append("cualProblema",_this.subcategoria);
     apiConsultarCasos.append("id","");
-    apiConsultarCasos.append("perfil",sessionStorage.getItem("perfil"));
+    apiConsultarCasos.append("perfil","");
     apiConsultarCasos.append("ciudadProblema",_this.ciudadProblema);
 
     _this.postModel("apiConsultarCasos",apiConsultarCasos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
@@ -116,9 +118,7 @@ export class BuscarCasosPage implements OnInit {
 
   }
 
-  /***************************** */
-  //  Cambio de campo trata caso
-  /***************************** */
+  //  CAMBIO DE CAMPO TRATA CASO
 
   trataCaso(){
 
@@ -135,9 +135,7 @@ export class BuscarCasosPage implements OnInit {
 
   }
 
-  /*************** */
-  //  Buscar casos
-  /*************** */
+  //  BUSCAR CASOS
 
   buscarCasos(){
 
@@ -155,9 +153,7 @@ export class BuscarCasosPage implements OnInit {
 
   }
 
-  /**************************************************************************** */
-  //  MODAL
-  /**************************************************************************** */
+  //  ABRIR MODAL
 
   open(content) {
     this.modal = this.modalService.open(content, { centered: true, backdropClass: 'light-blue-backdrop' })    
@@ -166,11 +162,9 @@ export class BuscarCasosPage implements OnInit {
     });        
   }
 
-  /**************************************************************************** */
   //  ELIGEME
-  /**************************************************************************** */
 
-  eligeme(modalImage,modalTitle,modalSubtitle,modalDescription,modalProceso){
+  eligeme(modalImage,modalTitle,modalSubtitle,modalDescription,modalProceso,idCaso){
 
     //  Variables iniciales
     var _this = this;
@@ -188,12 +182,11 @@ export class BuscarCasosPage implements OnInit {
     _this.modalSubtitle = modalSubtitle;
     _this.modalDescription = modalDescription;
     _this.modalProceso = modalProceso;
+    _this.idCaso = idCaso;
 
   }
 
-  /**************************************************************************** */
-  //  CERRAR MODAL
-  /**************************************************************************** */
+  //  CERRAR MODAL/
 
   closeModal(){
 
@@ -205,14 +198,15 @@ export class BuscarCasosPage implements OnInit {
 
   }
 
-  /************************************************* */
-  //  Eligeme
-  /************************************************* */
+  //  ESCOGER
 
   escoger(idCaso){
 
     //  Variables iniciales
     var _this = this;
+
+    if(!idCaso)
+      idCaso = this.idCaso;
 
     //  Sin autenticación
 
@@ -223,38 +217,44 @@ export class BuscarCasosPage implements OnInit {
 
     }else{
 
-      //  Enviar notificación al abogado
+      if(_this.abogado[0].estado == 2){
 
-      //  Spinner show
-      _this.spinner.show();
+        //  Spinner show
+        _this.spinner.show();
 
-      let apiCasosUsuarioAsociarAbogado = new FormData();
+        //  Enviar notificación al abogado
 
-      apiCasosUsuarioAsociarAbogado.append("idCaso",idCaso);
-      apiCasosUsuarioAsociarAbogado.append("abogado",_this.usuario);
-      apiCasosUsuarioAsociarAbogado.append("estadoUsuario","pendiente");
-      apiCasosUsuarioAsociarAbogado.append("estadoAbogado","aceptado");
+        let apiCasosUsuarioAsociarAbogado = new FormData();
 
-      _this.postModel("apiCasosUsuarioAsociarAbogado",apiCasosUsuarioAsociarAbogado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+        apiCasosUsuarioAsociarAbogado.append("idCaso",idCaso);
+        apiCasosUsuarioAsociarAbogado.append("abogado",_this.usuario);
+        apiCasosUsuarioAsociarAbogado.append("estadoUsuario","pendiente");
+        apiCasosUsuarioAsociarAbogado.append("estadoAbogado","aceptado");
 
-        //  Spinner hide
-        _this.spinner.hide();
+        _this.postModel("apiCasosUsuarioAsociarAbogado",apiCasosUsuarioAsociarAbogado).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-        $.alert('Se ha enviado la solicitud al usuario para continuar con el caso.');
+          //  Spinner hide
+          _this.spinner.hide();
 
-        setTimeout(function(){
-          _this.location("/buscar-casos");
-        },3000);
+          $.alert('Se ha enviado la solicitud al usuario para continuar con el caso.');
 
-      });
+          setTimeout(function(){
+            _this.location("/buscar-casos");
+          },3000);
+
+        });
+
+      }else{
+
+        $.alert('Aún esta pendiente de aprobación por parte de Abogline.');
 
       }
 
+    }
+
   }
 
-  /***************************** */
-  //  Cambio de campo ciudad problema
-  /***************************** */
+  //  CAMBIO DE CAMPO CIUDAD PROBLEMA
 
   ciudadProblemaChange(){
 
@@ -268,6 +268,24 @@ export class BuscarCasosPage implements OnInit {
 
     //  Consultar casos
     _this.consultarCasos();
+
+  }
+
+  //  CONSULTAR ABOGADO
+
+  consultarAbogado(){
+
+    var _this = this;
+
+    let apiUsuariosGetUser = new FormData();
+
+    apiUsuariosGetUser.append("usuario",_this.usuario);
+
+    _this.postModel("apiUsuariosGetUser",apiUsuariosGetUser).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      _this.abogado = result;
+
+    });
 
   }
 

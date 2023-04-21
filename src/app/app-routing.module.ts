@@ -117,6 +117,14 @@ const routes: Routes = [
   {
     path: 'admin-contratos',
     loadChildren: () => import('./admin-contratos/admin-contratos.module').then( m => m.AdminContratosPageModule)
+  },
+  {
+    path: 'admin-personalizar',
+    loadChildren: () => import('./admin-personalizar/admin-personalizar.module').then( m => m.AdminPersonalizarPageModule)
+  },
+  {
+    path: 'admin-textos',
+    loadChildren: () => import('./admin-textos/admin-textos.module').then( m => m.AdminTextosPageModule)
   }
 
 

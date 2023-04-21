@@ -47,7 +47,7 @@
           <div class="col-md-3">{{item.notificacion}}</div>
           <div class="col-md-3">{{item.notificacion_descripcion}}</div>
           <div class="col-md-3">
-            <span class="link" *ngIf="item.id_caso != 0" (click)="irCaso(item.id_caso)">{{item.id_caso}}</span>
+            <span class="link" *ngIf="item.id_caso != 0" (click)="verCaso(item.id_caso)">{{item.id_caso}}</span>
           </div>
           <div class="col-md-3">
             
@@ -102,3 +102,71 @@
   </div>
 
 </div>
+
+<!--  MODAL CASO -->
+
+<ng-template #modalCaso let-modal class="modalCaso">
+
+  <div class="modal-body">
+      
+    <form>
+
+      <div class="form-group">
+
+        <div class="row">
+
+          <div class="col"><b>Ciudad donde se presenta el problema:</b> {{casoCiudadProblema}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>Cuál es el problema:</b> {{casoCualProblema}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>Descripción del caso:</b> {{casoCuentanos}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>Fecha de registro:</b> {{casoFechaRegistro}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>Con quien tiene el problema:</b> <span class="capitalize">{{casoProblemas}}</span></div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>Ya se inicio un proceso:</b> {{casoProceso}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col"><b>De que trata el caso:</b> {{casoTrataCaso}}</div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+            <button class="seguimiento" (click)="seguimiento()">Seguimiento</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</ng-template>

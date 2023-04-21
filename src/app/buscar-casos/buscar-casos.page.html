@@ -109,7 +109,21 @@
       <div class="abogado">
 
         <div class="tCenter fotoAbogado">
-          <img src="/assets/images/icon2_{{item.trata_caso}}.png" />
+          
+          <img *ngIf="item.trata_caso == 'Amigo o conocido'" src="/assets/images/icon2_amigo.png" />
+          <img *ngIf="item.trata_caso == 'Un delito'" src="/assets/images/icon2_delito.png" />
+          <img *ngIf="item.trata_caso == 'Tu familia'" src="/assets/images/icon2_familia.png" />
+          <img *ngIf="item.trata_caso == 'Impuestos'" src="/assets/images/icon2_impuestos.png" />
+          <img *ngIf="item.trata_caso == 'Jefe o empresa'" src="/assets/images/icon2_jefe.png" />
+          <img *ngIf="item.trata_caso == 'Tu negocio'" src="/assets/images/icon2_negocio.png" />
+          <img *ngIf="item.trata_caso == 'Vulnerabilidad a tu salud'" src="/assets/images/icon2_vulnerabilidad.png" />
+
+          <img *ngIf="item.trata_caso == 'Con tu empleo en una entidad pública'" src="/assets/images/icon2_jefe.png" />
+          <img *ngIf="item.trata_caso == 'Quieres licitar con el estado'" src="/assets/images/icon2_jefe.png" />
+          <img *ngIf="item.trata_caso == 'Reparación de daños y perjuicios causados por el estado'" src="/assets/images/icon2_jefe.png" />
+          <img *ngIf="item.trata_caso == 'Vulneración de derechos fundamentales'" src="/assets/images/icon2_jefe.png" />
+          <img *ngIf="item.trata_caso == 'Vulneración de derechos por el estado'" src="/assets/images/icon2_jefe.png" />
+
         </div>
 
         <div class="tCenter abogadoName">{{item.trata_caso}}</div>
@@ -118,11 +132,11 @@
 
         <div class="tCenter perfilDescripcion">{{item.cuentanos}}</div>
 
-        <div class="tRight verMas" (click)="eligeme('/assets/images/icon2_' + item.trata_caso + '.png',item.trata_caso,item.cual_problema,item.cuentanos,item.proceso)">... ver más</div>
+        <div class="tRight verMas" (click)="eligeme('/assets/images/icon2_' + item.trata_caso_icon + '.png',item.trata_caso,item.cual_problema,item.cuentanos,item.proceso,item.id)">... ver más</div>
 
       </div>
 
-      <div class="eligeme" (click)="escoger(item.id)" *ngIf="item.estado_original == 1">ELÍGEME</div>
+      <div class="eligeme" (click)="escoger(item.id)" *ngIf="item.estado == 1">ELÍGEME</div>
 
     </div>
 

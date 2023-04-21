@@ -41,6 +41,19 @@ export class AppComponent {
   chatFlujo = 0;
   rutaBackend = `${environment.backend}`;
   totalNotificaciones = 0;
+  rolQuienesSomos = false;
+  rolNosotros = false;
+  rolAcerca = false;
+  rolCiudades = false;
+  rolGeneros = false;
+  rolMunicipios = false;
+  rolPolitica = false;
+  rolTiposDocumentos = false;
+  rolTitulos = false;
+  rolActividades = false;
+  rolContratos = false;
+  rolSolicitudes = false;
+  rolUsuarios = false;
 
   constructor(
     private http:HttpClient,
@@ -79,6 +92,20 @@ export class AppComponent {
       },1000);
 
     }
+
+    //  Consultar roles del usuario
+
+    setTimeout(function(){
+
+      _this.consultarRolesUsuario();
+
+    },1000);
+
+    //  Consultar personalización
+    this.obtenerPersonalizacion();
+
+    //  Consultar textos
+    this.obtenerTextos();
 
   }
 
@@ -620,7 +647,12 @@ export class AppComponent {
                   //  Consultar información del usuario
                   _this.getUser();
 
-                  _this.location('/home');
+                  //  Validar si ya registro perfil
+
+                  if(result[0].completa_perfil == 'false')
+                    _this.location('/perfil');
+                  else
+                    _this.location('/home');
 
                 },3000);
 
@@ -1236,6 +1268,183 @@ export class AppComponent {
     _this.postModel("apiHomeConsultarNotificaciones",apiHomeConsultarNotificaciones).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
       _this.totalNotificaciones = result.length;
+
+    });
+
+  }
+
+  //  CONSULTAR ROLES DEL USUARIO
+
+  consultarRolesUsuario(){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar roles
+
+    let apiAdminObtenerRoles = new FormData();
+
+    apiAdminObtenerRoles.append("usuario",_this.usuario);
+
+    _this.postModel("apiAdminObtenerRoles",apiAdminObtenerRoles).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          switch(result[i].rol){
+
+            case "rol_quienes_somos":
+              _this.rolQuienesSomos = true;
+            break;
+
+            case "rol_nosotros":
+              _this.rolNosotros = true;
+            break;
+
+            case "rol_acerca":
+              _this.rolAcerca = true;
+            break;
+
+            case "rol_ciudades":
+              _this.rolCiudades = true;
+            break;
+
+            case "rol_generos":
+              _this.rolGeneros = true;
+            break;
+
+            case "rol_municipios":
+              _this.rolMunicipios = true;
+            break;
+
+            case "rol_politica_privacidad":
+              _this.rolPolitica = true;
+            break;
+
+            case "rol_tipo_documentos":
+              _this.rolTiposDocumentos = true;
+            break;
+
+            case "rol_hoja_vida":
+              _this.rolTitulos = true;
+            break;
+
+            case "rol_actividades":
+              _this.rolActividades = true;
+            break;
+
+            case "rol_contratos":
+              _this.rolContratos = true;
+            break;
+
+            case "rol_solicitudes":
+              _this.rolSolicitudes = true;
+            break;
+
+            case "rol_usuarios":
+              _this.rolUsuarios = true;
+            break;
+
+          }
+
+        }
+          $("."+result[i].rol).prop("checked",true);
+
+      }
+
+    });
+
+  }
+
+  //  OBTENER PERSONALIZACIÓN
+
+  obtenerPersonalizacion(){
+
+    $("body").hide();
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar datos
+
+    let apiAdminObtenerPersonalizar = new FormData();
+
+    _this.postModel("apiAdminObtenerPersonalizar",apiAdminObtenerPersonalizar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++){
+
+          switch(result[i].atributo){
+
+            case "Contenido-Fondo":
+              $(".ion-page").css("background",result[i].valor);
+            break;
+
+            case "Contenido-Textos":
+              $(".ion-page div").css("color",result[i].valor);
+            break;
+
+            case "Header-Fondo":
+              $("ion-header").css("background",result[i].valor);
+            break;
+
+            case "Header-Textos":
+
+              $("#header .paddingL4").css("color",result[i].valor);
+              $("#header .paddingR4 ").css("color",result[i].valor);
+              $("#header button ").css("color",result[i].valor);
+
+            break;
+
+            case "Menu-Fondo":
+              $(".mainPrincipal").css("background",result[i].valor);
+            break;
+
+            case "Menu-Textos":
+
+              $("#menu span").css("color",result[i].valor);
+              $("#menu a").css("color",result[i].valor);
+              $("#menu li").css("color",result[i].valor);
+
+            break;
+
+          }
+
+        }
+
+      }
+
+      $("body").show();
+
+    });
+
+  }
+
+  //  OBTENER TEXTOS
+
+  obtenerTextos(){
+
+    $("body").hide();
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Consultar datos
+
+    let apiAdminObtenerTextos = new FormData();
+
+    _this.postModel("apiAdminObtenerTextos",apiAdminObtenerTextos).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++)
+          $("#"+result[i].atributo).html(result[i].valor);
+
+      }
+
+      $("body").show();
 
     });
 

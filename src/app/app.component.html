@@ -2,7 +2,7 @@
 
   <ion-header [translucent]="true">
 
-    <div class="row">
+    <div class="row" id="header">
 
       <div class="col-md-3">
         <img class="logoHeader cursor" (click)="location('home')" src="/assets/images/logo_header.png">
@@ -18,9 +18,9 @@
 
               <ul class="marginAuto">
                 <li (click)="location('perfil')" *ngIf="autenticado==1" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
-                <li class="heightFull paddingL4" (click)="location('contactenos')">Contáctenos</li>
-                <li class="heightFull paddingL4 paddingR4 borderR1" (click)="location('nosotros')">Nosotros</li>
-                <li class="heightFull paddingR4 borderR1" (click)="location('quienes-somos')">¿Quiénes Somos?</li>
+                <li class="heightFull paddingL4" (click)="location('contactenos')" id="contactenos">Contáctenos</li>
+                <li class="heightFull paddingL4 paddingR4 borderR1" (click)="location('nosotros')" id="nosotros">Nosotros</li>
+                <li class="heightFull paddingR4 borderR1" (click)="location('quienes-somos')" id="quienes-somos">¿Quiénes Somos?</li>
               </ul>
 
             </div>
@@ -32,15 +32,15 @@
             <div class="row heightFull">
 
               <div class="col-md-4 registrarse middle">
-                <button class="cursor" (click)="registrarseMain()" *ngIf="autenticado==0">REGISTRARSE</button>
+                <button class="cursor" (click)="registrarseMain()" *ngIf="autenticado==0" id="registrarse">REGISTRARSE</button>
               </div>
 
               <div class="col-md-4 iniciarSesion middle">
-                <button class="cursor" (click)="autenticacion()" *ngIf="autenticado==0">INICIAR SESIÓN</button>
+                <button class="cursor" (click)="autenticacion()" *ngIf="autenticado==0" id="iniciar-sesion">INICIAR SESIÓN</button>
               </div>
 
               <div class="col-md-4 cerrarSesion middle">
-                <button class="cursor" (click)="cerrarSesion()" *ngIf="autenticado==1">CERRAR SESIÓN</button>
+                <button class="cursor" (click)="cerrarSesion()" *ngIf="autenticado==1" id="cerrar-sesion">CERRAR SESIÓN</button>
               </div>
 
             </div>
@@ -53,21 +53,38 @@
 
     </div>
 
-    <div class="row mainPrincipal" *ngIf="autenticado == 1">
+    <div id="menu" class="row mainPrincipal" *ngIf="autenticado == 1">
 
       <ul class="marginAuto ulMain">
 
         <li class="heightFull paddingR4 borderR1">
           <span (click)="location('/')">Inicio</span>
         </li>
+
+        <!--  Administrador-->
+
+        <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
+
+          <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Administrar
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="admin-usuarios" *ngIf="perfil == 'administrador'">Usuarios</a>
+          </div>
+
+        </li>
+
+        <!--  Usuario-->
+
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
           <a class="btn dropdown-toggle fWhite administrar" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Ménu
           </a>
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="admin-quienes-somos">Quiénes somos</a>
-            <a class="dropdown-item" href="admin-nosotros">Nosotros</a>
+            <a class="dropdown-item" href="admin-quienes-somos" *ngIf="rolQuienesSomos == true  || usuario == 'admin'">Quiénes somos</a>
+            <a class="dropdown-item" href="admin-nosotros" *ngIf="rolNosotros == true  || usuario == 'admin'">Nosotros</a>
           </div>
         </li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'administrador'">
@@ -76,16 +93,16 @@
           </a>
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="admin-acerca">Acerca</a>
-            <a class="dropdown-item" href="admin-city">Ciudades</a>
-            <a class="dropdown-item" href="admin-genero">Generos</a>
-            <a class="dropdown-item" href="admin-municipio">Municipios</a>
-            <a class="dropdown-item" href="admin-politica">Política y privacidad</a>
-            <a class="dropdown-item" href="admin-tipo-documento">Tipos de documentos</a>
-            <a class="dropdown-item" href="admin-titulos-hv">Títulos hoja de vida</a>
+            <a class="dropdown-item" href="admin-acerca" *ngIf="rolAcerca == true || usuario == 'admin'">Acerca</a>
+            <a class="dropdown-item" href="admin-city" *ngIf="rolCiudades == true || usuario == 'admin'">Ciudades</a>
+            <a class="dropdown-item" href="admin-genero" *ngIf="rolGeneros == true || usuario == 'admin'">Generos</a>
+            <a class="dropdown-item" href="admin-municipio" *ngIf="rolMunicipios == true || usuario == 'admin'">Municipios</a>
+            <a class="dropdown-item" href="admin-politica" *ngIf="rolPolitica == true || usuario == 'admin'">Política y privacidad</a>
+            <a class="dropdown-item" href="admin-tipo-documento" *ngIf="rolTiposDocumentos == true || usuario == 'admin'">Tipos de documentos</a>
+            <a class="dropdown-item" href="admin-titulos-hv" *ngIf="rolTitulos == true || usuario == 'admin'">Títulos hoja de vida</a>
           </div>
         </li>
-        <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente'" (click)="location('registrar-caso')">Registrar caso</li>
+        <li class="heightFull paddingL4 paddingR4 borderR1 registrarCaso" *ngIf="perfil == 'cliente' && usuario != 'admin'" (click)="location('registrar-caso')">Registrar caso</li>
         <li class="heightFull paddingL4 paddingR4 borderR1 misCasos" *ngIf="perfil == 'cliente' || perfil == 'abogado'" (click)="location('mis-casos')">Mis casos</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil == 'cliente'" (click)="location('consultar-abogados')">Consultar abogados</li>
         <li class="heightFull paddingL4 paddingR4 borderR1" *ngIf="perfil != 'administrador'" (click)="location('notificaciones')">Notificaciones <span class="iconNotificacion">{{totalNotificaciones}}</span></li>
@@ -99,13 +116,14 @@
           </a>
         
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="admin-actividades">Actividades</a>
-            <a class="dropdown-item" href="admin-contratos">Contratos</a>
-            <a class="dropdown-item" href="admin-solicitudes">Solicitudes</a>
+            <a class="dropdown-item" href="admin-actividades" *ngIf="rolActividades == true || usuario == 'admin'">Actividades</a>
+            <a class="dropdown-item" href="admin-contratos" *ngIf="rolContratos == true || usuario == 'admin'">Contratos</a>
+            <a class="dropdown-item" href="admin-solicitudes" *ngIf="rolSolicitudes == true || usuario == 'admin'">Solicitudes</a>
           </div>
         </li>
 
-        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="perfil == 'administrador'" (click)="location('admin-usuarios')">Usuarios</li>
+        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="usuario == 'admin'" (click)="location('admin-personalizar')">Personalización</li>
+        <li class="heightFull paddingL4 paddingR4 administrarUsuarios" *ngIf="usuario == 'admin'" (click)="location('admin-textos')">Textos</li>
                 
       </ul>
 

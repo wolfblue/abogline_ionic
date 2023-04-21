@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { NgxSpinnerService } from "ngx-spinner";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $;
 
@@ -14,16 +15,28 @@ declare var $;
 })
 export class NotificacionesPage implements OnInit {
 
+  @ViewChild("modalCaso", {static: false}) modalCaso: TemplateRef<any>;
+
   private unsubscribe$ = new Subject<void>();
 
   notificaciones = [];
   totalNotificaciones = 0;
   mostrandoNotificaciones = 0;
   usuario = (sessionStorage.getItem("usuario") ? sessionStorage.getItem("usuario") : "");
+  modal : NgbModalRef;
+  casoCiudadProblema : any = "";
+  casoCualProblema : any = "";
+  casoCuentanos : any = "";
+  casoFechaRegistro : any = "";
+  casoProblemas : any = "";
+  casoProceso : any = "";
+  casoTrataCaso : any = "";
+  idCaso : any;
 
   constructor(
     private http:HttpClient,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private modalService: NgbModal
   ) { 
 
     this.consultarNotificaciones();
@@ -42,6 +55,17 @@ export class NotificacionesPage implements OnInit {
 
   location(ruta){
     window.location.href = ruta;
+  }
+
+  /**************************************************************************** */
+  //  MODAL
+  /**************************************************************************** */
+
+  open(content) {
+    this.modal = this.modalService.open(content, { size: 'lg', centered: true, backdropClass: 'light-blue-backdrop' })    
+    this.modal.result.then((e) => {
+        console.log("dialogo cerrado")
+    });        
   }
 
   //  CONSULTAR NOTIFICACIONES
@@ -215,7 +239,7 @@ export class NotificacionesPage implements OnInit {
             apiNotificacionesAprobar.append("idNotificacion",idNotificacion);
             apiNotificacionesAprobar.append("tipoNotificacion",tipoNotificacion);
             apiNotificacionesAprobar.append("idCaso",idCaso);
-            apiNotificacionesAprobar.append("abogado",_this.usuario);
+            apiNotificacionesAprobar.append("usuario",_this.usuario);
             apiNotificacionesAprobar.append("idCalendario",idCalendario);
 
             _this.postModel("apiNotificacionesAprobar",apiNotificacionesAprobar).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
@@ -245,6 +269,43 @@ export class NotificacionesPage implements OnInit {
 
     sessionStorage.setItem("idCaso",idCaso);
     window.location.href = "/core";
+
+  }
+
+  //  Ver caso
+
+  verCaso(idCaso){
+
+    this.idCaso = idCaso;
+
+    let apiNotificacionesGetCaso = new FormData();
+
+    apiNotificacionesGetCaso.append("idCaso",idCaso);
+
+    this.postModel("apiNotificacionesGetCaso",apiNotificacionesGetCaso).pipe(takeUntil(this.unsubscribe$)).subscribe((result: any) => {
+
+      this.casoCiudadProblema = result[0].ciudad_problema;
+      this.casoCualProblema = result[0].cual_problema;
+      this.casoCuentanos = result[0].cuentanos;
+      this.casoFechaRegistro = result[0].fecha_registro;
+      this.casoProblemas = result[0].problemas;
+      this.casoProceso = result[0].proceso;
+      this.casoTrataCaso = result[0].trata_caso;
+
+      this.open(this.modalCaso);
+
+    });
+
+  }
+
+  /**
+    * Seguimiento 
+  */
+
+  seguimiento() {
+
+    sessionStorage.setItem('idCaso', this.idCaso)
+    this.location('/core');
 
   }
 

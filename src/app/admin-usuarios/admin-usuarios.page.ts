@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from "ngx-spinner";
+import { count } from 'console';
 
 declare var $;
 
@@ -18,6 +19,7 @@ export class AdminUsuariosPage implements OnInit {
 
   @ViewChild("modalDocumentos", {static: false}) modalDocumentos: TemplateRef<any>;
   @ViewChild("modalUsuario", {static: false}) modalUsuario: TemplateRef<any>;
+  @ViewChild("modalRoles", {static: false}) modalRoles: TemplateRef<any>;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -35,6 +37,8 @@ export class AdminUsuariosPage implements OnInit {
   tp = "";
   maestria = "";
   pdfView = "";
+  usuario = (sessionStorage.getItem("usuario")?sessionStorage.getItem("usuario"):"");
+  usuarioModalRoles = "";
 
   constructor(
     private http:HttpClient,
@@ -367,6 +371,83 @@ export class AdminUsuariosPage implements OnInit {
       break;
 
     }
+
+  }
+
+  //  ABRIR MODAL ROLES
+
+  openModalRoles(usuario){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Capturar usuario
+    _this.usuarioModalRoles = usuario;
+
+    //  Abrir modal
+    _this.open(_this.modalRoles);
+
+    //  Obtener roles del usuario
+
+    let apiAdminObtenerRoles = new FormData();
+
+    apiAdminObtenerRoles.append("usuario",this.usuarioModalRoles);
+
+    _this.postModel("apiAdminObtenerRoles",apiAdminObtenerRoles).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      if(result.length > 0){
+
+        for(var i = 0; i < result.length; i++)
+          $("."+result[i].rol).prop("checked",true);
+
+      }
+
+    });
+
+  }
+
+  //  ACTUALIZAR ROLES DEL USUARIO
+
+  actualizarRolesUsuario(){
+
+    //  Variables iniciales
+
+    var _this = this;
+    var rolesActivos = "";
+
+    //  Capturar valores
+
+    $(".rolesUsuario input").each(function(){
+
+      if($(this).prop("checked") == true){
+
+        if(!rolesActivos)
+          rolesActivos = $(this).prop("class");
+        else
+          rolesActivos += "|" + $(this).prop("class");
+
+      }
+
+    });
+
+    //  Actualizar roles
+
+    let apiAdminActualizarRoles = new FormData();
+
+    apiAdminActualizarRoles.append("usuario",this.usuarioModalRoles);
+    apiAdminActualizarRoles.append("roles",rolesActivos);
+
+    _this.postModel("apiAdminActualizarRoles",apiAdminActualizarRoles).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+      $.alert('Se actualizaron los roles del usuario correctamente');
+
+      setTimeout(function(){
+
+        _this.location("/admin-usuarios");
+
+      },3000);
+
+    });
 
   }
 

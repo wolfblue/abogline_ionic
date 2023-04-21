@@ -73,6 +73,15 @@
 
             </div>
 
+            <div class="col-md-2" *ngIf="usuario == 'admin' && item.perfil == 'administrador' && item.usuario != 'admin'" (click)="openModalRoles(item.usuario)">
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+
+            </div>
+
           </div>
 
         </td>
@@ -337,5 +346,153 @@
     </form>
 
   </div>
+
+</ng-template>
+
+<!--  MODAL ROLES -->
+
+<ng-template #modalRoles let-modal class="modalRoles">
+
+  <div class="modal-header">
+
+    <p>Señor usuario administrador, a continuación por favor active unicamente los procesos los cuales el usuario <b>{{usuarioModalRoles}}</b> tendrá acceso:</p>
+
+  </div>
+
+  <div class="modal-body rolesUsuario">
+
+    <div class="row">
+
+      <div class="col-6">Menú - Quienes somos</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_quienes_somos" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Menú - Nosotros</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_nosotros" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Acerca</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_acerca" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Ciudades</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_ciudades" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Generos</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_generos" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Municipios</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_municipios" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Politica y privacidad</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_politica_privacidad" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Tipos de documentos</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_tipo_documentos" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Perfil - Titulos hoja de vida</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_hoja_vida" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Core - Actividades</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_actividades" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Core - Contratos</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_contratos" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Core - Solicitudes</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_solicitudes" />
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-6">Usuarios</div>
+      
+      <div class="col-6">
+        <input type="checkbox" class="rol_usuarios" />
+      </div>
+
+    </div>
+
+  </div>
+
+  <button class="btn btn-primary actualizaRoles" (click)="actualizarRolesUsuario()">Actualizar</button>
 
 </ng-template>

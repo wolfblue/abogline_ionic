@@ -62,13 +62,14 @@
             <p class="proceso">{{contratacion}}</p>
             <button *ngIf="item.estado == '1' && contratoRealizado == '1' && perfil == 'abogado'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
             <button *ngIf="item.estado == '1' && contratoRealizado == '3' && perfil == 'cliente'" class="btnProceso" (click)="actividadContratacion()">PROCEDER ></button>
+            <button *ngIf="contratoRealizado == '5'" class='btnProceso' (click)="descargarContrato()">DESCARGAR ></button>
             <p class="date">{{item.date_format}}</p>
           </div>
 
           <div class="carousel-cell background coreFinalizar" *ngIf="item.tipo == '6'">
             <p class="titleProceso">FINALIZAR CONTRATO</p>
             <p class="proceso">{{finalizarContrato}}</p>
-            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">FINALIZAR ></button>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso">FINALIZAR ></button>
             <p class="date">{{item.date_format}}</p>
           </div>
   
@@ -98,9 +99,16 @@
           <div class="carousel-cell background coreInformacion" *ngIf="item.tipo == '11'">
             <p class="titleProceso">INFORMACIÓN</p>
             <p class="proceso">{{informacion}}</p>
-            <button *ngIf="perfil == 'cliente'" class="btnProceso" (click)="solicitar()">PROCEDER ></button>
+            <button *ngIf="perfil == 'cliente'" class="btnProceso">PROCEDER ></button>
             <p class="date">{{item.date_format}}</p>
           </div>
+
+          <!--<div class="carousel-cell background coreDocumentacion" *ngIf="item.tipo == '12'">
+            <p class="titleProceso">DOCUMENTO AUTENTICADO</p>
+            <p class="proceso">{{autenticado}}</p>
+            <button *ngIf="perfil == 'cliente' && item.estado == '1'" class="btnProceso" (click)="cargarAutenticado()">PROCEDER ></button>
+            <p class="date">{{item.date_format}}</p>
+          </div>-->
 
         </ng-container>
 
@@ -378,7 +386,7 @@
             </div>
 
             <div class="col-md-4">
-              <img src="/assets/images/actividad_presencial.png" (click)="crearActividadAccion('paso11_reunion_presencial','0','Reunion presencial')">
+              <img src="/assets/images/actividad_presencial.png" (click)="crearActividadAccion('paso11_reunion_presencial','1','Reunion presencial')">
             </div>
 
             <div class="col-md-4">
@@ -699,7 +707,7 @@
 
         <div class="contratacion">
 
-          <p>Apreciado abogado, a continuación a continuación indique por favor el motivo por el cual esta solicitando un pago.</p>
+          <p>Apreciado abogado, a continuación indique por favor el motivo por el cual esta solicitando un pago.</p>
 
           <div class="center">
             
@@ -713,6 +721,34 @@
 
             <p>
               <button (click)="crearActividadAccion('paso8_pagos_2','1','Pagos')">Crear actividad</button>
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modalTipo14">
+
+        <div class='titleModal1 color1'>REUNIÓN PRESENCIAL</div>
+
+        <div class="contratacion">
+
+          <p>Apreciado abogado, a continuación indique por favor el motivo por el cual esta solicitando una reunión pesencial.</p>
+
+          <div class="center">
+            
+            <p>
+              <b>Motivo por el que se solicita una reunión presencial:</b>
+            </p>
+
+            <p>
+              <textarea id="motivoReunionP" class="motivoReunionP" (change)="changeMotivoReunionP(motivoReunionP.value)" #motivoReunionP></textarea>
+            </p>
+
+            <p>
+              <button (click)="crearActividadAccion('paso11_reunion_presencial_2','1','Reunion presencial')">Crear actividad</button>
             </p>
 
           </div>

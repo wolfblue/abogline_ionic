@@ -1,0 +1,27 @@
+<div class="content">
+
+  <h3>Textos</h3>
+
+  <div class="datatable">
+
+    <div class="row">
+
+      <div class="col title">Atributo</div>
+      <div class="col title">Texto</div>
+
+    </div>
+
+    <div class="row" *ngFor="let item of textos">
+
+      <div class="col">{{item.atributo}}</div>
+      
+      <div class="col">
+        <input type="text" [attr.class]="item.atributo" [attr.value]="item.valor" (change)="actualizar(item.atributo)" />
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

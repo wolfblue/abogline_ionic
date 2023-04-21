@@ -67,9 +67,9 @@ export class CorePage implements OnInit {
   desicionSelect2 = "1";
   desicionSelect3 = "1";
   desicionSelect4 = "1";
-  contratoCaso = [];
+  contratoCaso:any = [];
   contratoMetodopago = "";
-  contratoRealizado = 1;
+  contratoRealizado = '1';
   titleReunion = "";
   pdfView = "";
   clienteData = [];
@@ -82,6 +82,8 @@ export class CorePage implements OnInit {
   solicitudDocumentosEstado = 0;
   motivoFinalizaContrato = "";
   motivoPago = "";
+  motivoReunionP = "";
+  autenticado = "";
 
   constructor(
     private http:HttpClient,
@@ -181,6 +183,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
     
     $(".modal-content").css("opacity","0.8");
     $(".btnContinuar").prop("src","/assets/images/btn_continuar.png");
@@ -222,6 +225,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
     $(".modalTipo4").show();
 
     //  Validar botones
@@ -523,6 +527,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
     $(".btnContinuar").hide();
 
     //  Validar botones
@@ -563,6 +568,7 @@ export class CorePage implements OnInit {
         $(".modalTipo11").hide();
         $(".modalTipo12").show();
         $(".modalTipo13").hide();
+        $(".modalTipo14").hide();
 
       break;
 
@@ -585,6 +591,30 @@ export class CorePage implements OnInit {
         $(".modalTipo11").hide();
         $(".modalTipo12").hide();
         $(".modalTipo13").show();
+        $(".modalTipo14").hide();
+
+      break;
+
+      case "paso11_reunion_presencial":
+
+        //  Modal finalizar contrato
+
+        _this.open(_this.modalGeneral);
+
+        $(".modalTipo1").hide();
+        $(".modalTipo2").hide();
+        $(".modalTipo3").hide();
+        $(".modalTipo4").hide();
+        $(".modalTipo5").hide();
+        $(".modalTipo6").hide();
+        $(".modalTipo7").hide();
+        $(".modalTipo8").hide();
+        $(".modalTipo9").hide();
+        $(".modalTipo10").hide();
+        $(".modalTipo11").hide();
+        $(".modalTipo12").hide();
+        $(".modalTipo13").hide();
+        $(".modalTipo14").show();
 
       break;
 
@@ -651,6 +681,49 @@ export class CorePage implements OnInit {
                 apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
                 apiCoreCrearActividad.append("actividadDesc", actividad);
                 apiCoreCrearActividad.append("motivo", _this.motivoPago);
+
+                _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+
+                  if(aprobacion == "0")
+                    $.alert('Se creo la actividad correctamente.');
+                  else
+                    $.alert('Se ha enviado la solicitud Abogline para crear actividad.');
+
+                  setTimeout(function(){
+
+                    _this.location("/core");
+
+                  },3000);
+
+                });
+
+              },
+              cancelar: function () {}
+          }
+        });
+
+      break;
+
+      case "paso11_reunion_presencial_2":
+
+        //  Reunión presencial
+
+        $.confirm({
+          title: 'Crear Actividad ' + actividad + '!',
+          content: 'Esta seguro de crear la actividad ' + actividad +'?',
+          buttons: {
+              confirmar: function () {
+
+                //  Activar actividad caso
+
+                let apiCoreCrearActividad = new FormData();
+                
+                apiCoreCrearActividad.append("idCaso", sessionStorage.getItem("idCaso"));
+                apiCoreCrearActividad.append("actividad", proceso);
+                apiCoreCrearActividad.append("aprobacion", aprobacion);
+                apiCoreCrearActividad.append("usuario", sessionStorage.getItem("usuario"));
+                apiCoreCrearActividad.append("actividadDesc", actividad);
+                apiCoreCrearActividad.append("motivo", _this.motivoReunionP);
 
                 _this.postModel("apiCoreCrearActividad",apiCoreCrearActividad).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
@@ -788,6 +861,10 @@ export class CorePage implements OnInit {
               _this.informacion = result[i].contenido;
             break;
 
+            case "cargar-autenticado":
+              _this.autenticado = result[i].contenido;
+            break;
+
           }
 
         }
@@ -874,6 +951,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
     $(".btnContinuar").hide();
 
     $("."+clase).show();
@@ -1023,6 +1101,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
 
     //  Validar botones
 
@@ -1210,6 +1289,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
 
     //  Clausulas adicionales
 
@@ -1509,6 +1589,7 @@ export class CorePage implements OnInit {
         $(".modalTipo11").hide();
         $(".modalTipo12").hide();
         $(".modalTipo13").hide();
+        $(".modalTipo14").hide();
 
       });
 
@@ -1656,6 +1737,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
 
   }
 
@@ -1684,6 +1766,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").hide();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
 
     //  Asignar eventos para los anexos a cargar
 
@@ -1929,6 +2012,7 @@ export class CorePage implements OnInit {
     $(".modalTipo11").show();
     $(".modalTipo12").hide();
     $(".modalTipo13").hide();
+    $(".modalTipo14").hide();
 
   }
 
@@ -1966,6 +2050,36 @@ export class CorePage implements OnInit {
 
     //  Actualizar valor motivo
     _this.motivoPago = valor;
+
+  }
+
+  //  CHANGE MOTIVO REUNIÓN PRESENCIAL
+
+  changeMotivoReunionP(valor){
+
+    //  Variables iniciales
+    var _this = this;
+
+    //  Actualizar valor motivo
+    _this.motivoReunionP = valor;
+
+  }
+
+  /**
+   * Descargar contrato
+   */
+
+  descargarContrato() {
+
+    window.open(this.pdfView);
+
+  }
+
+  /**
+   * Cargar autenticado
+   */
+
+  cargarAutenticado() {
 
   }
 

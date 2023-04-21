@@ -252,8 +252,6 @@ export class ConsultarAbogadosPage implements OnInit {
     var _this = this;
 
     //  Actualizar valores
-
-    console.log(_this.abogados);
     
     _this.modalUsuario = _this.abogados[i].usuario;
     _this.modalNombre = _this.abogados[i].nombres + " " + _this.abogados[i].apellidos;
