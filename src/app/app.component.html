@@ -17,7 +17,10 @@
             <div class="row heightFull">
 
               <ul class="marginAuto">
-                <li (click)="location('perfil')" *ngIf="autenticado==1" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
+                
+                <li *ngIf="autenticado==1 && usuario == 'admin'" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
+                <li (click)="location('perfil')" *ngIf="autenticado==1 && usuario != 'admin'" class="heightFull paddingL4">Hola {{usuarioHeader}}</li>
+
                 <li class="heightFull paddingL4" (click)="location('contactenos')" id="contactenos">Contáctenos</li>
                 <li class="heightFull paddingL4 paddingR4 borderR1" (click)="location('nosotros')" id="nosotros">Nosotros</li>
                 <li class="heightFull paddingR4 borderR1" (click)="location('quienes-somos')" id="quienes-somos">¿Quiénes Somos?</li>

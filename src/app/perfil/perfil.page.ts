@@ -73,6 +73,7 @@ export class PerfilPage implements OnInit {
   cargaEspecializacion: any = "";
   cargaMaestria: any = "";
   tipo_tp: any = "";
+  usuarioAprobado: any = "false";
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -316,6 +317,7 @@ export class PerfilPage implements OnInit {
       _this.ramas = result[0].ramas;
       _this.consulta = result[0].consulta;
       _this.tipo_tp = result[0].tipo_tp;
+      _this.usuarioAprobado = result[0].aprobado;
 
       //  Actualizar foto
 
@@ -943,61 +945,71 @@ export class PerfilPage implements OnInit {
     //  Variables iniciales
     var _this = this;
 
-    //  Leer documentos
+    //  Cargar archivos solo cuando no esta aprobado el usuario
 
-    let reader = new FileReader();
+    if (_this.usuarioAprobado == "false") {
 
-    if(event.target.files && event.target.files.length) {
+      //  Leer documentos
 
-      const [file] = event.target.files;
+      let reader = new FileReader();
 
-      reader.readAsDataURL(file);
+      if(event.target.files && event.target.files.length) {
 
-      reader.onloadend = function () {
+        const [file] = event.target.files;
 
-        _this.tmpFile = reader.result;
+        reader.readAsDataURL(file);
 
-        let apiUsuariosUpdateDocumento = new FormData();
+        reader.onloadend = function () {
 
-        apiUsuariosUpdateDocumento.append("usuario",sessionStorage.getItem("usuario"));
-        apiUsuariosUpdateDocumento.append("tipo",tipo);
-        apiUsuariosUpdateDocumento.append("base64",_this.tmpFile);
+          _this.tmpFile = reader.result;
 
-        _this.postModel("apiUsuariosUpdateDocumento",apiUsuariosUpdateDocumento).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
+          let apiUsuariosUpdateDocumento = new FormData();
 
-          //  Actualizar icono
+          apiUsuariosUpdateDocumento.append("usuario",sessionStorage.getItem("usuario"));
+          apiUsuariosUpdateDocumento.append("tipo",tipo);
+          apiUsuariosUpdateDocumento.append("base64",_this.tmpFile);
 
-          switch(tipo){
+          _this.postModel("apiUsuariosUpdateDocumento",apiUsuariosUpdateDocumento).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {
 
-            case "cargaCedula":
-              _this.cargaCedula = true;
-            break;
+            //  Actualizar icono
 
-            case "cargaReciboServicioPublico":
-              _this.cargaReciboServicioPublico = true;
-            break;
+            switch(tipo){
 
-            case "cargaTp":
-              _this.cargaTp = true;
-            break;
+              case "cargaCedula":
+                _this.cargaCedula = true;
+              break;
 
-            case "cargaDiploma":
-              _this.cargaDiploma = true;
-            break;
+              case "cargaReciboServicioPublico":
+                _this.cargaReciboServicioPublico = true;
+              break;
 
-            case "cargaEspecializacion":
-              _this.cargaEspecializacion = true;
-            break;
+              case "cargaTp":
+                _this.cargaTp = true;
+              break;
 
-            case "cargaMaestria":
-              _this.cargaMaestria = true;
-            break;
+              case "cargaDiploma":
+                _this.cargaDiploma = true;
+              break;
 
-          }
+              case "cargaEspecializacion":
+                _this.cargaEspecializacion = true;
+              break;
 
-        });
+              case "cargaMaestria":
+                _this.cargaMaestria = true;
+              break;
+
+            }
+
+          });
+
+        }
 
       }
+
+    }else {
+
+      $.alert('El usuario ha sido aprobado por tal motivo no se puede actualizar archivos.');
 
     }
 

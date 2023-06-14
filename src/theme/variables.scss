@@ -333,3 +333,8 @@ form{
 ion-header{
   background: #264558;
 }
+
+#header li:hover {
+  opacity: 0.4;
+  cursor: pointer;
+}

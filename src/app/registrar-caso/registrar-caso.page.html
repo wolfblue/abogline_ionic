@@ -38,15 +38,13 @@
   
         <div class="col-md-3">
   
-          <div>¿Sobre qué trata tu caso?</div>
+          <div>¿Con quien tienes problemas?</div>
   
           <img class="iconSelect" src="/assets/images/icon_amigo.png" />
 
           <select (change)="trataCaso()" id="trataCaso">
 
-            <option></option>
-
-            <option *ngIf="selectProblemas == 'estado'">Con tu empleo en una entidad pública</option>
+            <option *ngIf="selectProblemas == 'estado'" selected>Con tu empleo en una entidad pública</option>
             <option *ngIf="selectProblemas == 'estado'">Quieres licitar con el estado</option>
             <option *ngIf="selectProblemas == 'estado'">Reparación de daños y perjuicios causados por el estado</option>
             <option *ngIf="selectProblemas == 'estado'">Vulneración de derechos fundamentales</option>
