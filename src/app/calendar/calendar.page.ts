@@ -87,8 +87,8 @@ export class CalendarPage implements OnInit {
   refresh: Subject<any> = new Subject(); 
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = false;
-
   renderCalendar: any;
+  eventIzq: any = [];
 
   constructor(
 
@@ -344,6 +344,23 @@ export class CalendarPage implements OnInit {
           else
           reunion = reunion + ": (Pronto se asignará link de la reunión)";
 
+          var date = new Date(result[i].fechaDesde);
+          var day = date.toLocaleString('default', { weekday: 'long' });
+          var month = date.toLocaleString('default', { month: 'long' });
+          let hour:any = date.getHours();
+          const ampm = hour >= 12 ? 'PM' : 'AM';
+          hour = (hour % 12) || 12;
+          if(hour < 10){
+            hour = '0' + hour;
+          }
+          _this.eventIzq.push(
+            {
+              'title':result[i].descripcion,
+              'hora':day.charAt(0).toUpperCase() + day.slice(1) + ' ' + date.getDate() + ' de ' + month.charAt(0).toUpperCase() + month.slice(1) + ' | ' + hour + ':00' + ' ' + ampm,
+              'day': date.getDate()
+            }
+          );
+
           _this.events.push(
             {
               start: new Date(result[i].fechaDesde),
@@ -353,6 +370,21 @@ export class CalendarPage implements OnInit {
               allDay: false,
             }
           );
+
+          //  Colocar evento en el calendario pequeño
+
+          var dia = result[i].fechaDesde.substr(8,2)*1;
+
+          setTimeout(function(){
+            $(".date h1").css("color","#ffffff");
+            $(".weekdays div").css("color","#ffffff");
+            $(".days div").css("color","#ffffff");
+            $(".days div").each(function(){
+              if($(this).html() == dia) {
+                $(this).css("color","#0E9BE0");
+              }
+            });
+          },3000);
 
         }
 
@@ -381,6 +413,17 @@ export class CalendarPage implements OnInit {
 
     });
 
+  }
+
+  //  VER EVENTO
+
+  verEvento(day) {
+    $(".cal-day-number").each(function(){
+      if ($(this).html() == day) {
+        $(this).click();
+      }
+      
+    });
   }
 
 }

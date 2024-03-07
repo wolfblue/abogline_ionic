@@ -45,7 +45,7 @@
         <div class="row tableRegistro" *ngFor="let item of notificaciones">
 
           <div class="col-md-3">{{item.notificacion}}</div>
-          <div class="col-md-3">{{item.notificacion_descripcion}}</div>
+          <div class="col-md-3">{{item.mensaje}}</div>
           <div class="col-md-3">
             <span class="link" *ngIf="item.id_caso != 0" (click)="verCaso(item.id_caso)">{{item.id_caso}}</span>
           </div>

@@ -8,7 +8,7 @@
 
     
     <div class="col-4 textR" *ngIf="perfil == 'abogado' && estadoCaso == '4'">
-      <img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" (click)="crearActividad();" />
+      <!--<img src="/assets/images/btn_crear_actividad.png" class="btnCrearActividad" (click)="crearActividad();" />-->
     </div>
 
   </div>
@@ -40,6 +40,8 @@
             <p class="date">{{item.date_format}}</p>
     
           </div>
+
+          <!--
 
           <div class="carousel-cell background coreContinuidad" *ngIf="item.tipo == '3'">
 
@@ -339,7 +341,7 @@
       <div class="modalTipo4">
 
         <div class='titleModal1 color1'>{{titleReunion}}</div>
-        <div class='titleModal2 color1'>Escoge una Fecha</div>
+        <div class='titleModal2 color1'>Dinos dos fechas para que puedas recibir tu asesoría</div>
 
         <p class="dateDesde">
 

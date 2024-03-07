@@ -37,6 +37,14 @@
 
           </div>
 
+          <div class="row eventSeccion" *ngFor="let evento of  eventIzq">
+            <div class="col-md-10">
+              <p class="eventTitle">{{evento.title}}</p>
+              <p class="eventHora">{{evento.hora}}</p>
+            </div>
+            <div class="col-md-2 eventVer" (click)="verEvento(evento.day)">Ver ></div>
+          </div>
+
         </div>
 
       </div>

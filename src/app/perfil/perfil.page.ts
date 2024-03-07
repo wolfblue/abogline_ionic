@@ -559,7 +559,7 @@ export class PerfilPage implements OnInit {
     apiUsuariosUpdatePhoto.append("base64",_this.tmpFile);
     apiUsuariosUpdatePhoto.append("ext",ext);
 
-    _this.postModel("apiUsuariosUpdatePhoto",apiUsuariosUpdatePhoto).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {_this.generos = result;});
+    _this.postModel("apiUsuariosUpdatePhoto",apiUsuariosUpdatePhoto).pipe(takeUntil(_this.unsubscribe$)).subscribe((result: any) => {});
 
   }
 
